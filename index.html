@@ -33,7 +33,7 @@
 	
 	
 	<ul>
-		<li ng-repeat="activity in activities" | filter:query | orderBy:orderProp>
+		<li ng-repeat="activity in activities | filter:query | orderBy:orderProp">
 			{{activity.title}}
 		</li>
 	</ul>
