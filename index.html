@@ -16,17 +16,17 @@
 	
 	
 	
-    <ul>
+    <!--<ul>
 		<li ng-repeat="phone in phones">
 			{{phone.name}}
 			<p>{{phone.snippet}}</p>
 		</li>
-	</ul>
+	</ul>-->
 	
 	
 	<ul>
-		<li ng-repeat="activity in activities">
-			{{activity.nid}}
+		<li ng-repeat="activity in activities" | orderBy:title>
+			{{activity.title}}
 		</li>
 	</ul>
      
