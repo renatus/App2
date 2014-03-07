@@ -9,19 +9,21 @@
 <body ng-controller="StartCtrl">
 	
      
-    Write some text in textbox:
+    <!--Write some text in textbox:
     <input type="text" ng-model="sometext" />
  
     <h1>Hello {{ sometext | uppercase }}</h1>
 	
 	
 	
-    <!--<ul>
+    <ul>
 		<li ng-repeat="phone in phones">
 			{{phone.name}}
 			<p>{{phone.snippet}}</p>
 		</li>
 	</ul>-->
+	
+	
 	
 	
 	Search: <input ng-model="query">
@@ -31,10 +33,16 @@
 		<option value="nid">Database ID</option>
 	</select>
 	
+	<select ng-model="lang">
+		<option value="English">English</option>
+		<option value="Russian">Russian</option>
+	</select>
+	
 	
 	<ul>
-		<li ng-repeat="activity in activities | filter:query | orderBy:orderProp">
+		<li ng-repeat="activity in activities | filter:query | filter:lang | orderBy:orderProp">
 			{{activity.title}}
+			<p>Description: {{activity.language}}</p>
 		</li>
 	</ul>
      
