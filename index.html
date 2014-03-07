@@ -23,14 +23,17 @@
 		</li>
 	</ul>-->
 	
+	
+	Search: <input ng-model="query">
+	
 	<select ng-model="orderProp">
 		<option value="title">Alphabetical</option>
 		<option value="nid">Database ID</option>
-  </select>
+	</select>
 	
 	
 	<ul>
-		<li ng-repeat="activity in activities" | orderBy:orderProp>
+		<li ng-repeat="activity in activities" | filter:query | orderBy:orderProp>
 			{{activity.title}}
 		</li>
 	</ul>
