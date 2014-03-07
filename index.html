@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html ng-app>
+<html ng-app="startApp">
 <head>
 	<title>Hello World, AngularJS</title>
     <script type="text/javascript" src="libs/angular.js"></script>
+	<script src="js/controllers.js"></script>
 </head>
 	
-<body>
+<body ng-controller="StartCtrl">
+	
      
     Write some text in textbox:
     <input type="text" ng-model="sometext" />
  
     <h1>Hello {{ sometext | uppercase }}</h1>
+	
+	
+	
+    <ul>
+		<li ng-repeat="phone in phones">
+			{{phone.name}}
+			<p>{{phone.snippet}}</p>
+		</li>
+	</ul>
      
 </body>
 </html>
