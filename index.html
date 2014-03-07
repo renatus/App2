@@ -23,9 +23,14 @@
 		</li>
 	</ul>-->
 	
+	<select ng-model="orderProp">
+		<option value="title">Alphabetical</option>
+		<option value="nid">Database ID</option>
+  </select>
+	
 	
 	<ul>
-		<li ng-repeat="activity in activities" | orderBy:title>
+		<li ng-repeat="activity in activities" | orderBy:orderProp>
 			{{activity.title}}
 		</li>
 	</ul>
