@@ -38,9 +38,14 @@
 		<option value="Russian">Russian</option>
 	</select>
 	
+	<select ng-model="nodeid">
+		<option value="<6000">less than 6000</option>
+		<option value=">5000">more than 5000</option>
+	</select>
+	
 	
 	<ul>
-		<li ng-repeat="activity in activities | filter:query | filter:lang | orderBy:orderProp">
+		<li ng-repeat="activity in activities | filter:query | filter:lang | filter:nodeid | orderBy:orderProp">
 			{{activity.title}}
 			<p>Description: {{activity.language}}</p>
 		</li>
