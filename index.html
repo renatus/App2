@@ -39,13 +39,13 @@
 	</select>
 	
 	<select ng-model="nodeid">
-		<option value=6000>less than 6000</option>
-		<option value=5000>more than 5000</option>
+		<option value=3188>3188</option>
+		<option value=6533>6533</option>
 	</select>
 	
 	
 	<ul>
-		<li ng-repeat="activity in activities | filter:query | filter:lang | orderBy:orderProp">
+		<li ng-repeat="activity in activities | filter:query | filter:lang | custfilter:nodeid orderBy:orderProp">
 			{{activity.title}}
 			<p>Description: {{activity.language}}</p>
 		</li>
