@@ -1,4 +1,4 @@
-var phonecatApp = angular.module('startApp', ['exoFilters']);
+var phonecatApp = angular.module('startApp', []);
  
 phonecatApp.controller('StartCtrl', function ($scope) {
 	$scope.phones = [
@@ -23,7 +23,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 });
 
 
-
+/*
     angular.module('exoFilters', []).filter('reverse', function() {
         return function(input, uppercase) {
             var out = "";
