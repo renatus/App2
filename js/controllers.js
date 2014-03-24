@@ -1,4 +1,4 @@
-var phonecatApp = angular.module('startApp', []);
+var phonecatApp = angular.module('startApp', ['reverse']);
  
 phonecatApp.controller('StartCtrl', function ($scope) {
 	$scope.phones = [
@@ -19,7 +19,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 	];
     
     
-    filter('reverse', function() {
+    $scope.filter('reverse', function() {
         return function(input, uppercase) {
             var out = "";
             for (var i = 0; i < input.length; i++) {
