@@ -26,6 +26,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 
     angular.module('exoFilters', []).filter('reverse', function() {
         return function(input, uppercase) {
+            console.log(input);
             var out = "";
             for (var i = 0; i < input.length; i++) {
                 out = input.charAt(i) + out;
