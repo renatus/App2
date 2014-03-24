@@ -24,9 +24,9 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 
 
 angular.module('exoFilters', []).filter('tstfilter', function() {
-    return function(input) {
+    //return function(input) {
         return 'a';
-    };
+    //};
 });
 
 /*
