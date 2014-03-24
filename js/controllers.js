@@ -25,10 +25,11 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 
 angular.module('exoFilters', []).filter('tstfilter', function() {
     return function(input) {
-        return '\u2718';
+        return 'a';
     };
 });
 
+/*
 filter('custfilter', function () {
     return function (movies, genres) {
         var items = {
@@ -43,3 +44,4 @@ filter('custfilter', function () {
         return items.out;
     };
 });
+*/
