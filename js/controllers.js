@@ -1,4 +1,4 @@
-var phonecatApp = angular.module('startApp', ['exoFilters']);
+var phonecatApp = angular.module('startApp', ['reverse']);
  
 phonecatApp.controller('StartCtrl', function ($scope) {
 	$scope.phones = [
