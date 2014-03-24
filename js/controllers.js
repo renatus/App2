@@ -1,4 +1,4 @@
-var phonecatApp = angular.module('startApp', []);
+var phonecatApp = angular.module('startApp', ['exoFilters']);
  
 phonecatApp.controller('StartCtrl', function ($scope) {
 	$scope.phones = [
@@ -19,6 +19,14 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 	];
 	
    
+});
+
+
+
+angular.module('exoFilters', []).filter('tstfilter', function() {
+    return function(input) {
+        return '\u2718';
+    };
 });
 
 filter('custfilter', function () {

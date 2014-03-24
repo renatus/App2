@@ -46,7 +46,7 @@
 	
 	<ul>
         <!--<li ng-repeat="activity in activities | filter:query | filter:lang | custfilter:nodeid orderBy:orderProp">-->
-		<li ng-repeat="activity in activities | filter:query | filter:lang | orderBy:orderProp">
+		<li ng-repeat="activity in activities | filter:query | filter:lang | tstfilter | orderBy:orderProp">
 			{{activity.title}}
 			<p>Description: {{activity.language}}</p>
 		</li>
