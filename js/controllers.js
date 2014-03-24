@@ -22,7 +22,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
     
     $scope.filterFn = function(activity){
         
-        if(activity.status == "Active"){
+        if(activity.status == "Completed"){
             return true; // this will be listed in the results
         }
         
