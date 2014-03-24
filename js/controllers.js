@@ -1,4 +1,4 @@
-var phonecatApp = angular.module('startApp', ['reverse']);
+var phonecatApp = angular.module('startApp', []);
  
 phonecatApp.controller('StartCtrl', function ($scope) {
 	$scope.phones = [
