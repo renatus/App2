@@ -24,8 +24,10 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 
 
 angular.module('exoFilters', []).filter('tstfilter', function() {
+    i=0;
     return function(input) {
-        return '<p>a</p>';
+        i=i+1;
+        return i;
     };
 });
 
