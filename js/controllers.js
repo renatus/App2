@@ -17,9 +17,14 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 		{"nid":"6533","language":"English","title":"Digitize VHS film from primary school","status":"Completed","statusRAW":"completed","priority":"Low","priorityRAW":"1000","strategicImportance":"Normal","strategicImportanceRAW":"2000","difficultyPlanned":"Extra","difficultyPlannedRAW":"4000","difficulty":"Extra","difficultyRAW":"4000","group":"1828, Education, Video, Digitizing","groupRAW":"496, 489, 2357, 6534","dateTimePlannedStart":"2014-04-30 00:00:51","dateTimePlannedEnd":"2014-04-30 23:11:30","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 03:46:06","dateTimeEnd":"2014-03-07 03:46:22","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394149582","bodySummary":""},
 		{"nid":"4327","language":"English","title":"Renew domain selenokhod.com","status":"Completed","statusRAW":"completed","priority":"Critical","priorityRAW":"4000","strategicImportance":"Normal","strategicImportanceRAW":"2000","difficultyPlanned":"Normal","difficultyPlannedRAW":"2000","difficulty":"Normal","difficultyRAW":"2000","group":"Domains, Internet, Payments, Selenokhod","groupRAW":"1431, 472, 743, 479","dateTimePlannedStart":"2014-06-30 00:00:45","dateTimePlannedEnd":"2014-07-30 23:06:26","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 04:02:49","dateTimeEnd":"2014-03-07 04:02:52","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394150531","bodySummary":""}
 	];
-    
-    
-    $scope.filter('reverse', function() {
+
+	
+   
+});
+
+
+
+    angular.module('exoFilters', []).filter('reverse', function() {
         return function(input, uppercase) {
             var out = "";
             for (var i = 0; i < input.length; i++) {
@@ -34,21 +39,8 @@ phonecatApp.controller('StartCtrl', function ($scope) {
             return out;
         };
     });
-	
-   
-});
-
 
 /*
-angular.module('exoFilters', []).filter('tstfilter', function(activities) {
-    var i=0;
-    return function(input) {
-        i=i+1;
-        return i;
-    };
-});
-
-
 filter('custfilter', function () {
     return function (movies, genres) {
         var items = {
