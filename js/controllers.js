@@ -28,8 +28,10 @@ phonecatApp.controller('StartCtrl', function ($scope) {
         return function(input, uppercase) {
             console.log(input);
             var out = "";
-            for (var i = 0; i < input.length; i++) {
-                out = input.charAt(i) + out;
+            if(input){
+                for (var i = 0; i < input.length; i++) {
+                    out = input.charAt(i) + out;
+                }
             }
             
             // conditional based on optional argument
