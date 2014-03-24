@@ -27,7 +27,7 @@ angular.module('exoFilters', []).filter('tstfilter', function(activity) {
     var i=0;
     return function(input) {
         i=i+1;
-        return activity;
+        return i;
     };
 });
 
