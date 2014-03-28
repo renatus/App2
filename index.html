@@ -46,9 +46,16 @@
 	
 	<ul>
         <!--<li ng-repeat="activity in activities | filter:query | filter:lang | tstfilter | orderBy:orderProp">-->
-		<li ng-repeat="activity in activities | filter:query | filter:lang | filter:filterFn |  orderBy:orderProp">
-			{{activity.title}}
-			<p>Description: {{activity.language}}</p>
+		<li ng-repeat="activity in activities | filter:query | filter:lang | filter:filterFn |  orderBy:orderProp">			
+			<span ng-hide="editing" ng-click="editing = true">{{activity.title}} | {{activity.language}}</span>
+			<form ng-show="editing" ng-submit="editing = false">
+				<label>Title:</label>
+				<input type="text" ng-model="activity.title" placeholder="Name" ng-required/>
+				<label>Language:</label>
+				<input type="date" ng-model="activity.language" placeholder="Date" ng-required/>
+				<br/>
+				<button class="btn" type="submit">Save</button>
+			</form>
 		</li>
 	</ul>
     
