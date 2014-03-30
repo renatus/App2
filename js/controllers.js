@@ -24,7 +24,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	
 	function init(){
-		indexedDBexo.open().then(function(){
+		indexedDBexo.exoDB.indexedDB.open().then(function(){
 			alert('DB opened');
 		});
 	}
@@ -43,7 +43,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 
 
 
-phonecatApp.factory('indexedDBexo', function(window, $q){
+phonecatApp.factory('indexedDBexo', function($window, $q){
 	
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
