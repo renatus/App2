@@ -29,7 +29,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 		});
 	}
 	
-	init();
+	//init();
 	
 	
 	
