@@ -24,9 +24,9 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	
 	$scope.init = function(){
-		indexedDBexo.exoDB.indexedDB.open().then(function(){
+		//indexedDBexo.exoDB.indexedDB.open().then(function(){
 			alert('DB opened');
-		});
+		//});
 	}
 	
 	$scope.init();
