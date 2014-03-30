@@ -29,7 +29,7 @@ phonecatApp.controller('StartCtrl', function ($scope) {
 		});
 	}
 	
-	//init();
+	init();
 	
 	
 	
@@ -119,7 +119,7 @@ phonecatApp.factory('indexedDBexo', function($window, $q){
 		return deferred.promise;
 	};
 	
-}
+});
 
 
 
