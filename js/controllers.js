@@ -24,7 +24,8 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 	
 	
 	$scope.init = function(){
-		indexedDBexo.open().then(function(){
+		//indexedDBexo.open().then(function(){
+		MathService.multiply(3,2).then(function(){
 			alert('DB opened');
 		//alert(MathService.multiply(3,2));
 		});
