@@ -23,13 +23,13 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	
 	
-	function init(indexedDBexo){
+	$scope.init = function(){
 		indexedDBexo.exoDB.indexedDB.open().then(function(){
 			alert('DB opened');
 		});
 	}
 	
-	init(indexedDBexo);
+	init();
 	
 	
 	
