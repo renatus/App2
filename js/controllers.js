@@ -26,7 +26,7 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService) {
 	$scope.init = function(){
 		//indexedDBexo.exoDB.indexedDB.open().then(function(){
 			//alert('DB opened');
-		alert(MathService.multiply(3,2));
+		alert(MathService.multiply.plus(3,2));
 		//});
 	}
 	
@@ -39,7 +39,7 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService) {
 phonecatApp.service('MathService', function() {
     this.add = function(a, b) { return a + b };
     this.subtract = function(a, b) { return a - b };
-    this.multiply = function(a, b) { return a * b };
+    this.multiply.plus = function(a, b) { return a * b };
     this.divide = function(a, b) { return a / b };
 });
 
