@@ -24,9 +24,9 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 	
 	
 	$scope.init = function(){
-		//indexedDBexo.open().then(function(){
+		indexedDBexo.open().then(function(){
 		//MathService.multiply(3,2).then(function(){
-		MathService().then(function(){
+		//MathService().then(function(){
 			alert('DB opened');
 		//alert(MathService.multiply(3,2));
 		});
@@ -55,7 +55,7 @@ phonecatApp.service('MathService', function($window, $q) {
 
 
 
-phonecatApp.factory('indexedDBexo', function($window, $q){
+phonecatApp.service('indexedDBexo', function($window, $q){
 	
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
@@ -75,7 +75,7 @@ phonecatApp.factory('indexedDBexo', function($window, $q){
 	
 	
 	//Function to open DB and upgrade it's data structure, if needed
-	var open = function() {
+	this.open = function() {
 		var deferred = $q.defer();
 		
 		//Request to open database. Will return IDBOpenDBRequest object.
