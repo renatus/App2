@@ -123,9 +123,9 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		//Database table name
 		var dbTableName = "activities";
-		var db = todoDB.indexedDB.db;
+		var db = exoDB.indexedDB.db;
 		//Create transaction, define Object stores it will cover
-		var transact = todoDB.indexedDB.db.transaction(dbTableName, "readwrite");
+		var transact = exoDB.indexedDB.db.transaction(dbTableName, "readwrite");
 		var store = transact.objectStore(dbTableName);
 		
 		var data = {
