@@ -25,7 +25,8 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 	
 	$scope.init = function(){
 		//indexedDBexo.open().then(function(){
-		MathService.multiply(3,2).then(function(){
+		//MathService.multiply(3,2).then(function(){
+		MathService().then(function(){
 			alert('DB opened');
 		//alert(MathService.multiply(3,2));
 		});
@@ -38,14 +39,18 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 
 
 phonecatApp.service('MathService', function($window, $q) {
-	var deferred = $q.defer();
-    this.add = function(a, b) { return a + b };
-    this.subtract = function(a, b) { return a - b };
-    this.multiply = function(a, b) { 
-		deferred.resolve();
-		return a * b;
+	var innerF = function(){
+		var deferred = $q.defer();
+		//this.multiply = function(a, b) {
+			deferred.resolve(3 * 4);
+		//};
+		return deferred.promise;
+	}
+	
+	return {
+		innerF: innerF
 	};
-    this.divide = function(a, b) { return a / b };
+
 });
 
 
