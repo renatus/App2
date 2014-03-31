@@ -28,7 +28,7 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 			//alert('DB opened');
 			indexedDBexo.addEntry('TestTitle1').then(function(){
 				alert('Data added!');
-			}
+			});
 			
 		});
 	}
