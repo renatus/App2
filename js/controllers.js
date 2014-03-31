@@ -25,31 +25,15 @@ phonecatApp.controller('StartCtrl', function ($scope, MathService, indexedDBexo)
 	
 	$scope.init = function(){
 		indexedDBexo.open().then(function(){
-		//MathService.multiply(3,2).then(function(){
-		//MathService().then(function(){
-			alert('DB opened');
-		//alert(MathService.multiply(3,2));
+			//alert('DB opened');
+			indexedDBexo.addEntry('TestTitle1').then(function(){
+				alert('Data added!');
+			}
+			
 		});
 	}
 	
 	$scope.init();
-
-});
-
-
-
-phonecatApp.service('MathService', function($window, $q) {
-	var innerF = function(){
-		var deferred = $q.defer();
-		//this.multiply = function(a, b) {
-			deferred.resolve(3 * 4);
-		//};
-		return deferred.promise;
-	}
-	
-	return {
-		innerF: innerF
-	};
 
 });
 
@@ -130,6 +114,42 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		return deferred.promise;
 	};
+	
+	
+	
+	//Add entry to DB
+	this.addEntry = function(titleText){
+		var deferred = $q.defer();
+		
+		//Database table name
+		var dbTableName = "activities";
+		var db = todoDB.indexedDB.db;
+		//Create transaction, define Object stores it will cover
+		var transact = todoDB.indexedDB.db.transaction(dbTableName, "readwrite");
+		var store = transact.objectStore(dbTableName);
+		
+		var data = {
+			"title": titleText,
+			"timeStamp": new Date().getTime()
+		};
+		
+		//Request to store data at DB
+		var request = store.put(data);
+		
+		request.onsuccess = function(e) {
+			console.log('Data added to DB');
+			deferred.resolve();
+		};
+		
+		request.onerror = function(e) {
+			console.error("Error Adding an item: ", e);
+			deferred.reject();
+		};
+		
+		return deferred.promise;
+	};
+	
+	
 	
 });
 
