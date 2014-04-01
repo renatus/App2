@@ -31,7 +31,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 			});
             
             indexedDBexo.getAllTodoItems().then(function(data){
-				$scope.activities = data;
+				$scope.activities2 = data;
                 console.log(data);
 			});
 			
