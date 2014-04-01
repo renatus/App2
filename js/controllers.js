@@ -29,11 +29,17 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 			indexedDBexo.addEntry('TestTitle1').then(function(){
 				alert('Data added!');
 			});
+            
+            indexedDBexo.getAllTodoItems().then(function(activities){
+				$scope.activities = activities;
+			});
 			
 		});
 	}
 	
 	$scope.init();
+    
+    
 
 });
 
@@ -44,7 +50,7 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version (should be increased, when structure updates). Should be of integer type.
-	var dbVersion = 4;
+	var dbVersion = 5;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
@@ -130,6 +136,7 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		var data = {
 			"title": titleText,
+            "language": "English",
 			"timeStamp": new Date().getTime()
 		};
 		
@@ -148,6 +155,46 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		return deferred.promise;
 	};
+    
+    
+    
+    this.getAllTodoItems = function() {
+        var deferred = $q.defer();
+        
+        var activities = [];
+        
+        //Database table name
+        var dbTableName = "activities";
+        var db = exoDB.indexedDB.db;
+        //Create transaction
+        var transact = db.transaction(dbTableName, "readonly");
+        var store = transact.objectStore(dbTableName);
+        
+        // Get everything in the store
+        //keyRange is a continuous interval over keys, for example greater than X and smaller than Y
+        var keyRange = IDBKeyRange.lowerBound(0);
+        //Cursor is a mechanism for iterating over multiple records within a key range
+        var cursorRequest = store.openCursor(keyRange);
+        
+        cursorRequest.onsuccess = function(e) {
+            var result = e.target.result;
+            if(result === null || result === undefined){
+                deferred.resolve(activities);
+            }else{
+                if(result){
+                    activities.push(result.value);
+                    result.continue();
+                }
+            }
+        };
+        
+        cursorRequest.onerror = function(e){
+            console.log(e.value);
+            deferred.reject("Something went wrong!!!");
+        };
+        
+        return deferred.promise;
+    };
 	
 	
 	
