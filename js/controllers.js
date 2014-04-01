@@ -27,11 +27,12 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 		indexedDBexo.open().then(function(){
 			//alert('DB opened');
 			indexedDBexo.addEntry('TestTitle1').then(function(){
-				alert('Data added!');
+				console.log('Activity added!');
 			});
             
-            indexedDBexo.getAllTodoItems().then(function(activities){
-				$scope.activities = activities;
+            indexedDBexo.getAllTodoItems().then(function(data){
+				$scope.activities = data;
+                console.log(data);
 			});
 			
 		});
