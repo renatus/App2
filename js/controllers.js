@@ -25,10 +25,9 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	$scope.init = function(){
 		indexedDBexo.open().then(function(){
-			//alert('DB opened');
-			indexedDBexo.addEntry('TestTitle1').then(function(){
-				console.log('Activity added!');
-			});
+			//indexedDBexo.addEntry('TestTitle1').then(function(){
+			//	console.log('Activity added!');
+			//});
             
             indexedDBexo.getAllTodoItems().then(function(data){
 				$scope.activities2 = data;
@@ -207,14 +206,6 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 	
 	
 });
-
-
-
-var addEntry = function(actTitle){
-    indexedDBexo.addEntry(actTitle).then(function(){
-        console.log('Activity added!');
-    });
-}
 
 
 
