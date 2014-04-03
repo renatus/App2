@@ -210,6 +210,14 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 
 
 
+var addEntry = function(actTitle){
+    indexedDBexo.addEntry(actTitle).then(function(){
+        console.log('Activity added!');
+    });
+}
+
+
+
 
 
 
