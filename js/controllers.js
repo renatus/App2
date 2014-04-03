@@ -1,8 +1,7 @@
 var phonecatApp = angular.module('startApp', ['exoFilters']);
  
 phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
-    var vm = this;
-	
+    
 	$scope.activities = [
 		{"nid":"6650","language":"English","title":"End an agreements with Stream ISP","status":"Completed","statusRAW":"completed","priority":"Low","priorityRAW":"1000","strategicImportance":"Low","strategicImportanceRAW":"1000","difficultyPlanned":"Hard","difficultyPlannedRAW":"3000","difficulty":"Hard","difficultyRAW":"3000","group":"Flat 524, Biryulyovo, flat 464, MTS, Internet","groupRAW":"742, 760, 1501, 472","dateTimePlannedStart":"2014-03-01 11:00:50","dateTimePlannedEnd":"2014-03-19 18:00:24","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 04:01:53","dateTimeEnd":"2014-03-07 04:01:56","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394150475","bodySummary":""},
 		{"nid":"6090","language":"Russian","title":"\u041e\u043f\u043b\u0430\u0442\u0430 \u0438\u043d\u0442\u0435\u0440\u043d\u0435\u0442\u0430, \u041c\u0422\u0421, +7(916)5477868","status":"Completed","statusRAW":"completed","priority":"Major","priorityRAW":"3000","strategicImportance":"Low","strategicImportanceRAW":"1000","difficultyPlanned":"Normal","difficultyPlannedRAW":"2000","difficulty":"Normal","difficultyRAW":"2000","group":"Internet, Payments, Phone, MTS","groupRAW":"472, 743, 1191, 1501","dateTimePlannedStart":"2014-03-31 00:00:43","dateTimePlannedEnd":"2014-04-03 23:54:19","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 04:02:30","dateTimeEnd":"2014-03-07 04:02:33","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394150513","bodySummary":""},
@@ -39,14 +38,6 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	}
 	
 	$scope.init();
-    
-    
-    vm.addEntry = function(){
-        alert('a');
-		indexedDBexo.addEntry(activity2.title).then(function(){
-            console.log('Activity added!');
-        });
-    }
     
     
 
