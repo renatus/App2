@@ -44,8 +44,8 @@ var activity3 = this;
 	$scope.init();
     
     $scope.addEnttry = function(){
-		console.log(activity3);
-        indexedDBexo.addEntry(activity3).then(function(){
+		console.log(activity3.title);
+        indexedDBexo.addEntry(activity3.title).then(function(){
             console.log('Activity added!');
         });
     }
