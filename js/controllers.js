@@ -12,7 +12,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	
 	
-var activity3 = this;
+//var activity3 = this;
     
     
     
