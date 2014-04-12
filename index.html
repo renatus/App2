@@ -73,6 +73,19 @@
     <input ng-model="greeting" type="text"><br>
     No filter: {{greeting}}<br>
     Reverse: {{greeting|reverse}}<br>
+	
+	<br/>
+	<br/>
+	<br/>
+	
+	
+	
+	Search: <input ng-model="manyQuery">
+	<ul>
+		<li ng-repeat="manyEntry in manyEntries | filter:manyQuery">			
+			{{manyEntry.nid}}
+		</li>
+	</ul>
 
 
      
