@@ -40,6 +40,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	$scope.init();
     
     $scope.addEnttry = function(){
+		console.log('s');
         indexedDBexo.addEntry(activity.title).then(function(){
             console.log('Activity added!');
         });
