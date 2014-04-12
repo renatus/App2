@@ -44,6 +44,33 @@
     
     
     
+    <ul>
+		<li ng-repeat="activity2 in activities2 | filter:query">			
+			{{activity2.title}} | {{activity2.language}}
+		</li>
+	</ul>
+    
+    
+    
+    <form ng-submit="addEnttry()">
+        <label>Title:</label>
+        <input type="text" ng-model="activity.title" placeholder="Title" ng-required/>
+        <label>Language:</label>
+        <input type="text" ng-model="activity.language" placeholder="Language" ng-required/>
+        <br/>
+        <button class="btn" type="submit">Add</button>
+    </form>
+    
+    
+    
+    <br/>
+    <button class="btn" ng-click="addEnttry()">Add</button>
+    <br/>
+    
+    
+
+    
+    
     <input ng-model="greeting" type="text"><br>
     No filter: {{greeting}}<br>
     Reverse: {{greeting|reverse}}<br>

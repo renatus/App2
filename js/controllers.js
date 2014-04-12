@@ -1,7 +1,7 @@
 var phonecatApp = angular.module('startApp', ['exoFilters']);
  
 phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
-	
+    
 	$scope.activities = [
 		{"nid":"6650","language":"English","title":"End an agreements with Stream ISP","status":"Completed","statusRAW":"completed","priority":"Low","priorityRAW":"1000","strategicImportance":"Low","strategicImportanceRAW":"1000","difficultyPlanned":"Hard","difficultyPlannedRAW":"3000","difficulty":"Hard","difficultyRAW":"3000","group":"Flat 524, Biryulyovo, flat 464, MTS, Internet","groupRAW":"742, 760, 1501, 472","dateTimePlannedStart":"2014-03-01 11:00:50","dateTimePlannedEnd":"2014-03-19 18:00:24","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 04:01:53","dateTimeEnd":"2014-03-07 04:01:56","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394150475","bodySummary":""},
 		{"nid":"6090","language":"Russian","title":"\u041e\u043f\u043b\u0430\u0442\u0430 \u0438\u043d\u0442\u0435\u0440\u043d\u0435\u0442\u0430, \u041c\u0422\u0421, +7(916)5477868","status":"Completed","statusRAW":"completed","priority":"Major","priorityRAW":"3000","strategicImportance":"Low","strategicImportanceRAW":"1000","difficultyPlanned":"Normal","difficultyPlannedRAW":"2000","difficulty":"Normal","difficultyRAW":"2000","group":"Internet, Payments, Phone, MTS","groupRAW":"472, 743, 1191, 1501","dateTimePlannedStart":"2014-03-31 00:00:43","dateTimePlannedEnd":"2014-04-03 23:54:19","dateTimePlannedTZ":"Europe/Moscow Europe/Moscow","dateTimePlannedOffset":"14400 14400","dateTimeStart":"2014-03-07 04:02:30","dateTimeEnd":"2014-03-07 04:02:33","dateTimeTZ":"Europe/Moscow Europe/Moscow","dateTimeOffset":"14400 14400","lastUpdated":"1394150513","bodySummary":""},
@@ -25,15 +25,27 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	$scope.init = function(){
 		indexedDBexo.open().then(function(){
-			//alert('DB opened');
-			indexedDBexo.addEntry('TestTitle1').then(function(){
-				alert('Data added!');
+			//indexedDBexo.addEntry('TestTitle1').then(function(){
+			//	console.log('Activity added!');
+			//});
+            
+            indexedDBexo.getAllTodoItems().then(function(data){
+				$scope.activities2 = data;
+                console.log(data);
 			});
 			
 		});
 	}
 	
 	$scope.init();
+    
+    $scope.addEnttry = function(){
+        indexedDBexo.addEntry(activity.title).then(function(){
+            console.log('Activity added!');
+        });
+    }
+    
+    
 
 });
 
@@ -44,7 +56,7 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version (should be increased, when structure updates). Should be of integer type.
-	var dbVersion = 4;
+	var dbVersion = 5;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
@@ -130,6 +142,7 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		var data = {
 			"title": titleText,
+            "language": "English",
 			"timeStamp": new Date().getTime()
 		};
 		
@@ -148,6 +161,46 @@ phonecatApp.service('indexedDBexo', function($window, $q){
 		
 		return deferred.promise;
 	};
+    
+    
+    
+    this.getAllTodoItems = function() {
+        var deferred = $q.defer();
+        
+        var activities = [];
+        
+        //Database table name
+        var dbTableName = "activities";
+        var db = exoDB.indexedDB.db;
+        //Create transaction
+        var transact = db.transaction(dbTableName, "readonly");
+        var store = transact.objectStore(dbTableName);
+        
+        // Get everything in the store
+        //keyRange is a continuous interval over keys, for example greater than X and smaller than Y
+        var keyRange = IDBKeyRange.lowerBound(0);
+        //Cursor is a mechanism for iterating over multiple records within a key range
+        var cursorRequest = store.openCursor(keyRange);
+        
+        cursorRequest.onsuccess = function(e) {
+            var result = e.target.result;
+            if(result === null || result === undefined){
+                deferred.resolve(activities);
+            }else{
+                if(result){
+                    activities.push(result.value);
+                    result.continue();
+                }
+            }
+        };
+        
+        cursorRequest.onerror = function(e){
+            console.log(e.value);
+            deferred.reject("Something went wrong!!!");
+        };
+        
+        return deferred.promise;
+    };
 	
 	
 	
