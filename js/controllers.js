@@ -17,9 +17,9 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	
 	
 	
-	$scope.filterFirst20 = function(manyEntry){
+	$scope.filter50 = function(manyEntry){
         
-        if(manyEntry.nid < 20){
+        if(manyEntry.nid < $scope.manyNID && manyEntry.nid > ($scope.manyNID - 50)){
             return true; // this will be listed in the results
         }
         

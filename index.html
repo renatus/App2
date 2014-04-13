@@ -80,9 +80,10 @@
 	
 	
 	
-	Search: <input ng-model="manyQuery">
+	Search: <input ng-model="manyQuery"><br/>
+	Nid: <input type="text" ng-model="manyNID" placeholder="200" ng-required/>
 	<ul>
-		<li ng-repeat="manyEntry in manyEntries | filter:manyQuery | filter:filterFirst20">			
+		<li ng-repeat="manyEntry in manyEntries | filter:manyQuery | filter:filter50">			
 			{{manyEntry.nid}}<br>
 		</li>
 	</ul>
