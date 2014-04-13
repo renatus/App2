@@ -45,7 +45,7 @@
     
     
     <ul>
-		<li ng-repeat="activity2 in activities2 | filter:query | filter:filterFirst20">			
+		<li ng-repeat="activity2 in activities2 | filter:query">			
 			{{activity2.title}} | {{activity2.language}}
 		</li>
 	</ul>
@@ -82,7 +82,7 @@
 	
 	Search: <input ng-model="manyQuery">
 	<ul>
-		<li ng-repeat="manyEntry in manyEntries | filter:manyQuery">			
+		<li ng-repeat="manyEntry in manyEntries | filter:manyQuery | filter:filterFirst20">			
 			{{manyEntry.nid}}<br>
 		</li>
 	</ul>
