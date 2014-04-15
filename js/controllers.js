@@ -69,16 +69,16 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
 	$scope.init();
     
     $scope.addEntry = function(){
-		//console.log($scope.activity3.title);
+		//console.log($scope.activity2.title);
         
         var newEntry = {
-			"title": $scope.activity3.title,
+			"title": $scope.activity2.title,
             "language": "English",
 			"timeStamp": new Date().getTime()
 		};
         $scope.activities2.push(newEntry);
         
-        indexedDBexo.addEntry($scope.activity3.title).then(function(){
+        indexedDBexo.addEntry($scope.activity2.title).then(function(){
             console.log('Activity added!');
         });
     }
