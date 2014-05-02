@@ -1,6 +1,22 @@
 var phonecatApp = angular.module('startApp', ['exoFilters']);
 
 phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
+    
+    
+    
+    
+    
+    
+    
+    $scope.i18nEntries = [
+        {"nid":1, "title":{"en":"TitleEn", "ru":"titleRu"}}
+    ];
+    
+    
+    
+    
+    
+    
 
 
 
