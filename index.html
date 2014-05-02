@@ -91,7 +91,11 @@
     
     
     <!--AngularJS i18n -->
-    {{i18nEntries.title.en}}
+    <ul>
+		<li ng-repeat="i18nEntry in i18nEntries">			
+			{{i18nEntry.title.en}}<br>
+		</li>
+	</ul>
 
 
      
