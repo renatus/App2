@@ -9,7 +9,7 @@ phonecatApp.controller('StartCtrl', function ($scope, indexedDBexo) {
     
     
     $scope.i18nEntries = [
-        {"nid":1, "title":{"en":"TitleEn", "ru":"titleRu"}}
+        {"nid":1, "title":{"en":"TitleEn", "ru":"titleRu"}}, {"nid":2, "title":{"en":"English", "ru":"Russian"}}
     ];
     
     
