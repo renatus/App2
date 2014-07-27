@@ -288,10 +288,14 @@ app.service('UUID4', function(){
 });
 
 
-app.service('serverInteract', function($q){
+
+app.controller('serverInteract', function ($scope, $q) {
+    $scope.login = function(user){
+
+//app.service('serverInteract', function($q){
 //Service to work with IndexedDB
 //app.service('serverInteract', function($q){
-	this.login = function(user){
+	//this.login = function(user){
         console.log(user.backendURL);
     }    
 });
