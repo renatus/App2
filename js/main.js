@@ -10,12 +10,20 @@ var app = angular.module('testApp', ['ngRoute']);
 app.config(['$routeProvider',
   function($routeProvider) {
       $routeProvider.
+      //Page for a single activity
       //You can call a page with URL like this: http://yourdomain.com/#/activities/123
       when('/activities/:activityId', {
           //HTML template for this URL pattern
           templateUrl: 'templates/activity.html',
           //Angular controller for this URL pattern
           controller: 'showActivityController'
+      }).
+      //Login form page
+      when('/login', {
+          //HTML template for this URL pattern
+          templateUrl: 'templates/login.html',
+          //Angular controller for this URL pattern
+          controller: 'loginController'
       }).
       
       //If there is no such a page
