@@ -23,7 +23,7 @@ app.config(['$routeProvider',
           //HTML template for this URL pattern
           templateUrl: 'templates/login.html',
           //Angular controller for this URL pattern
-          controller: 'loginController'
+          //controller: 'loginController'
       }).
       
       //If there is no such a page
@@ -286,3 +286,17 @@ app.service('UUID4', function(){
         
     };
 });
+
+
+
+//Service to work with IndexedDB
+app.service('serverInteract', function($q){
+	this.login = function(user){
+        console.log(user.backendURL);
+    }    
+});
+	
+	
+	//Function to open DB and upgrade it's data structure, if needed
+    //This function should contain names of all types of entries we're going to store at DB, as it defines DB structure
+	this.open = function() {
