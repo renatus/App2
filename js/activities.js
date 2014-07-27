@@ -1,5 +1,5 @@
 //activitiesM is a module to handle activities
-var activitiesMod = angular.module('activitiesM', ['testApp']);
+var activitiesMod = angular.module('activitiesM', ['exoApp']);
 
 
 

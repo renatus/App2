@@ -1,8 +1,8 @@
 //Modules are used to divide huge app in a logical parts - say, activities, checkins, health reports etc. may be handled by different modules
-//"testApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
+//"exoApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
 //It should be declared as a dependency for other modules
-//Multiple dependencies should be declared like this: ['exoFilters', 'testApp']);
-var app = angular.module('testApp', ['ngRoute']);
+//Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
+var app = angular.module('exoApp', ['ngRoute']);
 
 
 
@@ -288,7 +288,7 @@ app.service('UUID4', function(){
 });
 
 
-activitiesMod.service('serverInteract', function($q){
+app.service('serverInteract', function($q){
 //Service to work with IndexedDB
 //app.service('serverInteract', function($q){
 	this.login = function(user){
