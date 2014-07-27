@@ -1,0 +1,25 @@
+<form name="serverLogin" ng-submit="serverLogin(user)" novalidate >
+    <!--You should not put anything outside root tag (<form> in this case), even comments-->
+    <!--Form to login to your server account-->
+    
+    <!-- Server domain -->
+    <div>
+        <label for="page_login_domain">Backend domain</label>
+        <input type="url" ng-model="user.backendURL" id="page_login_domain" required />
+    </div>
+    
+    <!-- Server user username -->
+    <div>
+        <label for="page_login_name">Username</label>
+        <input type="text" ng-model="user.name" id="page_login_name" required />
+    </div>
+    
+    <!-- Server user password -->
+    <div>
+        <label for="page_login_pass">Password</label>
+        <input type="password" ng-model="user.password" id="page_login_pass" required />
+    </div>
+    
+    <!--Button to to login to server-->
+    <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
+</form>
