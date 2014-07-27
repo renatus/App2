@@ -288,9 +288,9 @@ app.service('UUID4', function(){
 });
 
 
-
+activitiesMod.service('serverInteract', function($q){
 //Service to work with IndexedDB
-app.service('serverInteract', function($q){
+//app.service('serverInteract', function($q){
 	this.login = function(user){
         console.log(user.backendURL);
     }    
