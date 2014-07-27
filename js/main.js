@@ -295,8 +295,3 @@ app.service('serverInteract', function($q){
         console.log(user.backendURL);
     }    
 });
-	
-	
-	//Function to open DB and upgrade it's data structure, if needed
-    //This function should contain names of all types of entries we're going to store at DB, as it defines DB structure
-	this.open = function() {
