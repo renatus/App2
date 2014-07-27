@@ -296,6 +296,6 @@ app.controller('serverInteract', function ($scope, $q) {
 //Service to work with IndexedDB
 //app.service('serverInteract', function($q){
 	//this.login = function(user){
-        console.log(user.backendURL);
+        console.log("user.backendURL");
     }    
 });
