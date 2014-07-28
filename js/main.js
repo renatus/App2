@@ -292,7 +292,7 @@ app.service('UUID4', function(){
 app.controller('serverInteract', function ($scope, $q, backend) {
     $scope.login = function(user){
         //console.log(user.backendURL);
-        backend.getServicesToken(user.backendURL);
+        console.log(backend.getServicesToken(user.backendURL));
     }    
 });
 
@@ -314,7 +314,7 @@ app.service('backend', function($q, $http){
             //data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
             //$scope.data = data;
-            console.log(data);
+            //console.log(data);
             deferred.resolve(data);
         }).error(function(data, status, headers, config) {
             //$scope.status = status;
