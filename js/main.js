@@ -292,8 +292,8 @@ app.service('UUID4', function(){
 app.controller('serverInteract', function ($scope, $q, backend) {
     $scope.login = function(user){
         //console.log(user.backendURL);
-        backend.getServicesToken(user.backendURL).then(function(){
-            console.log("Works");
+        backend.getServicesToken(user.backendURL).then(function(data){
+            console.log(data);
         });
     }    
 });
