@@ -1,6 +1,6 @@
 //Modules are used to divide huge app in a logical parts - say, activities, checkins, health reports etc. may be handled by different modules
 //"exoApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
-//It should be declared as a dependency for other modules
+//It should be declared as a dependency for other modules, thanks to that we don't have to add ng-app="exoApp" property to use it's controllers
 //Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
 var app = angular.module('exoApp', ['ngRoute']);
 
@@ -291,11 +291,39 @@ app.service('UUID4', function(){
 
 app.controller('serverInteract', function ($scope, $q) {
     $scope.login = function(user){
-
-//app.service('serverInteract', function($q){
-//Service to work with IndexedDB
-//app.service('serverInteract', function($q){
-	//this.login = function(user){
-        console.log(user.backendURL);
+        //console.log(user.backendURL);
+        backend.getServicesToken(user.backendURL);
     }    
+});
+
+
+
+app.service('backend', function($q, $http){
+	this.getServicesToken = function(backendDomain){
+        
+        
+        
+        var deferred = $q.defer();
+        
+        //var servicesToken;
+        
+        
+        $http({
+            url: backendDomain + "/services/session/token",
+            method: "GET",
+            //data: {"foo":"bar"}
+        }).success(function(data, status, headers, config) {
+            //$scope.data = data;
+            console.log(data);
+            deferred.resolve(data);
+        }).error(function(data, status, headers, config) {
+            //$scope.status = status;
+            console.log(status);
+            deferred.reject("Something went wrong!!!");
+        });
+        
+        return deferred.promise;
+        
+        
+    }
 });
