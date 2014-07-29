@@ -290,7 +290,7 @@ app.service('UUID4', function(){
 
 
 //Controller to start communication with server, when user initiated it
-app.controller('serverInteract', function ($scope, $q, backend, exoSettings) {
+app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
     $scope.pageLogin.backendURL = exoSettings.backendURL;
     
