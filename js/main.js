@@ -303,8 +303,8 @@ app.controller('serverInteract', function ($scope, $q, backend) {
     }
     
     //Method to initiate logout process, when user pressed Logout button
-    $scope.logout = function(user){
-        backend.logout(user.backendURL).then(function(serverReply){
+    $scope.logout = function(backendURL){
+        backend.logout(backendURL).then(function(serverReply){
             console.log(serverReply);
         });
     }
@@ -366,7 +366,7 @@ app.service('backend', function($q, $http){
     
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
-	this.logout = function(backendDomain, userLogin, userPass){
+	this.logout = function(backendDomain){
         console.log("Logging out");
         var deferred = $q.defer();    
         
