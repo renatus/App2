@@ -404,6 +404,7 @@ app.service('setSettings', function($q){
     //Returns current app's domain, like "http://yoursite.com", with correct protocol
     this.getCurDomain = function() {
         //console.log('G');
-        return window.location.protocol + "//" + window.location.hostname;
+        //return window.location.protocol + "//" + window.location.hostname;
+        return 2 + 3;
     }
 });
