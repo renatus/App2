@@ -292,7 +292,7 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings) {
     $scope.pageLogin = {};
-    $scope.pageLogin.backendURL = exoSettings.settings.backendURL;
+    $scope.pageLogin.backendURL = exoSettings.backendURL;
     
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
@@ -395,7 +395,10 @@ app.service('backend', function($q, $http){
 
 //Service to work with remote server
 app.service('exoSettings', function($q){
-    this.settings = {
-        "backendURL":"http://ren.sky37.pp.ua"
-    };
+    this.backendURL = this.getCurDomain;
+    
+    //Returns current app's domain, like "http://yoursite.com", with correct protocol
+    this.getCurDomain = function() {
+        return window.location.protocol + "//" + window.location.hostname;
+    }
 });
