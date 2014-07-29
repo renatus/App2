@@ -1,4 +1,5 @@
-<form name="serverLogin" ng-submit="login(user)" ng-controller="serverInteract" novalidate >
+<span ng-controller="serverInteract">
+<form name="serverLogin" ng-submit="login(user)" novalidate >
     <!--You should not put anything outside root tag (<form> in this case), even comments-->
     <!--Form to login to your server account-->
     
@@ -28,3 +29,4 @@
 
 <!--Button to logout from server-->
 <button class="btn" ng-click="logout('http://ren.sky37.pp.ua')">Logout</button>
+</span>
