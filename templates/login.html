@@ -22,6 +22,9 @@
         <input type="password" ng-model="user.password" id="page_login_pass" required />
     </div>
     
-    <!--Button to to login to server-->
+    <!--Button to login to server-->
     <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
+    
+    <!--Button to logout from server-->
+    <button class="btn" ng-click="logout(user)">Logout</button>
 </form>

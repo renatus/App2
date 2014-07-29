@@ -300,7 +300,14 @@ app.controller('serverInteract', function ($scope, $q, backend) {
             });
             
         });
-    }    
+    }
+    
+    //Method to initiate logout process, when user pressed Logout button
+    $scope.logout = function(user){
+        backend.logout(user.backendURL).then(function(serverReply){
+            console.log(serverReply);
+        });
+    }
 });
 
 
@@ -355,5 +362,25 @@ app.service('backend', function($q, $http){
         
     }
     
-    
+    //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
+    //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
+	this.logout = function(backendDomain, userLogin, userPass){
+        console.log("Logging out");
+        var deferred = $q.defer();    
+        
+        $http({
+            url: backendDomain + "/rest/user/logout.json",
+            method: "POST"
+        }).success(function(data, status, headers, config) {
+            //If we've successfully got data (i.e. token), return it
+            deferred.resolve("You've logged out successfully");
+        }).error(function(data, status, headers, config) {
+            //If there were error, show error message
+            console.log(status);
+            deferred.reject("Logout attemp failed");
+        });
+        
+        return deferred.promise;
+        
+    }
 });
