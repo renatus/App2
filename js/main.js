@@ -303,6 +303,7 @@ app.controller('serverInteract', function ($scope, $q, backend) {
 
 //Service to work with remote server
 app.service('backend', function($q, $http){
+    
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
 	this.getServicesToken = function(backendDomain){
@@ -314,6 +315,7 @@ app.service('backend', function($q, $http){
             //data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
             //If we've successfully got data (i.e. token), return it
+            $http.defaults.headers.common['X-CSRF-Token'] = data;
             deferred.resolve(data);
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
@@ -323,4 +325,31 @@ app.service('backend', function($q, $http){
         
         return deferred.promise;
     }
+    
+    //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
+    //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
+	this.login = function(backendDomain, userLogin, userPass){
+        var deferred = $q.defer();    
+        
+        $http({
+            url: backendDomain + "/rest/user/login.json",
+            method: "POST",
+            data: {
+                "username":userLogin,
+                "password":userPass
+            }
+        }).success(function(data, status, headers, config) {
+            //If we've successfully got data (i.e. token), return it
+            deferred.resolve("You've logged in successfully");
+        }).error(function(data, status, headers, config) {
+            //If there were error, show error message
+            console.log(status);
+            deferred.reject("Login attemp failed");
+        });
+        
+        return deferred.promise;
+        
+    }
+    
+    
 });
