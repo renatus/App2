@@ -340,6 +340,8 @@ app.service('backend', function($q, $http){
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
 	this.login = function(backendDomain, userLogin, userPass){
+        console.log("Logging in");
+        
         var deferred = $q.defer();    
         
         $http({
