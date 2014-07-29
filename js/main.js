@@ -290,12 +290,14 @@ app.service('UUID4', function(){
 
 
 //Controller to start communication with server, when user initiated it
-app.controller('serverInteract', function ($scope, $q, backend) {
+app.controller('serverInteract', function ($scope, $q, backend, exoSettings) {
+    $scope.pageLogin.backendURL = exoSettings.settings.backendURL;
+    
     //Method to initiate logging process, when user pressed Login button
-    $scope.login = function(user){
-        backend.getServicesToken(user.backendURL).then(function(servicesToken){
+    $scope.login = function(pageLogin){
+        backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
             console.log(servicesToken);
-            backend.login(user.backendURL, user.name, user.password).then(function(serverReply){
+            backend.login(pageLogin.backendURL, pageLogin.name, pageLogin.password).then(function(serverReply){
                 console.log(serverReply);
             });
             
@@ -347,6 +349,7 @@ app.service('backend', function($q, $http){
         $http({
             url: backendDomain + "/rest/user/login.json",
             method: "POST",
+            //headers: {'X-CSRF-Token': },
             data: {
                 "username":userLogin,
                 "password":userPass
@@ -385,4 +388,13 @@ app.service('backend', function($q, $http){
         return deferred.promise;
         
     }
+});
+
+
+
+//Service to work with remote server
+app.service('exoSettings', function($q){
+    this.settings = {
+        "backendURL":"http://ren.sky37.pp.ua"
+    };
 });
