@@ -289,9 +289,10 @@ app.service('UUID4', function(){
 
 
 
+//Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend) {
+    //Method to initiate logging process, when user pressed Login button
     $scope.login = function(user){
-        //console.log(user.backendURL);
         backend.getServicesToken(user.backendURL).then(function(data){
             console.log(data);
         });
@@ -300,32 +301,26 @@ app.controller('serverInteract', function ($scope, $q, backend) {
 
 
 
+//Service to work with remote server
 app.service('backend', function($q, $http){
+    //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
+    //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
 	this.getServicesToken = function(backendDomain){
-        
-        
-        
-        var deferred = $q.defer();
-        
-        //var servicesToken;
-        
+        var deferred = $q.defer();    
         
         $http({
             url: backendDomain + "/services/session/token",
             method: "GET",
             //data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
-            //$scope.data = data;
-            //console.log(data);
+            //If we've successfully got data (i.e. token), return it
             deferred.resolve(data);
         }).error(function(data, status, headers, config) {
-            //$scope.status = status;
+            //If there were error, show error message
             console.log(status);
-            deferred.reject("Something went wrong!!!");
+            deferred.reject("There was an error while trying to get Services token from server");
         });
         
         return deferred.promise;
-        
-        
     }
 });
