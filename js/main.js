@@ -293,8 +293,12 @@ app.service('UUID4', function(){
 app.controller('serverInteract', function ($scope, $q, backend) {
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(user){
-        backend.getServicesToken(user.backendURL).then(function(data){
-            console.log(data);
+        backend.getServicesToken(user.backendURL).then(function(servicesToken){
+            console.log(servicesToken);
+            backend.login(user.backendURL, user.name, user.password).then(function(serverReply){
+                console.log(serverReply);
+            });
+            
         });
     }    
 });
