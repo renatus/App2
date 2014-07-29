@@ -330,7 +330,7 @@ app.service('backend', function($q, $http){
             deferred.resolve(data);
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            console.log(status);
+            //console.log(status);
             deferred.reject("There was an error while trying to get Services token from server");
         });
         
@@ -356,7 +356,7 @@ app.service('backend', function($q, $http){
             deferred.resolve("You've logged in successfully");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            console.log(status);
+            //console.log(status);
             deferred.reject("Login attemp failed");
         });
         
@@ -378,7 +378,7 @@ app.service('backend', function($q, $http){
             deferred.resolve("You've logged out successfully");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            console.log(status);
+            //console.log(status);
             deferred.reject("Logout attemp failed");
         });
         
