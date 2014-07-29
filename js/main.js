@@ -395,7 +395,7 @@ app.service('backend', function($q, $http){
 
 //Service to work with remote server
 app.service('exoSettings', function($q){
-    this.backendURL = exoSettings.getCurDomain;
+    this.backendURL = getCurDomain;
     
     //Returns current app's domain, like "http://yoursite.com", with correct protocol
     this.getCurDomain = function() {
