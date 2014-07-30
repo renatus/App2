@@ -293,7 +293,8 @@ app.service('UUID4', function(){
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
     backend.getCurDomain().then(function(curDomain){
-        $scope.pageLogin.backendURL = curDomain;
+        console.log('');
+        //$scope.pageLogin.backendURL = curDomain;
     });
     
     //Method to initiate logging process, when user pressed Login button
