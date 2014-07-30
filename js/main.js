@@ -394,7 +394,12 @@ app.service('backend', function($q, $http){
     }
     
     this.getCurDomain = function() {
-        return 2 + 3;
+        var deferred = $q.defer();
+        
+        deferred.resolve(2 + 3);
+        
+        return deferred.promise;
+        //return 2 + 3;
     }
 });
 
