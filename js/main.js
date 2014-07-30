@@ -399,8 +399,10 @@ app.service('backend', function($q, $http){
 //Service to work with remote server
 app.service('exoSettings', function($q, setSettings){
     this.curDomain = function() {
+        //var deferred = $q.defer();
+        
         setSettings.getCurDomain().then(function(curDomain){
-            $scope.pageLogin.backendURL = curDomain;
+            return curDomain;
         });
     }
 });
