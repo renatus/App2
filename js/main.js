@@ -290,12 +290,14 @@ app.service('UUID4', function(){
 
 
 //Controller to start communication with server, when user initiated it
-app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
+app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings, Data) {
     $scope.pageLogin = {};
     //setSettings.getCurDomain().then(function(curDomain){
     exoSettings.curDomain().then(function(curDomain){
         $scope.pageLogin.backendURL = curDomain;
     });
+    $scope.pageLogin.backendURL = Data;
+    
     
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
@@ -420,3 +422,8 @@ app.service('setSettings', function($q){
         return deferred.promise;
     }
 });
+
+
+app.factory('Data', function() {
+    return {message: "I'm data from a service"}
+})
