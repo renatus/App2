@@ -292,7 +292,8 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
-    setSettings.getCurDomain().then(function(curDomain){
+    //setSettings.getCurDomain().then(function(curDomain){
+    exoSettings.curDomain().then(function(curDomain){
         $scope.pageLogin.backendURL = curDomain;
     });
     
@@ -397,8 +398,11 @@ app.service('backend', function($q, $http){
 
 //Service to work with remote server
 app.service('exoSettings', function($q, setSettings){
-    this.backendURL = setSettings.getCurDomain;
-    console.log(setSettings.getCurDomain);
+    this.curDomain = function() {
+        setSettings.getCurDomain().then(function(curDomain){
+            $scope.pageLogin.backendURL = curDomain;
+        });
+    }
 });
 
 //Service to work with remote server
