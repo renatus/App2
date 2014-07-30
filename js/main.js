@@ -293,7 +293,7 @@ app.service('UUID4', function(){
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
     backend.getCurDomain().then(function(curDomain){
-        console.log('');
+        console.log(curDomain);
         //$scope.pageLogin.backendURL = curDomain;
     });
     
