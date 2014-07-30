@@ -41,7 +41,7 @@ app.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version, should be increased, when structure updates, should be of integer type
-	var dbVersion = 9;
+	var dbVersion = 10;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
@@ -84,6 +84,10 @@ app.service('indexedDBexo', function($window, $q){
 				if (db.objectStoreNames && db.objectStoreNames.contains("activities")) {
 					db.deleteObjectStore("activities");
 				}
+                
+                if (db.objectStoreNames && db.objectStoreNames.contains("settings")) {
+					db.deleteObjectStore("settings");
+				}
 			}
 			catch (err) {
 				console.log("Error in objectStoreNames: " + err);
@@ -97,6 +101,10 @@ app.service('indexedDBexo', function($window, $q){
 			var store = db.createObjectStore("activities", {keyPath: "uuid"});
 			// Create an index to search customers by text field. We may have duplicates so we can't use a unique index.
 			store.createIndex("activities", "activities", {unique: false});
+            
+            var store = db.createObjectStore("settings", {keyPath: "uid"});
+			// Create an index to search customers by text field. We may have duplicates so we can't use a unique index.
+			store.createIndex("settings", "settings", {unique: false});
 			
 			//Or we can make unique integer out-of-line keys (1,2,3 ...) with keyGenerator, enabled by {autoIncrement: true}
 			//var store = db.createObjectStore("store2", {autoIncrement: true});
@@ -292,10 +300,10 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings, Data) {
     $scope.pageLogin = {};
-    //exoSettings.curDomain().then(function(curDomain){
-        //$scope.pageLogin.backendURL = curDomain;
-    //});
-    $scope.pageLogin.backendURL = Data;
+    exoSettings.curDomain().then(function(curDomain){
+        $scope.pageLogin.backendURL = curDomain;
+    });
+
     
     
     //Method to initiate logging process, when user pressed Login button
@@ -398,12 +406,28 @@ app.service('backend', function($q, $http){
 
 
 //Service to work with remote server
-app.service('exoSettings', function($q, setSettings){
+app.service('exoSettings', function($q, setSettings, indexedDBexo){
     this.curDomain = function() {
         var deferred = $q.defer();
         
         setSettings.getCurDomain().then(function(curDomain){
-            deferred.resolve(curDomain);
+            
+            var curTimestamp = new Date().getTime();
+            
+            //Create settings entry object
+            var settingsEntry = {
+                "uid": 0,
+                "backendDomain": curDomain,
+                "modifiedTimeStamp": curTimestamp
+            };
+            
+            //Add new entry to DB
+            indexedDBexo.addEntry(settingsEntry, "settings").then(function(){
+                //console.log('Settings saved to DB!');
+            });
+            
+            
+            deferred.resolve(curDomain);            
         });
         
         return deferred.promise;
@@ -421,8 +445,3 @@ app.service('setSettings', function($q){
         return deferred.promise;
     }
 });
-
-
-app.factory('Data', function() {
-    return {message: "I'm data from a service"}
-})
