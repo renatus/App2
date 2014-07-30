@@ -292,7 +292,7 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
-    backend.getCurDomain().then(function(curDomain){
+    setSettings.getCurDomain().then(function(curDomain){
         console.log(curDomain);
         //$scope.pageLogin.backendURL = curDomain;
     });
@@ -392,15 +392,6 @@ app.service('backend', function($q, $http){
         return deferred.promise;
         
     }
-    
-    this.getCurDomain = function() {
-        var deferred = $q.defer();
-        
-        deferred.resolve(2 + 3);
-        
-        return deferred.promise;
-        //return 2 + 3;
-    }
 });
 
 
@@ -415,8 +406,10 @@ app.service('exoSettings', function($q, setSettings){
 app.service('setSettings', function($q){    
     //Returns current app's domain, like "http://yoursite.com", with correct protocol
     this.getCurDomain = function() {
-        //console.log('G');
-        //return window.location.protocol + "//" + window.location.hostname;
-        return 2 + 3;
+        var deferred = $q.defer();
+        
+        deferred.resolve(window.location.protocol + "//" + window.location.hostname);
+        
+        return deferred.promise;
     }
 });
