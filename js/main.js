@@ -3,7 +3,7 @@
 //It should be declared as a dependency for other modules, thanks to that we don't have to add ng-app="exoApp" property to use it's controllers
 //Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
 var app = angular.module('exoApp', ['ngRoute']);
-
+console.log("GIT module works");
 
 
 //Set pre-defined URLs and URL patterns for your app
