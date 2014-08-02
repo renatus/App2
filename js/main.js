@@ -3,7 +3,7 @@
 //It should be declared as a dependency for other modules, thanks to that we don't have to add ng-app="exoApp" property to use it's controllers
 //Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
 var app = angular.module('exoApp', ['ngRoute']);
-console.log("GIT module works... Or not?");
+
 
 
 //Set pre-defined URLs and URL patterns for your app
@@ -300,14 +300,23 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
-    exoSettings.curDomain().then(function(curDomain){
-        $scope.pageLogin.backendURL = curDomain;
-    });
+    //exoSettings.curDomain().then(function(curDomain){
+    //    $scope.pageLogin.backendURL = curDomain;
+    //});
+
+    if (window.localStorage.getItem("backendURL")) {
+		//If there is user-entered backend domain
+		$scope.pageLogin.backendURL = window.localStorage.getItem("backendURL");
+    } else {
+        $scope.pageLogin.backendURL = window.location.protocol + "//" + window.location.hostname;
+    }
 
     
     
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
+        window.localStorage.setItem("backendURL", pageLogin.backendURL);
+
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
             console.log(servicesToken);
             backend.login(pageLogin.backendURL, pageLogin.name, pageLogin.password).then(function(serverReply){
