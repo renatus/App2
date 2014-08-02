@@ -311,11 +311,17 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
         $scope.pageLogin.backendURL = window.location.protocol + "//" + window.location.hostname;
     }
 
+    if (window.localStorage.getItem("backendUserName")) {
+		//If there is user-entered backend domain
+		$scope.pageLogin.name = window.localStorage.getItem("backendUserName");
+    }
+
     
     
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
         window.localStorage.setItem("backendURL", pageLogin.backendURL);
+        window.localStorage.setItem("backendUserName", pageLogin.name);
 
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
             console.log(servicesToken);
