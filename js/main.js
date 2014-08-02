@@ -321,6 +321,7 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
         window.localStorage.setItem("backendURL", pageLogin.backendURL);
+        console.log(pageLogin.name);
         window.localStorage.setItem("backendUserName", pageLogin.name);
 
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
