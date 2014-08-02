@@ -337,9 +337,13 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
     //Method to initiate logout process, when user pressed Logout button
     $scope.logout = function(){
         var backendURL = window.localStorage.getItem("backendURL");
-        backend.logout(backendURL).then(function(serverReply){
-            console.log(serverReply);
-        });
+        if (backendURL) {
+            backend.logout(backendURL).then(function(serverReply){
+                console.log(serverReply);
+            });
+        } else {
+            alert("Can't log out, server URL is not known");
+        }
     }
 });
 
