@@ -300,19 +300,19 @@ app.service('UUID4', function(){
 //Controller to start communication with server, when user initiated it
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
     $scope.pageLogin = {};
-    //exoSettings.curDomain().then(function(curDomain){
-    //    $scope.pageLogin.backendURL = curDomain;
-    //});
 
+    //Populate Backend domain textfield
     if (window.localStorage.getItem("backendURL")) {
-		//If there is user-entered backend domain
+		//If there is previously saved backend domain, propose it to user
 		$scope.pageLogin.backendURL = window.localStorage.getItem("backendURL");
     } else {
+        //If there is NO previously saved backend domain, propose webapp domain itself to user
         $scope.pageLogin.backendURL = window.location.protocol + "//" + window.location.hostname;
     }
 
+    //Populate Username textfield
     if (window.localStorage.getItem("backendUserName")) {
-		//If there is user-entered backend domain
+		//If there is previously saved username, propose it to user
 		$scope.pageLogin.name = window.localStorage.getItem("backendUserName");
     }
 
@@ -320,8 +320,9 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
     
     //Method to initiate logging process, when user pressed Login button
     $scope.login = function(pageLogin){
+        //Save domain we're trying to use (doesn't matter, was it user-entered)
         window.localStorage.setItem("backendURL", pageLogin.backendURL);
-        console.log(pageLogin.name);
+        //Save username we're trying to use
         window.localStorage.setItem("backendUserName", pageLogin.name);
 
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
