@@ -297,8 +297,9 @@ app.service('UUID4', function(){
 
 
 
-//Controller to start communication with server, when user initiated it
+//Controller to start communication with server, when user initiated it from Login page
 app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
+    //Prepopulate some of Login page input fields
     $scope.pageLogin = {};
 
     //Populate Backend domain textfield
@@ -325,32 +326,25 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
         //Save username we're trying to use
         window.localStorage.setItem("backendUserName", pageLogin.name);
 
+        //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
-            console.log(servicesToken);
+            //Login to server
             backend.login(pageLogin.backendURL, pageLogin.name, pageLogin.password).then(function(serverReply){
                 console.log(serverReply);
             });
             
         });
     }
-    
-    //Method to initiate logout process, when user pressed Logout button
-    //$scope.logout = function(){
-    //    var backendURL = window.localStorage.getItem("backendURL");
-    //    if (backendURL) {
-    //        backend.logout(backendURL).then(function(serverReply){
-    //            console.log(serverReply);
-    //        });
-    //    } else {
-    //        alert("Can't log out, server URL is not known");
-    //    }
-    //}
 
     //Method to initiate logout process, when user pressed Logout button
     $scope.logout = function(){
         var backendURL = window.localStorage.getItem("backendURL");
+
+        //If there is known server URL
         if (backendURL) {
+            //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
             backend.getServicesToken(backendURL).then(function(servicesToken){
+                //Logout from server
                 backend.logout(backendURL).then(function(serverReply){
                     console.log(serverReply);
                 });
@@ -368,33 +362,38 @@ app.service('backend', function($q, $http){
     
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
+    //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
+    //It's not clear, was it because token was the same, or $http.defaults.headers.common expired somehow
 	this.getServicesToken = function(backendDomain){
         var deferred = $q.defer();    
         
+        //Make HTTP request
         $http({
             url: backendDomain + "/services/session/token",
             method: "GET",
-            //data: {"foo":"bar"}
         }).success(function(data, status, headers, config) {
-            //If we've successfully got data (i.e. token), return it
+            //If we've successfully got data (i.e. token)
+            //Set token as default - we don't have to set it at request header itself
             $http.defaults.headers.common['X-CSRF-Token'] = data;
+            //Return token
             deferred.resolve(data);
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            //console.log(status);
+            console.log(status);
             deferred.reject("There was an error while trying to get Services token from server");
         });
         
         return deferred.promise;
     }
     
-    //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
+    //Login to remote server
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
+    //userLogin argument should contain backend user login
+    //userPass argument should contain backend user password
 	this.login = function(backendDomain, userLogin, userPass){
-        console.log("Logging in");
-        
         var deferred = $q.defer();    
         
+        //Make HTTP request
         $http({
             url: backendDomain + "/rest/user/login.json",
             method: "POST",
@@ -404,11 +403,11 @@ app.service('backend', function($q, $http){
                 "password":userPass
             }
         }).success(function(data, status, headers, config) {
-            //If we've successfully got data (i.e. token), return it
+            //If we've successfully logged in
             deferred.resolve("You've logged in successfully");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            //console.log(status);
+            console.log(status);
             deferred.reject("Login attemp failed");
         });
         
@@ -416,21 +415,21 @@ app.service('backend', function($q, $http){
         
     }
     
-    //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
+    //Logout from remote service
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
 	this.logout = function(backendDomain){
-        console.log("Logging out");
         var deferred = $q.defer();    
         
+        //Make HTTP request
         $http({
             url: backendDomain + "/rest/user/logout.json",
             method: "POST"
         }).success(function(data, status, headers, config) {
-            //If we've successfully got data (i.e. token), return it
+            //If we've successfully logged out
             deferred.resolve("You've logged out successfully");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
-            //console.log(status);
+            console.log(status);
             deferred.reject("Logout attemp failed");
         });
         
