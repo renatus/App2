@@ -16,7 +16,7 @@ activitiesMod.controller('activitiesController', function ($scope, $q, $routePar
 	
     //Open DB, get all entries and put them to $scope object
 	$scope.init = function(){
-        //console.log("Init started");
+        console.log("Init started");
 		indexedDBexo.open().then(function(){            
             indexedDBexo.getEntriesSubset("activities").then(function(data){
                 //Even if you only have one type of entries, it's better not to add them directly to scope, but use $scope as a container for models
