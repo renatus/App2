@@ -298,7 +298,7 @@ app.service('UUID4', function(){
 
 
 //Controller to start communication with server, when user initiated it from Login page
-app.controller('serverInteract', function ($scope, $q, backend, exoSettings, setSettings) {
+app.controller('serverInteract', function ($scope, $q, backend) {
     //Prepopulate some of Login page input fields
     $scope.pageLogin = {};
 
@@ -435,48 +435,5 @@ app.service('backend', function($q, $http){
         
         return deferred.promise;
         
-    }
-});
-
-
-
-//Service to work with remote server
-app.service('exoSettings', function($q, setSettings, indexedDBexo){
-    this.curDomain = function() {
-        var deferred = $q.defer();
-        
-        setSettings.getCurDomain().then(function(curDomain){
-            
-            var curTimestamp = new Date().getTime();
-            
-            //Create settings entry object
-            var settingsEntry = {
-                "uid": 0,
-                "backendDomain": curDomain,
-                "modifiedTimeStamp": curTimestamp
-            };
-            
-            //Add new entry to DB
-            indexedDBexo.addEntry(settingsEntry, "settings").then(function(){
-                //console.log('Settings saved to DB!');
-            });
-            
-            
-            deferred.resolve(curDomain);            
-        });
-        
-        return deferred.promise;
-    }
-});
-
-//Service to work with remote server
-app.service('setSettings', function($q){    
-    //Returns current app's domain, like "http://yoursite.com", with correct protocol
-    this.getCurDomain = function() {
-        var deferred = $q.defer();
-        
-        deferred.resolve(window.location.protocol + "//" + window.location.hostname);
-        
-        return deferred.promise;
     }
 });
