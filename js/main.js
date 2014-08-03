@@ -41,7 +41,7 @@ app.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version, should be increased, when structure updates, should be of integer type
-	var dbVersion = 10;
+	var dbVersion = 11;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
@@ -81,12 +81,14 @@ app.service('indexedDBexo', function($window, $q){
 			//we'll face error while trying to upgrade DB
 			//We should delete existing Object store (and all it's data, of course)
 			try {
+                //Store for activities
 				if (db.objectStoreNames && db.objectStoreNames.contains("activities")) {
 					db.deleteObjectStore("activities");
 				}
                 
-                if (db.objectStoreNames && db.objectStoreNames.contains("settings")) {
-					db.deleteObjectStore("settings");
+                //Store for check-ins
+                if (db.objectStoreNames && db.objectStoreNames.contains("checkins")) {
+					db.deleteObjectStore("checkins");
 				}
 			}
 			catch (err) {
@@ -98,13 +100,16 @@ app.service('indexedDBexo', function($window, $q){
 			//We do not define objects structure here other than "fields" for keyPath, and for indexes
 			//While adding objects, you can omit fields, including indexing ones, but keyPath field should be filled
 			//We can make one of it's "fields" (with unique values) an in-line key with keyPath
+
+            //Store for activities
 			var store = db.createObjectStore("activities", {keyPath: "uuid"});
 			// Create an index to search customers by text field. We may have duplicates so we can't use a unique index.
 			store.createIndex("activities", "activities", {unique: false});
             
-            var store = db.createObjectStore("settings", {keyPath: "uid"});
+            //Store for check-ins
+            var store = db.createObjectStore("checkins", {keyPath: "uuid"});
 			// Create an index to search customers by text field. We may have duplicates so we can't use a unique index.
-			store.createIndex("settings", "settings", {unique: false});
+			store.createIndex("checkins", "checkins", {unique: false});
 			
 			//Or we can make unique integer out-of-line keys (1,2,3 ...) with keyGenerator, enabled by {autoIncrement: true}
 			//var store = db.createObjectStore("store2", {autoIncrement: true});
