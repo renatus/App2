@@ -1,5 +1,5 @@
 //Modules are used to divide huge app in a logical parts - say, activities, checkins, health reports etc. may be handled by different modules
-var modulesLoader = angular.module('appModulesLoader', ['exoApp', 'activitiesM', 'checkinM', 'activitiesController']);
+var modulesLoader = angular.module('appModulesLoader', ['exoApp', 'activitiesM', 'checkinM']);
 
 
 //"exoApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
