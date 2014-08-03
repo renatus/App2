@@ -335,11 +335,25 @@ app.controller('serverInteract', function ($scope, $q, backend, exoSettings, set
     }
     
     //Method to initiate logout process, when user pressed Logout button
+    //$scope.logout = function(){
+    //    var backendURL = window.localStorage.getItem("backendURL");
+    //    if (backendURL) {
+    //        backend.logout(backendURL).then(function(serverReply){
+    //            console.log(serverReply);
+    //        });
+    //    } else {
+    //        alert("Can't log out, server URL is not known");
+    //    }
+    //}
+
+    //Method to initiate logout process, when user pressed Logout button
     $scope.logout = function(){
         var backendURL = window.localStorage.getItem("backendURL");
         if (backendURL) {
-            backend.logout(backendURL).then(function(serverReply){
-                console.log(serverReply);
+            backend.getServicesToken(backendURL).then(function(servicesToken){
+                backend.logout(backendURL).then(function(serverReply){
+                    console.log(serverReply);
+                });
             });
         } else {
             alert("Can't log out, server URL is not known");
