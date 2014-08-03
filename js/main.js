@@ -1,4 +1,7 @@
 //Modules are used to divide huge app in a logical parts - say, activities, checkins, health reports etc. may be handled by different modules
+var modulesLoader = angular.module('appModulesLoader', ['exoApp', 'activitiesM', 'checkinM']);
+
+
 //"exoApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
 //It should be declared as a dependency for other modules, thanks to that we don't have to add ng-app="exoApp" property to use it's controllers
 //Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
