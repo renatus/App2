@@ -87,7 +87,9 @@
         
         <br>
         <span ng-app="checkinM">
-            <button class="btn" ng-controller="checkinController" ng-click="addEntry()">Check-in</button>
+            <span ng-controller="checkinController">
+                <button class="btn" ng-click="addEntry()">Check-in</button>
+            </span>
         </span>
 
 
