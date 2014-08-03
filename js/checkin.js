@@ -8,7 +8,7 @@ checkinMod.controller('checkinController', function ($scope, $q, indexedDBexo, U
 
     //Add new activity entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
-    $scope.addEntry = function(){
+    $scope.addEntryl = function(){
         var curTimestamp = new Date().getTime();
         //Get universally unique identifier for a new entry
         var entryID = UUID4.generate();
