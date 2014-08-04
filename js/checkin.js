@@ -4,7 +4,7 @@ var checkinMod = angular.module('checkinM', ['exoApp']);
 
 
 //Controller to work with activities
-app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, getPosition) {
+app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, positionService) {
 
     //Add new activity entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
@@ -45,7 +45,7 @@ app.service('getPosition', function($q){
 
 
 //Service to save checkin
-app.service('positionService', function($q){
+app.service('positionService', function($q, indexedDBexo, UUID4){
 
     //Get current position
     this.get = function(){
