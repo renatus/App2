@@ -96,43 +96,43 @@ app.service('positionService', function($q, indexedDBexo, UUID4){
         //.toPrecision(13) will round number to 13 digits, it will return string rather than number
         //ECMA-262 requires .toPrecision() precision of up to 21 digits, and Chrome 32 can get arguments between 1 and 21 (Firefox 26 - between 1 and 100)
         //Switch to .toPrecision(32) in the future, as backend can store up to 32 digits for latLonAccuracy, altitude, altitudeAccuracy and speed
-        if ($.isNumeric(position.coords.latitude)) {
+        if (angular.isNumber(position.coords.latitude)) {
             var coordsLatitude = position.coords.latitude;
         } else {
             var coordsLatitude = "";
         }
 
-        if ($.isNumeric(position.coords.longitude)) {
+        if (angular.isNumber(position.coords.longitude)) {
             var coordsLongitude = position.coords.longitude;
         } else {
             var coordsLongitude = "";
         }
 
-        if ($.isNumeric(position.coords.accuracy)) {
+        if (angular.isNumber(position.coords.accuracy)) {
             var coordsAccuracy = (position.coords.accuracy).toPrecision(21);
         } else {
             var coordsAccuracy = "";
         }
 
-        if ($.isNumeric(position.coords.altitude)) {
+        if (angular.isNumber(position.coords.altitude)) {
             var coordsAltitude = (position.coords.altitude).toPrecision(21);
         } else {
             var coordsAltitude = "";
         }
 
-        if ($.isNumeric(position.coords.altitudeAccuracy)) {
+        if (angular.isNumber(position.coords.altitudeAccuracy)) {
             var coordsAltitudeAccuracy = (position.coords.altitudeAccuracy).toPrecision(21);
         } else {
             var coordsAltitudeAccuracy = "";
         }
 
-        if ($.isNumeric(position.coords.heading)) {
+        if (angular.isNumber(position.coords.heading)) {
             var coordsHeading = (position.coords.heading).toPrecision(13);
         } else {
             var coordsHeading = "";
         }
 
-        if ($.isNumeric(position.coords.speed)) {
+        if (angular.isNumber(position.coords.speed)) {
             var coordsSpeed = (position.coords.speed).toPrecision(21);
         } else {
             var coordsSpeed = "";
