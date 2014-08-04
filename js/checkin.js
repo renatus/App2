@@ -13,7 +13,7 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
         //Get universally unique identifier for a new entry
         var entryID = UUID4.generate();
 
-        positionService.current().then(function(position){
+        positionService.get().then(function(position){
             positionService.save(position);
             console.log(position);
         });
