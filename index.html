@@ -30,8 +30,10 @@
     
     
     
-    <!--Controller to render list of all activities-->
-    <body ng-controller="activitiesController">
+
+    <body>
+
+        <span ng-controller="activitiesController">
         <!--Fulltext search, all object properties are indexed, so "1" query will result in list of all entries, containing number 1 in, say, UUID-->
         Search: <input ng-model="userQuery">
         
@@ -84,6 +86,9 @@
             <!--Button to add entered values to the model-->
             <button class="btn" type="submit" ng-disabled="addActivity.$invalid">Add</button>
         </form>
+
+        </span>
+
         
         
         <br>
