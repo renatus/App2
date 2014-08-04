@@ -4,7 +4,7 @@ var activitiesMod = angular.module('activitiesM', ['exoApp']);
 
 
 //Controller to work with activities
-activitiesMod.controller('activitiesController', function ($scope, $q, $routeParams, indexedDBexo, UUID4) {
+app.controller('activitiesController', function ($scope, $q, $routeParams, indexedDBexo, UUID4) {
     
     //You can populate scope by hands if needed. This is just example, app uses different activity data structure and populates it from IndexedDB.
 	//$scope.activities = [
@@ -157,7 +157,7 @@ activitiesMod.controller('activitiesController', function ($scope, $q, $routePar
 
 
 //Controller to show single activity on a subpage
-activitiesMod.controller('showActivityController', function($scope, $routeParams) {
+app.controller('showActivityController', function($scope, $routeParams) {
     //Get parameter value from the URL
     var activityID = $routeParams.activityId;
     //Set current activity ID
@@ -186,7 +186,7 @@ activitiesMod.controller('showActivityController', function($scope, $routeParams
 
 
 //Directive to generate activity edit form
-activitiesMod.directive("editActivity", function() {
+app.directive("editActivity", function() {
 
     return {
         //Directive can be used as (element) Attribute or (custom) Element
@@ -212,7 +212,7 @@ activitiesMod.directive("editActivity", function() {
 //Entries with non-numeric titles will be shown as well, but without proper sorting
 //"reverse" argument may be equal to "ascend" or "descend" - in latter case sorting order should be reversed
 //orderBy standard filter only works with arrays, not with objects
-activitiesMod.filter('orderObjectByINT', function(){
+app.filter('orderObjectByINT', function(){
     return function(input, attribute, reverse) {
         //If input is not object, we can't process it properly
         if (!angular.isObject(input)) return input;
@@ -242,7 +242,7 @@ activitiesMod.filter('orderObjectByINT', function(){
 //Entries with numeric titles will be shown as well, but sorted as a text ones (i.e. 12 will be placed ahead of 2)
 //"reverse" argument may be equal to "ascend" or "descend" - in latter case sorting order should be reversed
 //orderBy standard filter only works with arrays, not with objects
-activitiesMod.filter('orderObjectByTXT', function(){
+app.filter('orderObjectByTXT', function(){
     return function(input, attribute, reverse) {
         //If input is not object, we can't process it properly
         if (!angular.isObject(input)) return input;
