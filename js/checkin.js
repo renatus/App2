@@ -29,9 +29,6 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, g
         indexedDBexo.addEntry(newEntry, "checkins").then(function(){
             console.log('Check-in saved to DB!');
         });
-
-        //Add new entry to $scope
-        $scope.activities.push(newEntry);
     }
 
 });
