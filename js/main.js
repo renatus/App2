@@ -444,3 +444,16 @@ app.service('backend', function($q, $http){
         
     }
 });
+
+
+
+//Service to work with interface elements
+app.service('userInterface', function($window, $q){
+
+	//Method to notify user about something by Alert
+    //alertBody argument should contain message text
+	this.alert = function(alertBody) {
+        alert(alertBody);
+    }
+
+});

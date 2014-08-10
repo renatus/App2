@@ -21,7 +21,7 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
 
 
 //Service to work with Geolocation data
-app.service('positionService', function($q, indexedDBexo, UUID4){
+app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
 
     //Method to get current position
     this.get = function(){
@@ -51,10 +51,11 @@ app.service('positionService', function($q, indexedDBexo, UUID4){
         //Usually timestamp is at seconds, and JavaScript works with milliseconds
         //So we have to multiply timestamp value by 1000, but with position.timestamp we don't have to do that
         //Date and time from GPS can be wrong in Android emulator, that's OK.
-        //Date (and hence Services) module can't handle ISO 8601-formatted dates, but Views module can
+        //Drupal Date (and hence Services) module can't handle ISO 8601-formatted dates, but Views module can
         //So for now we'll use such dates as "2013-12-07 00:00:00", and in future - such as "1997-07-16T19:20+01:00"
         //Get current Date, Time, Timestamp and Timezone
         var curDateTime = new Date(position.timestamp);
+        //Phone-provided time can be wrong or obsolete (position request process can be long), use GPS-provided time
         var curTimestamp = position.timestamp;
         var curDate = moment(curDateTime).format('YYYY-MM-DD');
         var curTime = moment(curDateTime).format('HH:mm:ss');
@@ -65,7 +66,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4){
         var timeZoneOffset = curDateTime.getTimezoneOffset() * 60;
 
 
-        //We should not put inappropriate values, like NULL, at app DB
+        //IndexedDB may save all JS data atypes, but for now we shouldn't put inappropriate values, like NULL, at app DB
         //So we can't put geolocation object properties directly to DB, we should check them first
         //NULL and other non-numeric values should be replaced by an empty field
 
@@ -122,7 +123,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4){
 
 
         //Create entry object
-        //For performance reasons, simple entry types do not support revisions and different languages
+        //For performance reasons, simple entry types should not support revisions and different languages
         var newEntry = {
             "uuid":entryID,
             "date":curDate,
@@ -156,17 +157,21 @@ app.service('positionService', function($q, indexedDBexo, UUID4){
             console.log('Check-in saved to DB!');
         });
 
-	alert("You've checked-in successfully! " +
-          'Latitude: '          + position.coords.latitude          + '\n' +
-          'Longitude: '         + position.coords.longitude         + '\n' +
-          'Altitude: '          + position.coords.altitude          + '\n' +
-          'Accuracy: '          + position.coords.accuracy          + '\n' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-          'Heading: '           + position.coords.heading           + '\n' +
-          'Speed: '             + position.coords.speed             + '\n' +
-          'Timestamp: '         + position.timestamp                + '\n' +
-          'Measurement time: '  + curDateTime                       + '\n' +
-          'Current time: '      + new Date()                        + '\n');
+        //Create text message to notify user about successfull check-in
+        var alertBody = "You've checked-in successfully! " +
+        'Latitude: '          + position.coords.latitude          + '\n' +
+        'Longitude: '         + position.coords.longitude         + '\n' +
+        'Altitude: '          + position.coords.altitude          + '\n' +
+        'Accuracy: '          + position.coords.accuracy          + '\n' +
+        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+        'Heading: '           + position.coords.heading           + '\n' +
+        'Speed: '             + position.coords.speed             + '\n' +
+        'Timestamp: '         + position.timestamp                + '\n' +
+        'Measurement time: '  + curDateTime                       + '\n' +
+        'Current time: '      + new Date()                        + '\n';
+
+        //Notify user about successfull check-in
+        userInterface.alert(alertBody);
     }
 
 });
