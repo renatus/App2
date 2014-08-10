@@ -1,8 +1,3 @@
-//activitiesM is a module to handle activities
-var activitiesMod = angular.module('activitiesM', ['exoApp']);
-
-
-
 //Controller to work with activities
 app.controller('activitiesController', function ($scope, $q, $routeParams, indexedDBexo, UUID4) {
     

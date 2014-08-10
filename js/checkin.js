@@ -1,8 +1,3 @@
-//checkinM is a module to handle check-ins
-var checkinMod = angular.module('checkinM', ['exoApp']);
-
-
-
 //Controller to work with activities
 app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, positionService) {
 

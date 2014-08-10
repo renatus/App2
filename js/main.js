@@ -1,7 +1,9 @@
-//Modules are used to divide huge app in a logical parts - say, activities, checkins, health reports etc. may be handled by different modules
-//"exoApp" is a basic module to handle tasks, common to other modules (authentication, work with DB, etc.)
-//It should be declared as a dependency for other modules, thanks to that we don't have to add ng-app="exoApp" property to use it's controllers
-//Multiple dependencies should be declared like this: ['exoFilters', 'exoApp']);
+//Modules theoretically should be used to divide huge app in a logical parts
+//Say, activities, checkins, health reports etc. may be handled by different modules
+//In practice you can't nest ng-app directives in your HTML code
+//Even if you'll put two ng-app directives to tags, that reside on a single page, but not as parent and child, only first one will work by default (there are workarounds, though)
+//So we only use "exoApp" module for all parts of our app
+//Multiple dependencies of the module should be declared like this: ['exoFilters', 'exoApp']);
 var app = angular.module('exoApp', ['ngRoute']);
 
 
