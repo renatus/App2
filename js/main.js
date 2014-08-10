@@ -455,13 +455,18 @@ app.service('userInterface', function($window, $q){
     //alertBody argument should contain message text
     //Promise will never be rejected since there is no divergent behavior available to the user with the alert() method
 	this.alert = function(alertBody) {
-        var deferred = $q.defer();
 
-        //Show alert message to the user
-        $window.alert(alertBody);
+        function alert(alertBody){
+            var deferred = $q.defer();
 
-        deferred.resolve();
-        return deferred.promise;
+            //Show alert message to the user
+            $window.alert(alertBody);
+
+            deferred.resolve();
+            return deferred.promise;
+        }
+
+        return (alert);
 
     }
 
