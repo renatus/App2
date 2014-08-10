@@ -305,7 +305,7 @@ app.service('UUID4', function(){
 
 
 //Controller to start communication with server, when user initiated it from Login page
-app.controller('serverInteract', function ($scope, $q, backend) {
+app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
     //Prepopulate some of Login page input fields
     $scope.pageLogin = {};
 
@@ -357,7 +357,8 @@ app.controller('serverInteract', function ($scope, $q, backend) {
                 });
             });
         } else {
-            alert("Can't log out, server URL is not known");
+            //Notify user about missing server URL
+            userInterface.alert("Can't log out, server URL is not known");
         }
     }
 });
@@ -452,8 +453,16 @@ app.service('userInterface', function($window, $q){
 
 	//Method to notify user about something by Alert
     //alertBody argument should contain message text
+    //Promise will never be rejected since there is no divergent behavior available to the user with the alert() method
 	this.alert = function(alertBody) {
-        alert(alertBody);
+        var deferred = $q.defer();
+
+        //Show alert message to the user
+        $window.alert(alertBody);
+
+        deferred.resolve();
+        return deferred.promise;
+
     }
 
 });
