@@ -20,11 +20,11 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
 
 
 
-//Service to get device position
-app.service('getPosition', function($q){
+//Service to work with Geolocation data
+app.service('positionService', function($q, indexedDBexo, UUID4){
 
-    //Get current position
-    this.current = function(){
+    //Method to get current position
+    this.get = function(){
         var deferred = $q.defer();
 
         //Get current position
@@ -39,30 +39,9 @@ app.service('getPosition', function($q){
         return deferred.promise;
     }
 
-});
 
 
-
-//Service to save checkin
-app.service('positionService', function($q, indexedDBexo, UUID4){
-
-    //Get current position
-    this.get = function(){
-        var deferred = $q.defer();
-
-        window.navigator.geolocation.getCurrentPosition(function(data) {
-            //Return position
-            deferred.resolve(data);
-        }, function(error) {
-            deferred.reject(error);
-        });
-
-        return deferred.promise;
-    }
-
-
-
-    //Save position
+    //Method to save position
     this.save = function(position){
         //Date, Time and Timezone format examples:
         //var curDate = "2013-05-30";
