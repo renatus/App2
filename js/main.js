@@ -466,7 +466,7 @@ app.service('userInterface', function($window, $q){
             return deferred.promise;
         }
 
-        alert(alertBody);
+        return alert(alertBody);
 
     }
 
