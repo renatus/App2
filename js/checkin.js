@@ -1,14 +1,16 @@
-//Controller to work with activities
+//Controller to work with GPS
 app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, positionService) {
 
-    //Add new activity entry to $scope and DB
+    //Add new Checkin entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
-    $scope.addEntryl = function(){
+    $scope.addEntry = function(){
         var curTimestamp = new Date().getTime();
         //Get universally unique identifier for a new entry
         var entryID = UUID4.generate();
 
+        //Get current position
         positionService.get().then(function(position){
+            //Save current position
             positionService.save(position);
             console.log(position);
         });
@@ -25,10 +27,12 @@ app.service('getPosition', function($q){
     this.current = function(){
         var deferred = $q.defer();
 
+        //Get current position
         window.navigator.geolocation.getCurrentPosition(function(data) {
-            //Return position
+            //If position acquered successfully, return position
             deferred.resolve(data);
         }, function(error) {
+            //If we've failed to get position, return error
             deferred.reject(error);
         });
 

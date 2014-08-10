@@ -94,14 +94,19 @@
         </span>
 
         
-        
-        <br>
-        <!--<span ng-app="checkinM">-->
-            <span ng-controller="checkinController">
-                <button ng-click="addEntryl()">Check-in</button>
-            </span>
-        <!--</span>-->
+        <!-- Interface elements to work with GPS-->
+        <span ng-controller="checkinController">
 
+            <!-- Button to check GPS-->
+            <br>
+            <button ng-click="testGPS()">Test GPS</button>
+
+
+
+            <!-- Button to check-in-->
+            <button ng-click="addEntry()">Check-in</button>
+
+        </span>
 
 
         
