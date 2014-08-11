@@ -168,7 +168,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
             //navigator.onLine will always return True at desktop Linux, and at Chrome for Android
             if (navigator.onLine) {
                 //Sync new or modified data to backend
-                positionService.syncToBackend(entryID);
+                syncToBackend(entryID);
             }
         });
 
