@@ -449,25 +449,13 @@ app.service('backend', function($q, $http){
 
 
 //Service to work with interface elements
-app.service('userInterface', function($window, $q){
+app.service('userInterface', function($window){
 
 	//Method to notify user about something by Alert
     //alertBody argument should contain message text
-    //Promise will never be rejected since there is no divergent behavior available to the user with the alert() method
 	this.alert = function(alertBody) {
-
-        function alert(alertBody){
-            var deferred = $q.defer();
-
-            //Show alert message to the user
-            $window.alert(alertBody);
-
-            deferred.resolve();
-            return deferred.promise;
-        }
-
-        return alert(alertBody);
-
+        //Show alert message to the user
+        $window.alert(alertBody);
     }
 
 });

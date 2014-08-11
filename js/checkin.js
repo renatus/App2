@@ -1,13 +1,9 @@
-//Controller to work with GPS
+//Controller to work with Geolocation
 app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, positionService) {
 
     //Add new Checkin entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
     $scope.addEntry = function(){
-        //var curTimestamp = new Date().getTime();
-        //Get universally unique identifier for a new entry
-        //var entryID = UUID4.generate();
-
         //Get current position
         positionService.get().then(function(position){
             //Save current position
@@ -194,7 +190,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         var curDateTime = new Date(position.timestamp);
 
         //Create text message to notify user about successfull check-in
-        var alertBody = "You've checked-in successfully! " +
+        var alertBody = "GPS works fine! " +
         'Latitude: '          + position.coords.latitude          + '\n' +
         'Longitude: '         + position.coords.longitude         + '\n' +
         'Altitude: '          + position.coords.altitude          + '\n' +
