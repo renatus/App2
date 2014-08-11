@@ -163,6 +163,13 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         //Add new entry to DB
         indexedDBexo.addEntry(newEntry, "checkins").then(function(){
             console.log('Check-in saved to DB!');
+
+            //If we're connected to the internet
+            //navigator.onLine will always return True at desktop Linux, and at Chrome for Android
+            if (navigator.onLine) {
+                //Sync new or modified data to backend
+                positionService.syncToBackend(entryID);
+            }
         });
 
         //Create text message to notify user about successfull check-in
@@ -180,6 +187,57 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
 
         //Notify user about successfull check-in
         userInterface.alert(alertBody);
+    }
+
+
+    //Sync checkin to IS backend
+    this.syncToBackend = function(UUID){
+        console.log('zzz');
+
+        //Example of data to send to IS to create or modify Drupal node:
+        //'node[type]=activity&node[language]=en&node[title]=' + encodeURIComponent(title) +
+        //'node[field_datetime][und][0][value][date]=' + curDate +
+        //'&node[field_datetime][und][0][value][time]=' + curTime;
+
+        //Get Checkin entry from DB
+        indexedDBexo.getEntry("checkins").then(function(data){
+            //Will show us all objects we've get - at Chrome DevTools console
+            console.log(data);
+
+
+            //Put all data to send to IS to modify Drupal node at this variable
+            //In case Drupal Date field already has both start and end values stored, you have to send both value and value2
+            //Looks like at least Decimal fields will accept emty values, like this:
+            //&node[field_altitude][und][0][value]=&node[field_altitude_accuracy][und][0][value]=
+            //So we can not to check whether value is here
+            //Attempt to save more digits, than allowed by Drupal Field's Scale setting will give us error
+            //We can put more digits, than specified in Scale setting, though, so we've to limit number of all digits in decimal number
+            //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB (it improved consistency as well)
+    var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
+                     '&node[field_place_latlon][und][0][lat]=' + curEntry.latitude +
+                     '&node[field_place_latlon][und][0][lon]=' + curEntry.longitude +
+                     '&node[field_latlon_accuracy][und][0][value]=' + curEntry.latLonAccuracy +
+                     '&node[field_altitude][und][0][value]=' + curEntry.altitude +
+                     '&node[field_altitude_accuracy][und][0][value]=' + curEntry.altitudeAccuracy +
+                     '&node[field_heading][und][0][value]=' + curEntry.heading +
+                     '&node[field_speed][und][0][value]=' + curEntry.speed +
+                     '&node[field_datetime_start][und][0][value][date]=' + curEntry.date +
+                     '&node[field_datetime_start][und][0][value][time]=' + curEntry.time +
+                     '&node[field_datetime_start][und][0][timezone][timezone]=' + curEntry.dateTimeTZ;
+
+            var URLpart = "/rest/node.json";
+            var requestType = 'post';
+            //name of function to complete activity-specific tasks, that should be done after node sync
+            var fuctionOnSuccess = "checkin_sync_to_backend_success";
+            var msgOnSuccess = "Node created!";
+            var msgOnError = "Failed to create checkin node at backend!";
+
+            //Try to edit backend node
+            //edit_backend_node(entryID, URLpart, requestType, dataToSend, fuctionOnSuccess, msgOnSuccess, msgOnError);
+
+
+        });
+
     }
 
 

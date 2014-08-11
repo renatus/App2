@@ -208,6 +208,55 @@ app.service('indexedDBexo', function($window, $q){
     
     
     
+    //Get particular item of particular type, say, some activity
+    //"entryType" argument should contain entry type name (it is a DB "table" name as well), like "activities"
+    this.getEntry = function(entryType, UUID) {
+        var deferred = $q.defer();
+
+        //Array for entries, extracted from DB
+        var entriesExtracted = [];
+
+        //Database table name
+        var dbTableName = entryType;
+        var db = exoDB.indexedDB.db;
+        //Create transaction
+        var transact = db.transaction(dbTableName, "readonly");
+        var store = transact.objectStore(dbTableName);
+
+        // Get everything in the store
+        //keyRange is a continuous interval over keys, for example greater than X and smaller than Y
+        var keyRange = IDBKeyRange.only(UUID);
+        //Cursor is a mechanism for iterating over multiple records within a key range
+        var cursorRequest = store.openCursor(keyRange);
+
+        //If request was successfull
+        cursorRequest.onsuccess = function(e) {
+            var result = e.target.result;
+            //If we've iterated through all extracted entries
+            if (result === null || result === undefined) {
+                //Return array with these entries
+                deferred.resolve(entriesExtracted);
+            } else {
+                if (result){
+                    //Add extracted entry to array for such entries
+                    entriesExtracted.push(result.value);
+                    //Continue to next entry
+                    result.continue();
+                }
+            }
+        };
+
+        //If request gave us error
+        cursorRequest.onerror = function(e){
+            console.log(e.value);
+            deferred.reject("Something went wrong!!!");
+        };
+
+        return deferred.promise;
+    };
+
+
+
     //Get all items of particular type, say, all activities
     //"entryType" argument should contain entry type name (it is a DB "table" name as well), like "activities"
     this.getEntriesSubset = function(entryType) {
@@ -444,6 +493,45 @@ app.service('backend', function($q, $http){
         return deferred.promise;
         
     }
+
+
+
+    //Send JSON data to create or modify backend node
+    //URLpart should contain last part of the node URL at IS, like this: "/rest/node/123.json"
+    //dataToSend should be JSON data to modify Drupal node
+    //fuctionOnSuccess should contain function name (in specific format) to call after this function execution will be completed
+    this.editBackendNode = function(entryID, dataToSend, msgOnSuccess, msgOnError) {
+        var backendURL = window.localStorage.getItem("backendURL");
+
+        //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
+        //backend.getServicesToken(backendURL).then(function(servicesToken){
+
+
+        //});
+
+
+
+        var deferred = $q.defer();
+
+        //Make HTTP request
+        $http({
+            url: backendURL + "/rest/node.json",
+            method: "POST",
+            //headers: {'X-CSRF-Token': },
+            data: dataToSend
+        }).success(function(data, status, headers, config) {
+            //If we've successfully created/updated backend entry
+            deferred.resolve("You've created/updated backend entry successfully");
+        }).error(function(data, status, headers, config) {
+            //If there were error, show error message
+            console.log(status);
+            deferred.reject("You've failed to create/update backend entry");
+        });
+
+        return deferred.promise;
+
+    };
+
 });
 
 
