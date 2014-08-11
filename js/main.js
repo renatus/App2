@@ -518,7 +518,7 @@ app.service('backend', function($q, $http){
             url: backendURL + "/rest/node.json",
             method: "POST",
             //headers: {'X-CSRF-Token': },
-            data: dataToSend
+            data: {dataToSend}
         }).success(function(data, status, headers, config) {
             //If we've successfully created/updated backend entry
             deferred.resolve("You've created/updated backend entry successfully");
