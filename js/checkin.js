@@ -166,7 +166,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         });
 
         //Create text message to notify user about successfull check-in
-        var alertBody = "You've checked-in successfully! " +
+        var alertBody = "You've checked-in successfully! " + '\n' +
         'Latitude: '          + position.coords.latitude          + '\n' +
         'Longitude: '         + position.coords.longitude         + '\n' +
         'Altitude: '          + position.coords.altitude          + '\n' +
@@ -190,7 +190,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         var curDateTime = new Date(position.timestamp);
 
         //Create text message to notify user about successfull check-in
-        var alertBody = "GPS works fine! " +
+        var alertBody = "GPS works fine! " + '\n' +
         'Latitude: '          + position.coords.latitude          + '\n' +
         'Longitude: '         + position.coords.longitude         + '\n' +
         'Altitude: '          + position.coords.altitude          + '\n' +
