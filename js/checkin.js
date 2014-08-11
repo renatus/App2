@@ -263,9 +263,12 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
             var msgOnError = "Failed to create checkin node at backend!";
 
             //Try to edit backend node
-            //edit_backend_node(entryID, URLpart, requestType, dataToSend, fuctionOnSuccess, msgOnSuccess, msgOnError);
-            backend.editBackendNode(data['0']['UUID'], dataToSend).then(function(data){
-                console.log(data);
+            //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
+            var backendURL = window.localStorage.getItem("backendURL");
+            backend.getServicesToken(backendURL).then(function(servicesToken){
+                backend.editBackendNode(data['0']['UUID'], dataToSend).then(function(data){
+                    console.log(data);
+                });
             });
 
 
