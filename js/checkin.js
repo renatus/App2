@@ -4,14 +4,26 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
     //Add new Checkin entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
     $scope.addEntry = function(){
-        var curTimestamp = new Date().getTime();
+        //var curTimestamp = new Date().getTime();
         //Get universally unique identifier for a new entry
-        var entryID = UUID4.generate();
+        //var entryID = UUID4.generate();
 
         //Get current position
         positionService.get().then(function(position){
             //Save current position
             positionService.save(position);
+            console.log(position);
+        });
+    }
+
+
+
+    //Test GPS sensor
+    $scope.testGPS = function(){
+        //Get current position
+        positionService.get().then(function(position){
+            //Show message with geolocation data
+            positionService.test(position);
             console.log(position);
         });
     }
@@ -156,6 +168,30 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         indexedDBexo.addEntry(newEntry, "checkins").then(function(){
             console.log('Check-in saved to DB!');
         });
+
+        //Create text message to notify user about successfull check-in
+        var alertBody = "You've checked-in successfully! " +
+        'Latitude: '          + position.coords.latitude          + '\n' +
+        'Longitude: '         + position.coords.longitude         + '\n' +
+        'Altitude: '          + position.coords.altitude          + '\n' +
+        'Accuracy: '          + position.coords.accuracy          + '\n' +
+        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+        'Heading: '           + position.coords.heading           + '\n' +
+        'Speed: '             + position.coords.speed             + '\n' +
+        'Timestamp: '         + position.timestamp                + '\n' +
+        'Measurement time: '  + curDateTime                       + '\n' +
+        'Current time: '      + new Date()                        + '\n';
+
+        //Notify user about successfull check-in
+        userInterface.alert(alertBody);
+    }
+
+
+
+    //Method to test GPS sensor
+    this.test = function(position){
+        //Get current Date, Time, Timestamp and Timezone
+        var curDateTime = new Date(position.timestamp);
 
         //Create text message to notify user about successfull check-in
         var alertBody = "You've checked-in successfully! " +
