@@ -500,7 +500,7 @@ app.service('backend', function($q, $http){
     //URLpart should contain last part of the node URL at IS, like this: "/rest/node/123.json"
     //dataToSend should be JSON data to modify Drupal node
     //fuctionOnSuccess should contain function name (in specific format) to call after this function execution will be completed
-    this.editBackendNode = function(entryID, dataToSend, msgOnSuccess, msgOnError) {
+    this.editBackendNode = function(entryID, dataToSend) {
         var backendURL = window.localStorage.getItem("backendURL");
 
         //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)

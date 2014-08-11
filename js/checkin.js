@@ -219,7 +219,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, 
 
 //Service to sync checkin to backend
 //We need it because we can't call service method from the method of this very same service, so we need two services
-app.service('positionBackendService', function($q, indexedDBexo){
+app.service('positionBackendService', function($q, indexedDBexo, backend){
     //Sync checkin to IS backend
     this.syncTo = function(UUID){
         console.log('zzz');
@@ -244,16 +244,16 @@ app.service('positionBackendService', function($q, indexedDBexo){
             //We can put more digits, than specified in Scale setting, though, so we've to limit number of all digits in decimal number
             //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB (it improved consistency as well)
     var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
-                     '&node[field_place_latlon][und][0][lat]=' + curEntry.latitude +
-                     '&node[field_place_latlon][und][0][lon]=' + curEntry.longitude +
-                     '&node[field_latlon_accuracy][und][0][value]=' + curEntry.latLonAccuracy +
-                     '&node[field_altitude][und][0][value]=' + curEntry.altitude +
-                     '&node[field_altitude_accuracy][und][0][value]=' + curEntry.altitudeAccuracy +
-                     '&node[field_heading][und][0][value]=' + curEntry.heading +
-                     '&node[field_speed][und][0][value]=' + curEntry.speed +
-                     '&node[field_datetime_start][und][0][value][date]=' + curEntry.date +
-                     '&node[field_datetime_start][und][0][value][time]=' + curEntry.time +
-                     '&node[field_datetime_start][und][0][timezone][timezone]=' + curEntry.dateTimeTZ;
+                     '&node[field_place_latlon][und][0][lat]=' + data['0']['latitude'] +
+                     '&node[field_place_latlon][und][0][lon]=' + data['0']['longitude'] +
+                     '&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
+                     '&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
+                     '&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
+                     '&node[field_heading][und][0][value]=' + data['0']['heading'] +
+                     '&node[field_speed][und][0][value]=' + data['0']['speed'] +
+                     '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
+                     '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
+                     '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
             var URLpart = "/rest/node.json";
             var requestType = 'post';
@@ -264,6 +264,9 @@ app.service('positionBackendService', function($q, indexedDBexo){
 
             //Try to edit backend node
             //edit_backend_node(entryID, URLpart, requestType, dataToSend, fuctionOnSuccess, msgOnSuccess, msgOnError);
+            backend.editBackendNode(data['0']['UUID'], dataToSend).then(function(data){
+                console.log(data);
+            });
 
 
         });
