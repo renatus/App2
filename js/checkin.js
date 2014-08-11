@@ -246,11 +246,11 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
     var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
                      '&node[field_place_latlon][und][0][lat]=' + data['0']['latitude'] +
                      '&node[field_place_latlon][und][0][lon]=' + data['0']['longitude'] +
-                     '&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
-                     '&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
-                     '&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
-                     '&node[field_heading][und][0][value]=' + data['0']['heading'] +
-                     '&node[field_speed][und][0][value]=' + data['0']['speed'] +
+                     //'&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
+                     //'&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
+                     //'&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
+                     //'&node[field_heading][und][0][value]=' + data['0']['heading'] +
+                     //'&node[field_speed][und][0][value]=' + data['0']['speed'] +
                      '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
                      '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
                      '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
