@@ -230,7 +230,7 @@ app.service('positionBackendService', function($q, indexedDBexo){
         //'&node[field_datetime][und][0][value][time]=' + curTime;
 
         //Get Checkin entry from DB
-        indexedDBexo.getEntry("checkins").then(function(data){
+        indexedDBexo.getEntry("checkins", UUID).then(function(data){
             //Will show us all objects we've get - at Chrome DevTools console
             console.log(data);
 
