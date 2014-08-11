@@ -29,7 +29,7 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
 
 
 //Service to work with Geolocation data
-app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
+app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, positionBackendService){
 
     //Method to get current position
     this.get = function(){
@@ -168,7 +168,7 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
             //navigator.onLine will always return True at desktop Linux, and at Chrome for Android
             if (navigator.onLine) {
                 //Sync new or modified data to backend
-                this.syncToBackend(entryID);
+                positionBackendService.syncTo(entryID);
             }
         });
 
@@ -190,8 +190,38 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
     }
 
 
+
+    //Method to test GPS sensor
+    this.test = function(position){
+        //Get current Date, Time, Timestamp and Timezone
+        var curDateTime = new Date(position.timestamp);
+
+        //Create text message to notify user about successfull check-in
+        var alertBody = "GPS works fine! " + '\n' +
+        'Latitude: '          + position.coords.latitude          + '\n' +
+        'Longitude: '         + position.coords.longitude         + '\n' +
+        'Altitude: '          + position.coords.altitude          + '\n' +
+        'Accuracy: '          + position.coords.accuracy          + '\n' +
+        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+        'Heading: '           + position.coords.heading           + '\n' +
+        'Speed: '             + position.coords.speed             + '\n' +
+        'Timestamp: '         + position.timestamp                + '\n' +
+        'Measurement time: '  + curDateTime                       + '\n' +
+        'Current time: '      + new Date()                        + '\n';
+
+        //Notify user about successfull check-in
+        userInterface.alert(alertBody);
+    }
+
+});
+
+
+
+//Service to sync checkin to backend
+//We need it because we can't call service method from the method of this very same service, so we need two services
+app.service('positionBackendService', function($q, indexedDBexo){
     //Sync checkin to IS backend
-    this.syncToBackend = function(UUID){
+    this.syncTo = function(UUID){
         console.log('zzz');
 
         //Example of data to send to IS to create or modify Drupal node:
@@ -239,29 +269,4 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface){
         });
 
     }
-
-
-
-    //Method to test GPS sensor
-    this.test = function(position){
-        //Get current Date, Time, Timestamp and Timezone
-        var curDateTime = new Date(position.timestamp);
-
-        //Create text message to notify user about successfull check-in
-        var alertBody = "GPS works fine! " + '\n' +
-        'Latitude: '          + position.coords.latitude          + '\n' +
-        'Longitude: '         + position.coords.longitude         + '\n' +
-        'Altitude: '          + position.coords.altitude          + '\n' +
-        'Accuracy: '          + position.coords.accuracy          + '\n' +
-        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-        'Heading: '           + position.coords.heading           + '\n' +
-        'Speed: '             + position.coords.speed             + '\n' +
-        'Timestamp: '         + position.timestamp                + '\n' +
-        'Measurement time: '  + curDateTime                       + '\n' +
-        'Current time: '      + new Date()                        + '\n';
-
-        //Notify user about successfull check-in
-        userInterface.alert(alertBody);
-    }
-
 });
