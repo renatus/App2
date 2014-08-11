@@ -503,6 +503,8 @@ app.service('backend', function($q, $http){
     this.editBackendNode = function(entryID, dataToSend) {
         var backendURL = window.localStorage.getItem("backendURL");
 
+        console.log(dataToSend);
+
         //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
         //backend.getServicesToken(backendURL).then(function(servicesToken){
 
@@ -518,7 +520,7 @@ app.service('backend', function($q, $http){
             url: backendURL + "/rest/node.json",
             method: "POST",
             //headers: {'X-CSRF-Token': },
-            data: {dataToSend}
+            data: dataToSend
         }).success(function(data, status, headers, config) {
             //If we've successfully created/updated backend entry
             deferred.resolve("You've created/updated backend entry successfully");
