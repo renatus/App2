@@ -519,6 +519,7 @@ app.service('backend', function($q, $http){
         $http({
             url: backendURL + "/rest/node.json",
             method: "POST",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             //headers: {'X-CSRF-Token': },
             data: dataToSend
         }).success(function(data, status, headers, config) {
