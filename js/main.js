@@ -503,22 +503,16 @@ app.service('backend', function($q, $http){
     this.editBackendNode = function(entryID, dataToSend) {
         var backendURL = window.localStorage.getItem("backendURL");
 
-        console.log(dataToSend);
-
-        //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
-        //backend.getServicesToken(backendURL).then(function(servicesToken){
-
-
-        //});
-
-
-
         var deferred = $q.defer();
 
         //Make HTTP request
         $http({
             url: backendURL + "/rest/node.json",
             method: "POST",
+            //"application/x-www-form-urlencoded" is Internet media type for encoding key-value pairs
+            //Each key-value pair is separated by an '&' character, and each key is separated from its value by an '=' character
+            //Keys and values are escaped by replacing spaces with the '+' character
+            //URL encoding used on all other non-alphanumeric characters
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             //headers: {'X-CSRF-Token': },
             data: dataToSend
