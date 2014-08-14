@@ -230,8 +230,11 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
 
         //Get Checkin entry from DB
         indexedDBexo.getEntry("checkins", UUID).then(function(data){
+
+            //0
+            var retrievedObj = data['0'];
             //Will show us all objects we've get - at Chrome DevTools console
-            console.log(data);
+            console.log(retrievedObj);
 
 
             //Put all data to send to IS to modify Drupal node at this variable
@@ -255,13 +258,26 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
                              '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
             var URLpart = "/rest/node.json";
+            var entryUUID = data['0']['UUID'];
 
             //Try to edit backend node
             //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
             var backendURL = window.localStorage.getItem("backendURL");
             backend.getServicesToken(backendURL).then(function(servicesToken){
-                backend.editBackendNode(data['0']['UUID'], dataToSend, URLpart).then(function(data){
-                    console.log(URLpart);
+                backend.editBackendNode(entryUUID, dataToSend, URLpart).then(function(data){
+                    if (data === "success") {
+                        //
+                        retrievedObj["lastUpdatedLocally"] = "";
+
+                        //Modify Checkin entry at DB
+                        indexedDBexo.addEntry(retrievedObj, "checkins").then(function(data){
+                            console.log(data);
+                        });
+
+                        console.log("You've created/updated backend entry successfully");
+                    } else {
+                        console.log("You've failed to create/update backend entry");
+                    }
                 });
             });
 

@@ -520,11 +520,11 @@ app.service('backend', function($q, $http){
             data: dataToSend
         }).success(function(data, status, headers, config) {
             //If we've successfully created/updated backend entry
-            deferred.resolve("You've created/updated backend entry successfully 2");
+            deferred.resolve("success");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
             console.log(status);
-            deferred.reject("You've failed to create/update backend entry 2");
+            deferred.reject("fail");
         });
 
         return deferred.promise;
