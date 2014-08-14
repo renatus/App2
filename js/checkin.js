@@ -261,7 +261,7 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
             var backendURL = window.localStorage.getItem("backendURL");
             backend.getServicesToken(backendURL).then(function(servicesToken){
                 backend.editBackendNode(data['0']['UUID'], dataToSend, URLpart).then(function(data){
-                    console.log(data);
+                    console.log(URLpart);
                 });
             });
 
