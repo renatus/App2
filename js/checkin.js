@@ -222,7 +222,6 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, 
 app.service('positionBackendService', function($q, indexedDBexo, backend){
     //Sync checkin to IS backend
     this.syncTo = function(UUID){
-        console.log('zzz');
 
         //Example of data to send to IS to create or modify Drupal node:
         //'node[type]=activity&node[language]=en&node[title]=' + encodeURIComponent(title) +
@@ -243,30 +242,25 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
             //Attempt to save more digits, than allowed by Drupal Field's Scale setting will give us error
             //We can put more digits, than specified in Scale setting, though, so we've to limit number of all digits in decimal number
             //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB (it improved consistency as well)
-    var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
-                     '&node[field_place_latlon][und][0][lat]=' + data['0']['latitude'] +
-                     '&node[field_place_latlon][und][0][lon]=' + data['0']['longitude'] +
-                     '&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
-                     '&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
-                     '&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
-                     '&node[field_heading][und][0][value]=' + data['0']['heading'] +
-                     '&node[field_speed][und][0][value]=' + data['0']['speed'] +
-                     '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
-                     '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
-                     '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
+            var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
+                             '&node[field_place_latlon][und][0][lat]=' + data['0']['latitude'] +
+                             '&node[field_place_latlon][und][0][lon]=' + data['0']['longitude'] +
+                             '&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
+                             '&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
+                             '&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
+                             '&node[field_heading][und][0][value]=' + data['0']['heading'] +
+                             '&node[field_speed][und][0][value]=' + data['0']['speed'] +
+                             '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
+                             '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
+                             '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
             var URLpart = "/rest/node.json";
-            var requestType = 'post';
-            //name of function to complete activity-specific tasks, that should be done after node sync
-            var fuctionOnSuccess = "checkin_sync_to_backend_success";
-            var msgOnSuccess = "Node created!";
-            var msgOnError = "Failed to create checkin node at backend!";
 
             //Try to edit backend node
             //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
             var backendURL = window.localStorage.getItem("backendURL");
             backend.getServicesToken(backendURL).then(function(servicesToken){
-                backend.editBackendNode(data['0']['UUID'], dataToSend).then(function(data){
+                backend.editBackendNode(data['0']['UUID'], dataToSend, URLpart).then(function(data){
                     console.log(data);
                 });
             });

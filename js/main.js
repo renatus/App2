@@ -497,17 +497,19 @@ app.service('backend', function($q, $http){
 
 
     //Send JSON data to create or modify backend node
-    //URLpart should contain last part of the node URL at IS, like this: "/rest/node/123.json"
     //dataToSend should be JSON data to modify Drupal node
+    //"URLpart" argument should contain last part of URL to put data, to add note it'll be "/rest/node.json"
+    //To edit node, URLpart should contain last part of the node URL at IS, like "/rest/node/123.json"
+
     //fuctionOnSuccess should contain function name (in specific format) to call after this function execution will be completed
-    this.editBackendNode = function(entryID, dataToSend) {
+    this.editBackendNode = function(entryID, dataToSend, URLpart) {
         var backendURL = window.localStorage.getItem("backendURL");
 
         var deferred = $q.defer();
 
         //Make HTTP request
         $http({
-            url: backendURL + "/rest/node.json",
+            url: backendURL + URLpart,
             method: "POST",
             //"application/x-www-form-urlencoded" is Internet media type for encoding key-value pairs
             //Each key-value pair is separated by an '&' character, and each key is separated from its value by an '=' character
@@ -518,11 +520,11 @@ app.service('backend', function($q, $http){
             data: dataToSend
         }).success(function(data, status, headers, config) {
             //If we've successfully created/updated backend entry
-            deferred.resolve("You've created/updated backend entry successfully");
+            deferred.resolve("You've created/updated backend entry successfully 2");
         }).error(function(data, status, headers, config) {
             //If there were error, show error message
             console.log(status);
-            deferred.reject("You've failed to create/update backend entry");
+            deferred.reject("You've failed to create/update backend entry 2");
         });
 
         return deferred.promise;
