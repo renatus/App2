@@ -8,8 +8,10 @@ var app = angular.module('exoApp', ['ngRoute']);
 
 
 
-//Set pre-defined URLs and URL patterns for your app
+//Code to be executed on app loading
+//You can't call a service from .config
 app.config(['$routeProvider',
+  //Set pre-defined URLs and URL patterns for your app
   function($routeProvider) {
       $routeProvider.
       //Page for a single activity
@@ -43,6 +45,15 @@ app.config(['$routeProvider',
           templateUrl: 'templates/frontpage.html'
       });
 }]);
+
+
+
+//Code to be executed on app loading
+//You can call a service from .run
+app.run(function($rootScope, indexedDBexo) {
+    //Open app's IndexedDB database
+    indexedDBexo.open();
+});
 
 
 
