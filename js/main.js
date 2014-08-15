@@ -31,7 +31,9 @@ app.config(['$routeProvider',
       //If there is no such a page
       otherwise({
           //Redirect user to
-          redirectTo: '/'
+          redirectTo: '/',
+          //HTML template for this URL pattern
+          templateUrl: 'templates/frontpage.html'
       });
 }]);
 
