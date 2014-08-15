@@ -28,7 +28,8 @@
             <!-- Something like "ActivityTitle | en |"-->
             <span ng-hide="editing" ng-click="editing = true">{{activity[activity['lastVersion']]['title'][activity[activity['lastVersion']]['langcode']]}} | {{activity[activity['lastVersion']]['langcode']}} | </span>
             <!--"Details" link, click will open subpage with this particularactivity details-->
-            <a ng-hide="editing" href="#/activities/{{activity.uuid}}">Details</a>
+            <!--You can get wrong URL in case you use dynamic parts (like {{activity.uuid}}) at href URL, use ng-href instead-->
+            <a ng-hide="editing" ng-href="#/activities/{{activity.uuid}}">Details</a>
 
             <!--Button to delete this particular entry-->
             <button ng-hide="editing" ng-click="deleteEntry(activity)">Del</button>

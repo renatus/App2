@@ -58,6 +58,28 @@ app.run(function($rootScope, indexedDBexo) {
 
 
 
+//Directive to make buttons and other UI elements work like <a> tag
+//http://stackoverflow.com/questions/15847726/is-there-a-simple-way-to-use-button-to-navigate-page-as-a-link-does-in-angularjs
+app.directive('exoHref', function ($location) {
+    return function (scope, element, attrs) {
+
+        var path;
+
+        attrs.$observe( 'exoHref', function (val) {
+            path = val;
+        });
+
+        element.bind( 'click', function () {
+            scope.$apply( function () {
+                $location.path( path );
+            });
+        });
+
+    };
+});
+
+
+
 //Service to work with IndexedDB
 app.service('indexedDBexo', function($window, $q){
 	
