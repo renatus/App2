@@ -189,7 +189,7 @@ app.directive("editActivity", function() {
         replace: true,
         //template: editorTemplate,
         //Form HTML template
-        templateUrl: "templates/edit-activity.html",
+        templateUrl: "templates/activity-edit.html",
         controller: function($scope) {
             //We have to copy activity subobject to bind it to edit form - to prevent changes from taking immediate effect, prior to pressing Save button
             //If we'll modify activity directly, entry and edit form may disappear, if modified entry should be hidden by ng-repeat filters

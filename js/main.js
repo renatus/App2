@@ -20,6 +20,13 @@ app.config(['$routeProvider',
           //Angular controller for this URL pattern
           controller: 'showActivityController'
       }).
+
+      //Page for activities list
+      when('/activities', {
+          //HTML template for this URL pattern
+          templateUrl: 'templates/activities.html'
+      }).
+
       //Login form page
       when('/login', {
           //HTML template for this URL pattern
