@@ -20,6 +20,7 @@ app.controller('activitiesController', function ($scope, $q, $routeParams, index
         });
 	}
 	
+    //Will reload activities on EACH page visit
 	$scope.init();
     
     

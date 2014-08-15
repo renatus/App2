@@ -58,28 +58,6 @@ app.run(function($rootScope, indexedDBexo) {
 
 
 
-//Directive to make buttons and other UI elements work like <a> tag
-//http://stackoverflow.com/questions/15847726/is-there-a-simple-way-to-use-button-to-navigate-page-as-a-link-does-in-angularjs
-app.directive('exoHref', function ($location) {
-    return function (scope, element, attrs) {
-
-        var path;
-
-        attrs.$observe( 'exoHref', function (val) {
-            path = val;
-        });
-
-        element.bind( 'click', function () {
-            scope.$apply( function () {
-                $location.path( path );
-            });
-        });
-
-    };
-});
-
-
-
 //Service to work with IndexedDB
 app.service('indexedDBexo', function($window, $q){
 	
@@ -588,4 +566,27 @@ app.service('userInterface', function($window){
         $window.alert(alertBody);
     }
 
+});
+
+
+
+//Directive to make buttons and other UI elements work like <a> tag
+//http://stackoverflow.com/questions/15847726/is-there-a-simple-way-to-use-button-to-navigate-page-as-a-link-does-in-angularjs
+//$location service parses the URL in the browser address bar (using window.location) and makes it available to your app
+app.directive('exoHref', function ($location) {
+    return function (scope, element, attrs) {
+
+        var URLpath;
+
+        attrs.$observe('exoHref', function(data) {
+            URLpath = data;
+        });
+
+        element.bind( 'click', function() {
+            scope.$apply(function() {
+                $location.path(URLpath);
+            });
+        });
+
+    };
 });
