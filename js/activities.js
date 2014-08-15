@@ -11,8 +11,7 @@ app.controller('activitiesController', function ($scope, $q, $routeParams, index
 	
     //Open DB, get all entries and put them to $scope object
 	$scope.init = function(){
-        console.log("Init started");
-		indexedDBexo.open().then(function(){            
+		//indexedDBexo.open().then(function(){
             indexedDBexo.getEntriesSubset("activities").then(function(data){
                 //Even if you only have one type of entries, it's better not to add them directly to scope, but use $scope as a container for models
                 //In this case, our model is contained in "activities"
@@ -20,7 +19,7 @@ app.controller('activitiesController', function ($scope, $q, $routeParams, index
                 //Will show us all objects we've get - at Chrome DevTools console
                 console.log(data);
 			});			
-		});
+		//});
 	}
 	
 	$scope.init();

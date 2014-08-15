@@ -52,6 +52,7 @@ app.config(['$routeProvider',
 //You can call a service from .run
 app.run(function($rootScope, indexedDBexo) {
     //Open app's IndexedDB database
+    //There will be no problems, in case you'll call indexedDBexo.open() method again
     indexedDBexo.open();
 });
 
