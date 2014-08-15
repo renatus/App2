@@ -37,23 +37,17 @@
 
     <body>
         
-        <!-- Interface elements to work with GPS-->
-        <span ng-controller="checkinController">
+        <!--App global menu buttons-->
 
-            <!-- Button to check GPS-->
-            <br>
-            <button ng-click="testGPS()">Test GPS</button>
+        <!-- Open frontpage -->
+        <button ng-click="window.location.href='#/'">Frontpage</button>
 
-
-
-            <!-- Button to check-in-->
-            <button ng-click="addEntry()">Check-in</button>
-
-        </span>
+        <!-- Open activities list -->
+        <button ng-click="window.location.href='#/activities'">Activities</button>
 
 
         
-        <!-- Here single activity's page content will be placed-->
+        <!-- Here app pages content will be placed-->
         <ng-view></ng-view>
         
     </body>

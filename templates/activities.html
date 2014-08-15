@@ -1,58 +1,58 @@
-    <span ng-controller="activitiesController">
-        <!--You should put nothing outside root tag (<form> in this case), even comments-->
-        <!--Page for activities list-->
+<span ng-controller="activitiesController">
+    <!--You should put nothing outside root tag (<form> in this case), even comments-->
+    <!--Page for activities list-->
 
-        <!--Fulltext search, all object properties are indexed, so "1" query will result in list of all entries, containing number 1 in, say, UUID-->
-        Search: <input ng-model="userQuery">
+    <!--Fulltext search, all object properties are indexed, so "1" query will result in list of all entries, containing number 1 in, say, UUID-->
+    Search: <input ng-model="userQuery">
 
-        <!--Select sorting order for list of all activities-->
-        <select ng-model="orderChoice">
-            <option value="ascend">Ascending</option>
-            <option value="descend">Descending</option>
-        </select>
+    <!--Select sorting order for list of all activities-->
+    <select ng-model="orderChoice">
+        <option value="ascend">Ascending</option>
+        <option value="descend">Descending</option>
+    </select>
 
-        <!-- This filter will search through all the fields, nod only through activity[activity['lastVersion']]['langcode'] -->
-        <select ng-model="langcode">
+    <!-- This filter will search through all the fields, nod only through activity[activity['lastVersion']]['langcode'] -->
+    <select ng-model="langcode">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+    </select>
+
+
+    <!--List of all activities-->
+    <ul>
+        <!-- Single activity line -->
+        <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
+        <!-- orderBy standard filter works with arrays only, not with objects -->
+        <li ng-repeat="activity in activities | filter:userQuery | filter:langcode | filter:filterNot123 | orderObjectByINT:'title':orderChoice track by activity.uuid">
+
+            <!-- Something like "ActivityTitle | en |"-->
+            <span ng-hide="editing" ng-click="editing = true">{{activity[activity['lastVersion']]['title'][activity[activity['lastVersion']]['langcode']]}} | {{activity[activity['lastVersion']]['langcode']}} | </span>
+            <!--"Details" link, click will open subpage with this particularactivity details-->
+            <a ng-hide="editing" href="#/activities/{{activity.uuid}}">Details</a>
+
+            <!--Button to delete this particular entry-->
+            <button ng-hide="editing" ng-click="deleteEntry(activity)">Del</button>
+
+            <!--Here activity editing form will be placed-->
+            <edit-activity></edit-activity>
+
+        </li>
+    </ul>
+
+
+
+    <!--Form to add new activity-->
+    <form name="addActivity" ng-submit="addEntry(activity)" novalidate >
+        <label>Title:</label>
+        <input type="text" ng-model="activity.title" placeholder="Title" required />
+        <select ng-model="activity.langcode" required >
             <option value="en">English</option>
             <option value="ru">Russian</option>
         </select>
+        <br/>
 
+        <!--Button to add entered values to the model-->
+        <button class="btn" type="submit" ng-disabled="addActivity.$invalid">Add</button>
+    </form>
 
-        <!--List of all activities-->
-        <ul>
-            <!-- Single activity line -->
-            <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
-            <!-- orderBy standard filter works with arrays only, not with objects -->
-            <li ng-repeat="activity in activities | filter:userQuery | filter:langcode | filter:filterNot123 | orderObjectByINT:'title':orderChoice track by activity.uuid">
-
-                <!-- Something like "ActivityTitle | en |"-->
-                <span ng-hide="editing" ng-click="editing = true">{{activity[activity['lastVersion']]['title'][activity[activity['lastVersion']]['langcode']]}} | {{activity[activity['lastVersion']]['langcode']}} | </span>
-                <!--"Details" link, click will open subpage with this particularactivity details-->
-                <a ng-hide="editing" href="#/activities/{{activity.uuid}}">Details</a>
-
-                <!--Button to delete this particular entry-->
-                <button ng-hide="editing" ng-click="deleteEntry(activity)">Del</button>
-
-                <!--Here activity editing form will be placed-->
-                <edit-activity></edit-activity>
-
-            </li>
-        </ul>
-
-
-
-        <!--Form to add new activity-->
-        <form name="addActivity" ng-submit="addEntry(activity)" novalidate >
-            <label>Title:</label>
-            <input type="text" ng-model="activity.title" placeholder="Title" required />
-            <select ng-model="activity.langcode" required >
-                <option value="en">English</option>
-                <option value="ru">Russian</option>
-            </select>
-            <br/>
-
-            <!--Button to add entered values to the model-->
-            <button class="btn" type="submit" ng-disabled="addActivity.$invalid">Add</button>
-        </form>
-
-    </span>
+</span>
