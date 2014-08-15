@@ -153,6 +153,9 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, 
             "heading":coordsHeading,
             //like 1 Current ground speed of the device, specified in meters per second. (Number)
             "speed":coordsSpeed,
+            //Backend URL probably should not be synced to backend, as it knows it's URL
+            //It should be used on client to sync to right backend
+            "backendURL":window.localStorage.getItem("backendURL"),
             "createdTimeStamp": curTimestamp,
             "modifiedTimeStamp": curTimestamp,
             //Looks like we should not bother about timezone here

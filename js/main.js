@@ -54,6 +54,17 @@ app.run(function($rootScope, indexedDBexo) {
     //Open app's IndexedDB database
     //There will be no problems, in case you'll call indexedDBexo.open() method again
     indexedDBexo.open();
+
+
+
+    //If there is NO previously saved backend domain, use webapp domain itself
+    if (!(window.localStorage.getItem("backendURL"))) {
+        //Get webapp domain
+        var appURL = window.location.protocol + "//" + window.location.hostname;
+        //Save webapp domain to local storage
+        window.localStorage.setItem("backendURL", appURL);
+    }
+
 });
 
 
@@ -380,6 +391,7 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
     $scope.pageLogin = {};
 
     //Populate Backend domain textfield
+    //backendURL at local storage is populated on app start, but storage may be cleared later, so we check if it is filled
     if (window.localStorage.getItem("backendURL")) {
 		//If there is previously saved backend domain, propose it to user
 		$scope.pageLogin.backendURL = window.localStorage.getItem("backendURL");
