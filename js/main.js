@@ -632,9 +632,9 @@ app.directive('exoHref', function ($location) {
 app.controller('allEntriesController', function($scope, $rootScope) {
 
     //Get all entries from $rootScope and put them to $scope object
-    $scope.activities = $rootScope.exo.activities;
+    $scope.entries = $rootScope.exo.activities;
 
-    angular.forEach($scope.activities, function(value,index){
+    angular.forEach($scope.entries, function(value,index){
         console.log(value.UUID);
     })
 
