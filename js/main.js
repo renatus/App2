@@ -634,8 +634,6 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
 //Controller to test code
 app.controller('exotst', function($scope, $rootScope){
 
-    $rootScope.exo = 3337;
-
     $scope.log = function(){
         console.log($rootScope.exo);
 	}

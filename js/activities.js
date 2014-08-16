@@ -15,6 +15,7 @@ app.controller('activitiesController', function ($scope, $q, $routeParams, index
             //Even if you only have one type of entries, it's better not to add them directly to scope, but use $scope as a container for models
             //In this case, our model is contained in "activities"
             $scope.activities = data;
+            $rootScope.exo.activities = $scope.activities;
             //Will show us all objects we've get - at Chrome DevTools console
             console.log(data);
         });
