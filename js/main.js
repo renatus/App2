@@ -641,17 +641,18 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     console.log('af');
     console.log($rootScope.exo.activities);
     //Get all entries from $rootScope and put them to $scope object
-    $scope.entries = $rootScope.exo.activities;
+    $scope.activities = $rootScope.exo.activities;
+    $scope.checkins = $rootScope.exo.checkins;
 
     var numOfUnsyncedEntries = 0;
 
-    angular.forEach($scope.entries, function(value,index){
+    angular.forEach($scope.activities, function(value,index){
         if (value['lastUpdatedLocally']) {
             numOfUnsyncedEntries++;
         }
     });
 
-    angular.forEach($rootScope.exo.checkins, function(value,index){
+    angular.forEach($scope.checkins, function(value,index){
         if (value['lastUpdatedLocally']) {
             numOfUnsyncedEntries++;
         }
