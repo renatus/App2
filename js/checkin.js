@@ -1,5 +1,10 @@
 //Controller to work with Geolocation
-app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, positionService) {
+app.controller('checkinController', function ($rootScope, $scope, $q, indexedDBexo, UUID4, positionService) {
+
+    //Get all entries from $rootScope and put them to $scope object
+    $scope.checkins = $rootScope.exo.checkins;
+
+
 
     //Add new Checkin entry to $scope and DB
     //You can get user-entered field value without passing object to function with construction like $scope.activity.title
@@ -29,7 +34,7 @@ app.controller('checkinController', function ($scope, $q, indexedDBexo, UUID4, p
 
 
 //Service to work with Geolocation data
-app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, positionBackendService){
+app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, userInterface, positionBackendService){
 
     //Method to get current position
     this.get = function(){
@@ -166,6 +171,9 @@ app.service('positionService', function($q, indexedDBexo, UUID4, userInterface, 
         //Add new entry to DB
         indexedDBexo.addEntry(newEntry, "checkins").then(function(){
             console.log('Check-in saved to DB!');
+
+            //Add new entry to $scope
+            $rootScope.exo.checkins.push(newEntry);
 
             //If we're connected to the internet
             //navigator.onLine will always return True at desktop Linux, and at Chrome for Android

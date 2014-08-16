@@ -73,7 +73,14 @@ app.run(function($rootScope, indexedDBexo) {
         indexedDBexo.getEntriesSubset("activities").then(function(data){
             $rootScope.exo.activities = data;
             //Will show us all objects we've get - at Chrome DevTools console
-            console.log(data);
+            //console.log(data);
+        });
+
+        //Get all Check-ins from DB and put them to $rootScope subobject
+        indexedDBexo.getEntriesSubset("checkins").then(function(data){
+            $rootScope.exo.checkins = data;
+            //Will show us all objects we've get - at Chrome DevTools console
+            //console.log(data);
         });
     });
 
@@ -637,11 +644,18 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.entries = $rootScope.exo.activities;
 
     var numOfUnsyncedEntries = 0;
+
     angular.forEach($scope.entries, function(value,index){
         if (value['lastUpdatedLocally']) {
             numOfUnsyncedEntries++;
         }
-    })
+    });
+
+    angular.forEach($rootScope.exo.checkins, function(value,index){
+        if (value['lastUpdatedLocally']) {
+            numOfUnsyncedEntries++;
+        }
+    });
 
 
 
