@@ -12,6 +12,7 @@ var app = angular.module('exoApp', ['ngRoute']);
 //You can't call a service from .config
 app.config(['$routeProvider',
   //Set pre-defined URLs and URL patterns for your app
+  //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
   function($routeProvider) {
       $routeProvider.
       //Page for a single activity
@@ -59,6 +60,7 @@ app.run(function($rootScope, indexedDBexo) {
 
     //Open app's IndexedDB database
     //There will be no problems, in case you'll call indexedDBexo.open() method again
+    //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
     indexedDBexo.open().then(function(){
 
         //Get all entries from DB and put them to $rootScope subobject
@@ -626,20 +628,15 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all entries at app
-app.controller('allEntriesController', function($scope, indexedDBexo) {
+//<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
+app.controller('allEntriesController', function($scope, $rootScope) {
 
-     //Get all entries from DB and put them to $scope object
-	$scope.init = function(){
-        indexedDBexo.open().then(function(){
-            indexedDBexo.getEntriesSubset("activities").then(function(data){
-                //In this case, our model is contained in "activities"
-                $scope.entries = data;
-            });
-        });
-	}
+    //Get all entries from $rootScope and put them to $scope object
+    $scope.activities = $rootScope.exo.activities;
 
-    //Will reload activities on EACH page visit
-	$scope.init();
+    angular.forEach($scope.activities, function(value,index){
+        console.log(value.UUID);
+    })
 
 
 
