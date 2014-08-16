@@ -636,14 +636,17 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     //Get all entries from $rootScope and put them to $scope object
     $scope.entries = $rootScope.exo.activities;
 
+    var numOfUnsyncedEntries = 0;
     angular.forEach($scope.entries, function(value,index){
-        console.log(value['uuid']);
+        if (value['lastUpdatedLocally']) {
+            numOfUnsyncedEntries++;
+        }
     })
 
 
 
     //Set current activity ID
-    //$scope.numOfUnsyncedEntries = $scope.entries.length;
+    $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 });
 
 

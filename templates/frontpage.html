@@ -16,6 +16,7 @@
 
     </span>
 
-    <div ng-controller="allEntriesController">{{entries.length}}</div>
+    <!-- Placed in index.html file, will trigger controller before entries were acquired from DB-->
+    <div ng-controller="allEntriesController">{{numOfUnsyncedEntries}}</div>
 
 </span>
