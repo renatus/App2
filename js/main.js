@@ -638,7 +638,7 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
 app.controller('exotst', function($scope, $rootScope){
 
     $scope.log = function(){
-        console.log($rootScope.exo);
+        console.log($rootScope.exo.activities.length);
 	}
 
 });
