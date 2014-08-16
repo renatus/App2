@@ -26,6 +26,9 @@ app.controller('activitiesController', function ($scope, $rootScope, $q, $routeP
             "uuid": entryID,
             //Entry is new, so revision number is "0"
             "lastVersion": 0,
+            //Looks like we should not bother about timezone here
+            //Mark entry as updated locally, by putting in last update timestamp
+            "lastUpdatedLocally": curTimestamp,
             "0": {
                 "title": {},
                 "langcode": $scope.activity.langcode,

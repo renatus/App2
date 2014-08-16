@@ -636,7 +636,6 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.entries = $rootScope.exo.activities;
 
     angular.forEach($scope.entries, function(value,index){
-        //console.log(value);
         console.log(value['uuid']);
     })
 
@@ -649,10 +648,10 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
 
 //Controller to test code
-app.controller('exotst', function($scope, $rootScope){
+//app.controller('exotst', function($scope, $rootScope){
 
-    $scope.log = function(){
-        console.log($rootScope.exo.activities.length);
-	}
+//    $scope.log = function(){
+//        console.log($rootScope.exo.activities.length);
+//	}
 
-});
+//});
