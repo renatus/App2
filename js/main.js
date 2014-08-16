@@ -20,6 +20,8 @@ app.config(['$routeProvider',
           //HTML template for this URL pattern
           templateUrl: 'templates/activity.html',
           //Angular controller for this URL pattern
+          //showActivityController is a child of activitiesController, as showActivityController uses data from $scope of latter
+          //So we should set activitiesController here, and showActivityController - at single activity page template .html file
           controller: 'activitiesController'
       }).
 
@@ -601,4 +603,26 @@ app.directive('exoHref', function ($location) {
         });
 
     };
+});
+
+
+
+//Controller to show number of all entries at app
+app.controller('allEntriesController', function($scope, indexedDBexo) {
+
+     //Get all entries from DB and put them to $scope object
+	$scope.init = function(){
+        indexedDBexo.getEntriesSubset("activities").then(function(data){
+            //In this case, our model is contained in "activities"
+            $scope.entries = data;
+        });
+	}
+
+    //Will reload activities on EACH page visit
+	$scope.init();
+
+
+
+    //Set current activity ID
+    //$scope.numOfUnsyncedEntries = $scope.entries.length;
 });
