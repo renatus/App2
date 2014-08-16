@@ -1,5 +1,5 @@
 //Controller to work with activities
-app.controller('activitiesController', function ($scope, $q, $routeParams, indexedDBexo, UUID4) {
+app.controller('activitiesController', function ($scope, $rootScope, $q, $routeParams, indexedDBexo, UUID4) {
     
     //You can populate scope by hands if needed. This is just example, app uses different activity data structure and populates it from IndexedDB.
 	//$scope.activities = [
