@@ -636,7 +636,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.entries = $rootScope.exo.activities;
 
     angular.forEach($scope.entries, function(value,index){
-        console.log("This: " + value);
+        console.log(value);
     })
 
 
