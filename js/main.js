@@ -632,6 +632,7 @@ app.directive('exoHref', function ($location) {
 app.controller('allEntriesController', function($scope, $rootScope) {
 
     console.log('af');
+    console.log($rootScope.exo.activities);
     //Get all entries from $rootScope and put them to $scope object
     $scope.entries = $rootScope.exo.activities;
 
