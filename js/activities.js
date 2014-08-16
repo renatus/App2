@@ -6,19 +6,9 @@ app.controller('activitiesController', function ($scope, $rootScope, $q, $routeP
 	//	{"nid":"6650","langcode":"en","title":"End an agreements with Stream ISP"},
 	//	{"nid":"3188","langcode":"en","title":"Renew domain exocortex.pp.ua"}
 	//];
-    	
-	
-	
-    //Get all entries from DB and put them to $scope object
-	$scope.init = function(){
-        //We should duplicate model at $rootScope to be able to get data outside of this controller
-        //As far as objects are copied by reference, memory consumption should not increase
-        //And all manipulations will be mirrored between $scope and $rootScope
-        $scope.activities = $rootScope.exo.activities;
-	}
-	
-    //Will reload activities on EACH page visit
-	$scope.init();
+
+    //Get all entries from $rootScope and put them to $scope object
+    $scope.activities = $rootScope.exo.activities;
     
     
     

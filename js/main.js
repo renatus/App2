@@ -54,17 +54,21 @@ app.config(['$routeProvider',
 //You can call a service from .run
 app.run(function($rootScope, indexedDBexo) {
 
+    //Create subobject for app's model
     $rootScope.exo = {};
 
     //Open app's IndexedDB database
     //There will be no problems, in case you'll call indexedDBexo.open() method again
     indexedDBexo.open().then(function(){
+
+        //Get all entries from DB and put them to $rootScope subobject
+        //We should store model at $rootScope to be able to get data outside of perticular controller
+        //To use all Angular's goodness, we will duplicate appropriate subobjects from $rootScope to $scope of particular controller
+        //As far as objects are copied by reference, memory consumption should not increase
+        //And all manipulations will be mirrored between $scope and $rootScope automatically
+
+        //Get all Activities from DB and put them to $rootScope subobject
         indexedDBexo.getEntriesSubset("activities").then(function(data){
-            //Even if you only have one type of entries, it's better not to add them directly to scope, but use $scope as a container for models
-            //In this case, our model is contained in "activities"
-            //We should duplicate model at $rootScope to be able to get data outside of this controller
-            //As far as objects are copied by reference, memory consumption should not increase
-            //And all manipulations will be mirrored between $scope and $rootScope
             $rootScope.exo.activities = data;
             //Will show us all objects we've get - at Chrome DevTools console
             console.log(data);
