@@ -631,6 +631,7 @@ app.directive('exoHref', function ($location) {
 //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
 app.controller('allEntriesController', function($scope, $rootScope) {
 
+    console.log('af');
     //Get all entries from $rootScope and put them to $scope object
     $scope.entries = $rootScope.exo.activities;
 
