@@ -612,9 +612,11 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
 
      //Get all entries from DB and put them to $scope object
 	$scope.init = function(){
-        indexedDBexo.getEntriesSubset("activities").then(function(data){
-            //In this case, our model is contained in "activities"
-            $scope.entries = data;
+        indexedDBexo.open().then(function(){
+            indexedDBexo.getEntriesSubset("activities").then(function(data){
+                //In this case, our model is contained in "activities"
+                $scope.entries = data;
+            });
         });
 	}
 
