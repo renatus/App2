@@ -20,7 +20,7 @@ app.config(['$routeProvider',
           //HTML template for this URL pattern
           templateUrl: 'templates/activity.html',
           //Angular controller for this URL pattern
-          controller: 'showActivityController'
+          controller: 'activitiesController'
       }).
 
       //Page for activities list
