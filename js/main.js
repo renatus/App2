@@ -632,7 +632,7 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
 
 
 //Controller to test code
-app.controller('exotst', function($rootScope){
+app.controller('exotst', function($scope, $rootScope){
 
     $scope.log = function(){
         console.log($rootScope);
