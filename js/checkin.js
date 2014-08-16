@@ -230,7 +230,7 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
 
 //Service to sync checkin to backend
 //We need it because we can't call service method from the method of this very same service, so we need two services
-app.service('positionBackendService', function($q, indexedDBexo, backend){
+app.service('positionBackendService', function($rootScope, $q, indexedDBexo, backend){
     //Sync checkin to IS backend
     this.syncTo = function(UUID){
 
@@ -284,6 +284,17 @@ app.service('positionBackendService', function($q, indexedDBexo, backend){
                         indexedDBexo.addEntry(retrievedObj, "checkins").then(function(data){
                             console.log(data);
                         });
+
+                        //Update entry at $rootScope
+                        for (var i = 0; i < $rootScope.exo.checkins; i++){
+                            //If edited entry UUID is equal to found entry UUID
+                            if ($rootScope.exo.checkins[i].uuid == entryUUID){
+                                //Update entry at $rootScope
+                                $rootScope.exo.checkins[i] = angular.copy(retrievedObj);
+                                //Stop searching through all $rootScope entries
+                                break;
+                            }
+                        }
 
                         console.log("You've created/updated backend entry successfully");
                     } else {
