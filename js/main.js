@@ -628,3 +628,20 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
     //Set current activity ID
     //$scope.numOfUnsyncedEntries = $scope.entries.length;
 });
+
+
+
+//Service to work with interface elements
+app.service('exotst', function($rootScope){
+
+	//Method to notify user about something by Alert
+    //alertBody argument should contain message text
+	this.log = function() {
+        console.log($rootScope);
+    }
+
+});
+
+var tstroot = function(){
+    console.log($rootScope);
+}
