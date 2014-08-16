@@ -11,14 +11,10 @@ app.controller('activitiesController', function ($scope, $rootScope, $q, $routeP
 	
     //Get all entries from DB and put them to $scope object
 	$scope.init = function(){
-        indexedDBexo.getEntriesSubset("activities").then(function(data){
-            //Even if you only have one type of entries, it's better not to add them directly to scope, but use $scope as a container for models
-            //In this case, our model is contained in "activities"
-            $scope.activities = data;
-            $rootScope.exo.activities = $scope.activities;
-            //Will show us all objects we've get - at Chrome DevTools console
-            console.log(data);
-        });
+        //We should duplicate model at $rootScope to be able to get data outside of this controller
+        //As far as objects are copied by reference, memory consumption should not increase
+        //And all manipulations will be mirrored between $scope and $rootScope
+        $scope.activities = $rootScope.exo.activities;
 	}
 	
     //Will reload activities on EACH page visit
