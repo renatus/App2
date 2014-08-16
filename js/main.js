@@ -631,17 +631,11 @@ app.controller('allEntriesController', function($scope, indexedDBexo) {
 
 
 
-//Service to work with interface elements
-app.service('exotst', function($rootScope){
+//Controller to test code
+app.controller('exotst', function($rootScope){
 
-	//Method to notify user about something by Alert
-    //alertBody argument should contain message text
-	this.log = function() {
+    $scope.log = function(){
         console.log($rootScope);
-    }
+	}
 
 });
-
-var tstroot = function(){
-    console.log($rootScope);
-}
