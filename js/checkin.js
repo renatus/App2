@@ -47,7 +47,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
         }, function(error) {
             //If we've failed to get position, return error
             deferred.reject(error);
-        });
+            //maximumAge and timeout values are in milliseconds
+        }, {enableHighAccuracy: true, maximumAge: 20000, timeout: 60000});
 
         return deferred.promise;
     }
