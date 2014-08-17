@@ -645,7 +645,8 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.checkins = $rootScope.exo.checkins;
 
 
-    $rootScope.$watchCollection("exo", function(newValue, oldValue) {
+    //$rootScope.$watchCollection("exo", function(newValue, oldValue) {
+    $rootScope.$watch("exo", function(newValue, oldValue) {
 
         console.log("exo collection changed");
 
@@ -672,7 +673,9 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
 
-    });
+    //});
+
+    }, true);
 });
 
 
