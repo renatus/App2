@@ -296,7 +296,7 @@ app.service('positionBackendService', function($rootScope, $q, indexedDBexo, bac
                                 console.log(index);
                                 $rootScope.exo.checkins[index] = angular.copy(retrievedObj);
                                 //Stop searching through all $rootScope entries
-                                break;
+                                //break;
                             }
                         //}
                         });
