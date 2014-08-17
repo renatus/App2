@@ -290,6 +290,7 @@ app.service('positionBackendService', function($rootScope, $q, indexedDBexo, bac
                         //Update entry at $rootScope
                         for (var i = 0; i < $rootScope.exo.checkins; i++){
                             //If edited entry UUID is equal to found entry UUID
+                            console.log($rootScope.exo.checkins[i].uuid);
                             if ($rootScope.exo.checkins[i].uuid == entryUUID){
                                 //Update entry at $rootScope
                                 $rootScope.exo.checkins[i] = angular.copy(retrievedObj);
