@@ -47,6 +47,9 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
         }, function(error) {
             //If we've failed to get position, return error
             deferred.reject(error);
+            //enableHighAccuracy option enables GPS usage (otherwise location will be calculated based on WiFi and cells signal only)
+            //maximumAge option tells, is it possible to use previously acquired location (and how old it may be)
+            //timeout option sets time period, after that device will give up trying to find it's position
             //maximumAge and timeout values are in milliseconds
         }, {enableHighAccuracy: true, maximumAge: 20000, timeout: 60000});
 
