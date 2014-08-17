@@ -676,6 +676,13 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     //});
 
     }, true);
+
+
+
+    $scope.log = function(){
+        console.log($rootScope.exo.checkins.length);
+	}
+
 });
 
 
