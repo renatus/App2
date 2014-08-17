@@ -680,7 +680,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
 
     $scope.log = function(){
-        console.log($rootScope.exo.checkins.length);
+        console.log($scope.checkins.length);
 	}
 
 });
