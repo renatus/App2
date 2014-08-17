@@ -647,6 +647,8 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
     $rootScope.$watchCollection("exo", function(newValue, oldValue) {
 
+        console.log("exo collection changed");
+
     var numOfUnsyncedEntries = 0;
 
     angular.forEach($scope.activities, function(value,index){
