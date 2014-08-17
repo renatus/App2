@@ -644,6 +644,9 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.activities = $rootScope.exo.activities;
     $scope.checkins = $rootScope.exo.checkins;
 
+
+    $rootScope.$watchCollection("exo", function(newValue, oldValue) {
+
     var numOfUnsyncedEntries = 0;
 
     angular.forEach($scope.activities, function(value,index){
@@ -651,6 +654,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
             numOfUnsyncedEntries++;
         }
     });
+
 
     angular.forEach($scope.checkins, function(value,index){
         if (value['lastUpdatedLocally']) {
@@ -660,8 +664,13 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
 
 
+
+
     //Set current activity ID
     $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
+
+
+    });
 });
 
 
