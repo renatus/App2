@@ -638,15 +638,15 @@ app.directive('exoHref', function ($location) {
 //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
 app.controller('allEntriesController', function($scope, $rootScope) {
 
-    console.log('af');
-    console.log($rootScope.exo.activities);
     //Get all entries from $rootScope and put them to $scope object
     $scope.activities = $rootScope.exo.activities;
     $scope.checkins = $rootScope.exo.checkins;
+    $scope.entries = $rootScope.exo;
 
 
     //$scope.$watch("checkins", function(newValue, oldValue) {
-    $rootScope['exo'].$watchCollection("checkins", function(newValue, oldValue) {
+    $scope.$watch("entries", function(newValue, oldValue) {
+
 
         console.log("exo collection changed");
 
