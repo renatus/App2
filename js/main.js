@@ -649,6 +649,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
 
         console.log("exo collection changed");
+        console.log($scope.checkins);
 
     var numOfUnsyncedEntries = 0;
 
