@@ -644,8 +644,8 @@ app.controller('allEntriesController', function($scope, $rootScope) {
     $scope.entries = $rootScope.exo;
 
 
-    //$scope.$watch("checkins", function(newValue, oldValue) {
-    $scope.$watch("entries", function(newValue, oldValue) {
+    $scope.$watch("checkins", function(newValue, oldValue) {
+    //$scope.$watch("entries", function(newValue, oldValue) {
 
 
         console.log("exo collection changed");
