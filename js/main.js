@@ -656,14 +656,16 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
     var numOfUnsyncedEntries = 0;
 
-    angular.forEach($scope.activities, function(value,index){
+    //angular.forEach($scope.activities, function(value,index){
+    angular.forEach($rootScope.exo.activities, function(value,index){
         if (value['lastUpdatedLocally']) {
             numOfUnsyncedEntries++;
         }
     });
 
 
-    angular.forEach($scope.checkins, function(value,index){
+    //angular.forEach($scope.checkins, function(value,index){
+    angular.forEach($rootScope.exo.checkins, function(value,index){
         if (value['lastUpdatedLocally']) {
             numOfUnsyncedEntries++;
         }
