@@ -640,46 +640,25 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
     $rootScope.$watch("exo", function(newValue, oldValue) {
 
-    //Get all entries from $rootScope and put them to $scope object
-    $scope.activities = $rootScope.exo.activities;
-    $scope.checkins = $rootScope.exo.checkins;
-    $scope.entries = $rootScope.exo;
+        var numOfUnsyncedEntries = 0;
+
+        angular.forEach($rootScope.exo.activities, function(value,index){
+            if (value['lastUpdatedLocally']) {
+                numOfUnsyncedEntries++;
+            }
+            //BREAK
+        });
+
+        angular.forEach($rootScope.exo.checkins, function(value,index){
+            if (value['lastUpdatedLocally']) {
+                numOfUnsyncedEntries++;
+            }
+        });
 
 
 
-    //$scope.$watch("checkins", function(newValue, oldValue) {
-    //$scope.$watch("entries", function(newValue, oldValue) {
-
-
-        console.log("exo collection changed");
-        console.log($scope.checkins);
-
-    var numOfUnsyncedEntries = 0;
-
-    //angular.forEach($scope.activities, function(value,index){
-    angular.forEach($rootScope.exo.activities, function(value,index){
-        if (value['lastUpdatedLocally']) {
-            numOfUnsyncedEntries++;
-        }
-    });
-
-
-    //angular.forEach($scope.checkins, function(value,index){
-    angular.forEach($rootScope.exo.checkins, function(value,index){
-        if (value['lastUpdatedLocally']) {
-            numOfUnsyncedEntries++;
-        }
-    });
-
-
-
-
-
-    //Set current activity ID
-    $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
-
-
-    //});
+        //Set current activity ID
+        $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
     }, true);
 
