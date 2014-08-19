@@ -178,6 +178,7 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
 
             //Add new entry to $scope
             $rootScope.exo.checkins.push(newEntry);
+            console.log($rootScope.exo.checkins);
 
             //If we're connected to the internet
             //navigator.onLine will always return True at desktop Linux, and at Chrome for Android
