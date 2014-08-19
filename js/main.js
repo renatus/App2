@@ -70,17 +70,17 @@ app.run(function($rootScope, indexedDBexo) {
         //And all manipulations will be mirrored between $scope and $rootScope automatically
 
         //Get all Activities from DB and put them to $rootScope subobject
-        //indexedDBexo.getEntriesSubset("activities").then(function(data){
-        //    $rootScope.exo.activities = data;
+        indexedDBexo.getEntriesSubset("activities").then(function(data){
+            $rootScope.exo.activities = data;
             //Will show us all objects we've get - at Chrome DevTools console
             //console.log(data);
-        //});
+        });
 
         //Get all Check-ins from DB and put them to $rootScope subobject
         indexedDBexo.getEntriesSubset("checkins").then(function(data){
             $rootScope.exo.checkins = data;
             //Will show us all objects we've get - at Chrome DevTools console
-            //console.log(data);
+            console.log(data);
         });
     });
 
