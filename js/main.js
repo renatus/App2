@@ -80,7 +80,7 @@ app.run(function($rootScope, indexedDBexo) {
         indexedDBexo.getEntriesSubset("checkins").then(function(data){
             $rootScope.exo.checkins = data;
             //Will show us all objects we've get - at Chrome DevTools console
-            console.log(data);
+            //console.log(data);
         });
     });
 
@@ -448,7 +448,8 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
             //Login to server
             backend.login(pageLogin.backendURL, pageLogin.name, pageLogin.password).then(function(serverReply){
-                console.log(serverReply);
+                //console.log(serverReply);
+                userInterface.alert(serverReply);
             });
             
         });
@@ -464,7 +465,8 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
             backend.getServicesToken(backendURL).then(function(servicesToken){
                 //Logout from server
                 backend.logout(backendURL).then(function(serverReply){
-                    console.log(serverReply);
+                    //console.log(serverReply);
+                    userInterface.alert(serverReply);
                 });
             });
         } else {
