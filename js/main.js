@@ -657,9 +657,13 @@ app.controller('allEntriesController', function($scope, $rootScope) {
         //    }
         //});
 
-        angular.forEach($rootScope.exo, function(value,index){
-            console.log(value);
-        });
+        //angular.forEach($rootScope.exo, function(value,index){
+        //    console.log(value);
+        //});
+
+        for (var i in $rootScope.exo){
+            console.log(i); // alerts key
+        }
 
 
 
