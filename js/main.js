@@ -670,7 +670,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
             });
 
             var curObject = $rootScope['exo'][i];
-            curObject.some(function(value, index, array){
+            $rootScope['exo'][i].some(function(value, index, array){
                 if (value['lastUpdatedLocally']) {
                     numOfUnsyncedEntries++;
                 }
