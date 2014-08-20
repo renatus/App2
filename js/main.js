@@ -644,17 +644,21 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
         var numOfUnsyncedEntries = 0;
 
-        angular.forEach($rootScope.exo.activities, function(value,index){
-            if (value['lastUpdatedLocally']) {
-                numOfUnsyncedEntries++;
-            }
+        //angular.forEach($rootScope.exo.activities, function(value,index){
+        //    if (value['lastUpdatedLocally']) {
+        //        numOfUnsyncedEntries++;
+        //    }
             //BREAK
-        });
+        //});
 
-        angular.forEach($rootScope.exo.checkins, function(value,index){
-            if (value['lastUpdatedLocally']) {
-                numOfUnsyncedEntries++;
-            }
+        //angular.forEach($rootScope.exo.checkins, function(value,index){
+        //    if (value['lastUpdatedLocally']) {
+        //        numOfUnsyncedEntries++;
+        //    }
+        //});
+
+        angular.forEach($rootScope.exo, function(value,index){
+            console.log(value);
         });
 
 
@@ -664,21 +668,4 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
     }, true);
 
-
-
-    $scope.log = function(){
-        console.log($scope.checkins.length);
-	}
-
 });
-
-
-
-//Controller to test code
-//app.controller('exotst', function($scope, $rootScope){
-
-//    $scope.log = function(){
-//        console.log($rootScope.exo.activities.length);
-//	}
-
-//});
