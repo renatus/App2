@@ -662,7 +662,12 @@ app.controller('allEntriesController', function($scope, $rootScope) {
         //});
 
         for (var i in $rootScope.exo){
-            console.log(i); // alerts key
+            angular.forEach($rootScope['exo'][i], function(value,index){
+                if (value['lastUpdatedLocally']) {
+                    numOfUnsyncedEntries++;
+                }
+                //BREAK
+            });
         }
 
 
