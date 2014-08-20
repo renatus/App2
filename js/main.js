@@ -637,39 +637,13 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all entries at app
-//<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
 app.controller('allEntriesController', function($scope, $rootScope) {
 
     $rootScope.$watch("exo", function(newValue, oldValue) {
 
         var numOfUnsyncedEntries = 0;
 
-        //angular.forEach($rootScope.exo.activities, function(value,index){
-        //    if (value['lastUpdatedLocally']) {
-        //        numOfUnsyncedEntries++;
-        //    }
-            //BREAK
-        //});
-
-        //angular.forEach($rootScope.exo.checkins, function(value,index){
-        //    if (value['lastUpdatedLocally']) {
-        //        numOfUnsyncedEntries++;
-        //    }
-        //});
-
-        //angular.forEach($rootScope.exo, function(value,index){
-        //    console.log(value);
-        //});
-
         for (var i in $rootScope.exo){
-            angular.forEach($rootScope['exo'][i], function(value,index){
-                if (value['lastUpdatedLocally']) {
-                    //numOfUnsyncedEntries++;
-                }
-                //BREAK
-            });
-
-            var curObject = $rootScope['exo'][i];
             $rootScope['exo'][i].some(function(value, index, array){
                 if (value['lastUpdatedLocally']) {
                     numOfUnsyncedEntries++;
@@ -677,9 +651,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
             });
         }
 
-
-
-        //Set current activity ID
+        //Set
         $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
     }, true);
