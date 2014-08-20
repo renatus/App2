@@ -664,9 +664,16 @@ app.controller('allEntriesController', function($scope, $rootScope) {
         for (var i in $rootScope.exo){
             angular.forEach($rootScope['exo'][i], function(value,index){
                 if (value['lastUpdatedLocally']) {
-                    numOfUnsyncedEntries++;
+                    //numOfUnsyncedEntries++;
                 }
                 //BREAK
+            });
+
+            var curObject = $rootScope['exo'][i];
+            curObject.some(function(){
+                if (value['lastUpdatedLocally']) {
+                    numOfUnsyncedEntries++;
+                }
             });
         }
 
