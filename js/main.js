@@ -479,7 +479,7 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
 
 
 //Service to work with remote server
-app.service('backend', function($q, $http){
+app.service('backend', function($q, $http, $rootScope){
     
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
