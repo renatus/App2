@@ -613,7 +613,8 @@ app.service('backendSyncAll', function($rootScope, backendSync){
             $rootScope['exo'][i].some(function(value, index, array){
                 if (value['lastUpdatedLocally']) {
                     console.log(i);
-                    backendSync[i]();
+                    console.log(value['uuid']);
+                    backendSync[i](value['uuid']);
                 }
             });
         }
