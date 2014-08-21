@@ -643,6 +643,7 @@ app.controller('allEntriesController', function($scope, $rootScope) {
 
     //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
     //Number of unsynced entries will be updated, right after it was changed
+    //$watch({}, true) is the most computationally-expensive observer, but you have to use it to get correct result
     $rootScope.$watch("exo", function(newValue, oldValue) {
 
         //Variable to store numbers of unsynced entries
@@ -664,7 +665,6 @@ app.controller('allEntriesController', function($scope, $rootScope) {
         //Display number of locally-modified unsynced entries
         $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
-    //}, true);
-    });
+    }, true);
 
 });
