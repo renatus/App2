@@ -479,7 +479,7 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
 
 
 //Service to work with remote server
-app.service('backend', function($q, $http, $rootScope, backendSync){
+app.service('backend', function($q, $http, $rootScope){
     
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
@@ -595,8 +595,13 @@ app.service('backend', function($q, $http, $rootScope, backendSync){
 
     };
 
+});
 
 
+
+//Service to sync checkin to backend
+//We need it because we can't call service method from the method of this very same service, so we need two services
+app.service('backendSyncAll', function($rootScope, backendSync){
     //Iterate throug all entries in all collections to order sync of all unsynced entries to server
     this.syncAllTo = function() {
         //for/in loops through the properties of an object and return names of that properties in i variable
@@ -613,7 +618,6 @@ app.service('backend', function($q, $http, $rootScope, backendSync){
             });
         }
     }
-
 });
 
 
@@ -751,7 +755,7 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all unsynced entries at app
-app.controller('allEntriesController', function($scope, $rootScope, backend) {
+app.controller('allEntriesController', function($scope, $rootScope, backendSyncAll) {
 
     //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
     //Number of unsynced entries will be updated, right after it was changed
@@ -783,7 +787,7 @@ app.controller('allEntriesController', function($scope, $rootScope, backend) {
 
     //Button to sync all entries was pressed
     $scope.syncAllTo = function(){
-        backend.syncAllTo();
+        backendSyncAll.syncAllTo();
     }
 
 });
