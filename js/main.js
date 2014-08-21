@@ -479,7 +479,7 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
 
 
 //Service to work with remote server
-app.service('backend', function($q, $http, $rootScope, positionBackendService){
+app.service('backend', function($q, $http, $rootScope){
     
     //Get Drupal Services token, needed to communicate with server (security measure implemented by Services module)
     //backendDomain argument should contain server domain without trailing slash, like "http://yoursite.com"
@@ -595,9 +595,14 @@ app.service('backend', function($q, $http, $rootScope, positionBackendService){
 
     };
 
+});
 
 
-    this.syncAllTo = function() {
+
+//Service to work with remote server
+app.service('backendSync', function($rootScope){
+
+    this.allTo = function() {
         //for/in loops through the properties of an object and return names of that properties in i variable
         //i will hold collection name, like "activities" or "checkins"
         //Each collection contains array of individual entries (which are JS objects themselves)
@@ -610,9 +615,6 @@ app.service('backend', function($q, $http, $rootScope, positionBackendService){
                 }
             });
         }
-
-    var testNameElem = "sync";
-    positionBackendService[testNameElem + "To2"]();
     }
 
 });
@@ -659,7 +661,7 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all unsynced entries at app
-app.controller('allEntriesController', function($scope, $rootScope, backend) {
+app.controller('allEntriesController', function($scope, $rootScope, backendSync) {
 
     //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
     //Number of unsynced entries will be updated, right after it was changed
@@ -691,7 +693,7 @@ app.controller('allEntriesController', function($scope, $rootScope, backend) {
 
     //Button to sync all entries was pressed
     $scope.syncAllTo = function(){
-        backend.syncAllTo();
+        backendSync.allTo();
     }
 
 });
