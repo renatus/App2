@@ -595,14 +595,10 @@ app.service('backend', function($q, $http, $rootScope){
 
     };
 
-});
 
 
-
-//Service to work with remote server
-app.service('backendSync', function($rootScope){
-
-    this.allTo = function() {
+    //Iterate throug all entries in all collections to order sync of all unsynced entries to server
+    this.syncAllTo = function() {
         //for/in loops through the properties of an object and return names of that properties in i variable
         //i will hold collection name, like "activities" or "checkins"
         //Each collection contains array of individual entries (which are JS objects themselves)
@@ -615,6 +611,92 @@ app.service('backendSync', function($rootScope){
                 }
             });
         }
+    }
+
+});
+
+
+
+//Service to sync checkin to backend
+//We need it because we can't call service method from the method of this very same service, so we need two services
+app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
+    //Sync checkin to IS backend
+    this.checkins = function(UUID){
+
+        //Example of data to send to IS to create or modify Drupal node:
+        //'node[type]=activity&node[language]=en&node[title]=' + encodeURIComponent(title) +
+        //'node[field_datetime][und][0][value][date]=' + curDate +
+        //'&node[field_datetime][und][0][value][time]=' + curTime;
+
+        //Get Checkin entry from DB
+        indexedDBexo.getEntry("checkins", UUID).then(function(data){
+
+            //0
+            var retrievedObj = data['0'];
+            //Will show us all objects we've get - at Chrome DevTools console
+            console.log(retrievedObj);
+
+
+            //Put all data to send to IS to modify Drupal node at this variable
+            //In case Drupal Date field already has both start and end values stored, you have to send both value and value2
+            //Looks like at least Decimal fields will accept emty values, like this:
+            //&node[field_altitude][und][0][value]=&node[field_altitude_accuracy][und][0][value]=
+            //So we can not to check whether value is here
+            //Attempt to save more digits, than allowed by Drupal Field's Scale setting will give us error
+            //We can put more digits, than specified in Scale setting, though, so we've to limit number of all digits in decimal number
+            //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB (it improved consistency as well)
+            var dataToSend = 'node[type]=check_in&node[language]=en&node[title]=' + encodeURIComponent("Check-in") +
+                             '&node[field_place_latlon][und][0][lat]=' + data['0']['latitude'] +
+                             '&node[field_place_latlon][und][0][lon]=' + data['0']['longitude'] +
+                             '&node[field_latlon_accuracy][und][0][value]=' + data['0']['latLonAccuracy'] +
+                             '&node[field_altitude][und][0][value]=' + data['0']['altitude'] +
+                             '&node[field_altitude_accuracy][und][0][value]=' + data['0']['altitudeAccuracy'] +
+                             '&node[field_heading][und][0][value]=' + data['0']['heading'] +
+                             '&node[field_speed][und][0][value]=' + data['0']['speed'] +
+                             '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
+                             '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
+                             '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
+
+            var URLpart = "/rest/node.json";
+            var entryUUID = data['0']['UUID'];
+
+            //Try to edit backend node
+            //Theoretically you can use CSRF token multiple times, but this gave error: 401 (Unauthorized: CSRF validation failed)
+            var backendURL = window.localStorage.getItem("backendURL");
+            backend.getServicesToken(backendURL).then(function(servicesToken){
+                backend.editBackendNode(entryUUID, dataToSend, URLpart).then(function(data){
+                    if (data === "success") {
+                        //
+                        retrievedObj["lastUpdatedLocally"] = "";
+
+                        //Modify Checkin entry at DB
+                        indexedDBexo.addEntry(retrievedObj, "checkins").then(function(data){
+                            console.log(data);
+                        });
+
+                        //Update entry at $rootScope
+                        //.some will iterate through all array elements
+                        //.some can be stopped by return keyword, and angular.forEach (or native .forEach) - can't
+                        $rootScope['exo']['checkins'].some(function(value, index, array){
+                            //If edited entry UUID is equal to found entry UUID
+                            if (value['uuid'] == retrievedObj['uuid']){
+                                //Update entry at $rootScope
+                                $rootScope.exo.checkins[index] = angular.copy(retrievedObj);
+                                //Stop searching through all $rootScope entries
+                                return;
+                            }
+                        });
+
+                        console.log("You've created/updated backend entry successfully");
+                    } else {
+                        console.log("You've failed to create/update backend entry");
+                    }
+                });
+            });
+
+
+        });
+
     }
 
 });
@@ -661,7 +743,7 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all unsynced entries at app
-app.controller('allEntriesController', function($scope, $rootScope, backendSync) {
+app.controller('allEntriesController', function($scope, $rootScope, backend) {
 
     //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
     //Number of unsynced entries will be updated, right after it was changed
@@ -693,7 +775,7 @@ app.controller('allEntriesController', function($scope, $rootScope, backendSync)
 
     //Button to sync all entries was pressed
     $scope.syncAllTo = function(){
-        backendSync.allTo();
+        backend.syncAllTo();
     }
 
 });

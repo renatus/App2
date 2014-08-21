@@ -34,7 +34,7 @@ app.controller('checkinController', function ($rootScope, $scope, $q, indexedDBe
 
 
 //Service to work with Geolocation data
-app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, userInterface, positionBackendService){
+app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, userInterface, backendSync){
 
     //Method to get current position
     this.get = function(){
@@ -184,7 +184,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
             //navigator.onLine will always return True at desktop Linux, and at Chrome for Android
             if (navigator.onLine) {
                 //Sync new or modified data to backend
-                positionBackendService.syncTo(entryID);
+                //positionBackendService.syncTo(entryID);
+                backendSync.checkins(entryID);
             }
         });
 
