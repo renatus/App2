@@ -599,7 +599,7 @@ app.service('backend', function($q, $http){
 
 
 
-//Service to work with interface elements
+//Service to work with random interface elements
 app.service('userInterface', function($window){
 
 	//Method to notify user about something by Alert
@@ -614,6 +614,7 @@ app.service('userInterface', function($window){
 
 
 //Directive to make buttons and other UI elements work like <a> tag
+//For example, you may create a button, that will open new page being clicked
 //http://stackoverflow.com/questions/15847726/is-there-a-simple-way-to-use-button-to-navigate-page-as-a-link-does-in-angularjs
 //$location service parses the URL in the browser address bar (using window.location) and makes it available to your app
 app.directive('exoHref', function ($location) {
@@ -627,6 +628,7 @@ app.directive('exoHref', function ($location) {
 
         element.bind( 'click', function() {
             scope.$apply(function() {
+                //.path method returns current url when called without parameter, and change path URL when called with parameter
                 $location.path(URLpath);
             });
         });
@@ -636,14 +638,22 @@ app.directive('exoHref', function ($location) {
 
 
 
-//Controller to show number of all entries at app
+//Controller to show number of all unsynced entries at app
 app.controller('allEntriesController', function($scope, $rootScope) {
 
+    //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
+    //Number of unsynced entries will be updated, right after it was changed
     $rootScope.$watch("exo", function(newValue, oldValue) {
 
+        //Variable to store numbers of unsynced entries
         var numOfUnsyncedEntries = 0;
 
+        //for/in loops through the properties of an object and return names of that properties in i variable
+        //i will hold collection name, like "activities" or "checkins"
+        //Each collection contains array of individual entries (which are JS objects themselves)
         for (var i in $rootScope.exo){
+            //.some will iterate through all array elements (i.e. individual entries)
+            //.some can be stopped by return keyword, and angular.forEach (or native .forEach) - can't
             $rootScope['exo'][i].some(function(value, index, array){
                 if (value['lastUpdatedLocally']) {
                     numOfUnsyncedEntries++;
@@ -651,9 +661,10 @@ app.controller('allEntriesController', function($scope, $rootScope) {
             });
         }
 
-        //Set
+        //Display number of locally-modified unsynced entries
         $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
-    }, true);
+    //}, true);
+    });
 
 });

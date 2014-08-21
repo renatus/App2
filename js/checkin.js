@@ -291,8 +291,9 @@ app.service('positionBackendService', function($rootScope, $q, indexedDBexo, bac
                         });
 
                         //Update entry at $rootScope
+                        //.some will iterate through all array elements
+                        //.some can be stopped by return keyword, and angular.forEach (or native .forEach) - can't
                         $rootScope['exo']['checkins'].some(function(value, index, array){
-                        //angular.forEach($rootScope.exo.checkins, function(value,index){
                             //If edited entry UUID is equal to found entry UUID
                             if (value['uuid'] == retrievedObj['uuid']){
                                 //Update entry at $rootScope
