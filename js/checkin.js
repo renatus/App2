@@ -314,4 +314,10 @@ app.service('positionBackendService', function($rootScope, $q, indexedDBexo, bac
         });
 
     }
+
+
+    this.syncTo2 = function(){
+        console.log("aaa");
+    };
+
 });
