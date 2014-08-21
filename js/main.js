@@ -595,6 +595,23 @@ app.service('backend', function($q, $http){
 
     };
 
+
+
+    this.syncAllTo = function() {
+        //for/in loops through the properties of an object and return names of that properties in i variable
+        //i will hold collection name, like "activities" or "checkins"
+        //Each collection contains array of individual entries (which are JS objects themselves)
+        for (var i in $rootScope.exo){
+            //.some will iterate through all array elements (i.e. individual entries)
+            //.some can be stopped by return keyword, and angular.forEach (or native .forEach) - can't
+            $rootScope['exo'][i].some(function(value, index, array){
+                if (value['lastUpdatedLocally']) {
+                    console.log(i);
+                }
+            });
+        }
+    }
+
 });
 
 
@@ -639,7 +656,7 @@ app.directive('exoHref', function ($location) {
 
 
 //Controller to show number of all unsynced entries at app
-app.controller('allEntriesController', function($scope, $rootScope) {
+app.controller('allEntriesController', function($scope, $rootScope, backend) {
 
     //We should watch for changes at model to react when it is fully loaded from DB, or changed by user actions
     //Number of unsynced entries will be updated, right after it was changed
@@ -666,5 +683,12 @@ app.controller('allEntriesController', function($scope, $rootScope) {
         $scope.numOfUnsyncedEntries = numOfUnsyncedEntries;
 
     }, true);
+
+
+
+    //Button to sync all entries was pressed
+    $scope.syncAllTo = function(){
+        backend.syncAllTo();
+    }
 
 });
