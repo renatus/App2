@@ -1,7 +1,7 @@
 //Controller to work with activities
 app.controller('activitiesController', function ($scope, $rootScope, $q, $routeParams, indexedDBexo, UUID4) {
     
-    //You can populate scope by hands if needed. This is just example, app uses different activity data structure and populates it from IndexedDB.
+    //You can populate scope by hands. This is just example, app uses different activity data structure and populates it from IndexedDB
 	//$scope.activities = [
 	//	{"nid":"6650","langcode":"en","title":"End an agreements with Stream ISP"},
 	//	{"nid":"3188","langcode":"en","title":"Renew domain exocortex.pp.ua"}
