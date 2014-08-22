@@ -686,7 +686,7 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
 
                         //And modify corresponding Checkin entry at DB
                         indexedDBexo.addEntry(retrievedObj, "checkins").then(function(data){
-                            console.log(data);
+                            //console.log(data);
                         });
 
                         //Update entry at $rootScope model
