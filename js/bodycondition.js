@@ -7,7 +7,7 @@ app.controller('bodyconditionController', function ($scope, $rootScope, $q, $rou
 
     //Method to add new Body Condition report entry to $scope and DB
     $scope.addEntry = function(bodycondition){
-        console.log(bodycondition);
+        console.log($scope.bodycondition);
         //bodyconditionService.save();
     }
 
