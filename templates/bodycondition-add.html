@@ -1,0 +1,12 @@
+<form name="addBodyCondition" ng-submit="addEntry(bodycondition)" novalidate >
+    <!--You should put nothing outside root tag (<form> in this case), even comments-->
+    <!--Form to add new Body Condition Report-->
+    <!--We work with activity copy (editActivity object) to prevent changes from takin immediate effect-->
+
+    <!--Activity title-->
+    <label>Body temperature:</label>
+    <input type="text" ng-model="bodycondition['langcode']" placeholder="36.6">
+
+    <!--Button to add entered values to the model-->
+    <button class="btn" type="submit" ng-disabled="editorActivity.$invalid">Save</button>
+</form>

@@ -32,6 +32,14 @@ app.config(['$routeProvider',
           templateUrl: 'templates/activities.html'
       }).
 
+      //Page to add new Body condition report
+      when('/bodycondition-add', {
+          //HTML template for this URL pattern
+          templateUrl: 'templates/bodycondition-add.html',
+          //Angular controller for this URL pattern
+          controller: 'bodyconditionController'
+      }).
+
       //Login form page
       when('/login', {
           //HTML template for this URL pattern
@@ -79,8 +87,11 @@ app.run(function($rootScope, indexedDBexo) {
         //Get all Check-ins from DB and put them to $rootScope subobject
         indexedDBexo.getEntriesSubset("checkins").then(function(data){
             $rootScope.exo.checkins = data;
-            //Will show us all objects we've get - at Chrome DevTools console
-            //console.log(data);
+        });
+
+        //Get all Body Condition reports from DB and put them to $rootScope subobject
+        indexedDBexo.getEntriesSubset("bodycondition").then(function(data){
+            $rootScope.exo.bodycondition = data;
         });
     });
 
@@ -152,6 +163,11 @@ app.service('indexedDBexo', function($window, $q){
                 //Store for check-ins
                 if (db.objectStoreNames && db.objectStoreNames.contains("checkins")) {
 					db.deleteObjectStore("checkins");
+				}
+
+                //Store for body condition reports
+                if (db.objectStoreNames && db.objectStoreNames.contains("bodycondition")) {
+					db.deleteObjectStore("bodycondition");
 				}
 			}
 			catch (err) {
