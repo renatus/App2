@@ -115,7 +115,7 @@ app.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version, should be increased, when structure updates, should be of integer type
-	var dbVersion = 11;
+	var dbVersion = 12;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
