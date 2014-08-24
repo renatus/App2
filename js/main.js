@@ -90,8 +90,8 @@ app.run(function($rootScope, indexedDBexo) {
         });
 
         //Get all Body Condition reports from DB and put them to $rootScope subobject
-        indexedDBexo.getEntriesSubset("bodycondition").then(function(data){
-            $rootScope.exo.bodycondition = data;
+        indexedDBexo.getEntriesSubset("bodyconditions").then(function(data){
+            $rootScope.exo.bodyconditions = data;
         });
     });
 
@@ -115,7 +115,7 @@ app.service('indexedDBexo', function($window, $q){
 	//IndexedDB database name
 	var dbName = "ExocortexDB";
 	//Database version, should be increased, when structure updates, should be of integer type
-	var dbVersion = 12;
+	var dbVersion = 13;
 	var exoDB = {};
 	var indexedDB = window.indexedDB;
 	
@@ -166,8 +166,8 @@ app.service('indexedDBexo', function($window, $q){
 				}
 
                 //Store for body condition reports
-                if (db.objectStoreNames && db.objectStoreNames.contains("bodycondition")) {
-					db.deleteObjectStore("bodycondition");
+                if (db.objectStoreNames && db.objectStoreNames.contains("bodyconditions")) {
+					db.deleteObjectStore("bodyconditions");
 				}
 			}
 			catch (err) {
@@ -189,6 +189,11 @@ app.service('indexedDBexo', function($window, $q){
             var store = db.createObjectStore("checkins", {keyPath: "uuid"});
 			// Create an index to search customers by text field. We may have duplicates so we can't use a unique index.
 			store.createIndex("checkins", "checkins", {unique: false});
+
+            //Store for body condition reports
+            var store = db.createObjectStore("bodyconditions", {keyPath: "uuid"});
+			// Create an index. We may have duplicates so we can't use a unique index.
+			store.createIndex("bodyconditions", "bodyconditions", {unique: false});
 			
 			//Or we can make unique integer out-of-line keys (1,2,3 ...) with keyGenerator, enabled by {autoIncrement: true}
 			//var store = db.createObjectStore("store2", {autoIncrement: true});
