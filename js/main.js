@@ -37,7 +37,7 @@ app.config(['$routeProvider',
           //HTML template for this URL pattern
           templateUrl: 'templates/bodycondition-add.html',
           //Angular controller for this URL pattern
-          controller: 'bodyconditionController'
+          controller: 'bodyconditionsController'
       }).
 
       //Login form page
