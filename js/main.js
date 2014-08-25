@@ -741,6 +741,13 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
 
     };
 
+
+
+    //Sync activity entry to backend
+    this.bodyconditions = function(UUID){
+
+    };
+
 });
 
 
