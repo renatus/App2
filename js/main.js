@@ -179,6 +179,7 @@ app.service('indexedDBexo', function($window, $q){
 			//We do not define objects structure here other than "fields" for keyPath, and for indexes
 			//While adding objects, you can omit fields, including indexing ones, but keyPath field should be filled
 			//We can make one of it's "fields" (with unique values) an in-line key with keyPath
+            //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
 
             //Store for activities
 			var store = db.createObjectStore("activities", {keyPath: "uuid"});
