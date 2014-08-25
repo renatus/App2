@@ -33,7 +33,7 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
         //Get current Date, Time, Timestamp and Timezone
         var curDateTime = new Date();
         //Device-provided time can be wrong or obsolete (position request process can be long), use GPS-provided time
-        var curTimestamp = position.timestamp;
+        var curTimestamp = moment(curDateTime).format('X');
         var curDate = moment(curDateTime).format('YYYY-MM-DD');
         var curTime = moment(curDateTime).format('HH:mm:ss');
         //Determine the time zone of the browser client, jstz.min.js required
