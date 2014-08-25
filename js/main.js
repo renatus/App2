@@ -64,11 +64,13 @@ app.config(['$routeProvider',
 app.run(function($rootScope, indexedDBexo) {
 
     //Create subobject for app's model
+    //Note that $rootScope.exo subobjects may be iterated through to check or modify all app's entries
+    //So there should be only model containers for entries of particular types (like "activities" or "checkins"), nothing more
+    //In case you need add something other (say, settings), you should add another subobject to $rootScope
     $rootScope.exo = {};
 
     //Open app's IndexedDB database
     //There will be no problems, in case you'll call indexedDBexo.open() method again
-    //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
     indexedDBexo.open().then(function(){
 
         //Get all entries from DB and put them to $rootScope subobject
@@ -76,6 +78,8 @@ app.run(function($rootScope, indexedDBexo) {
         //To use all Angular's goodness, we will duplicate appropriate subobjects from $rootScope to $scope of particular controller
         //As far as objects are copied by reference, memory consumption should not increase
         //And all manipulations will be mirrored between $scope and $rootScope automatically
+
+        //<CODETAG:NewEntityType comment="While adding new entity type to app, add it's name here, alongside 'activities'">
 
         //Get all Activities from DB and put them to $rootScope subobject
         indexedDBexo.getEntriesSubset("activities").then(function(data){

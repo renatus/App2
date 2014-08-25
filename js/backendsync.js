@@ -40,7 +40,7 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
 
             //Last part of the URL to create or update backend entry
             var URLpart = '/rest/node.json';
-            //UUID of entry we're going to update
+            //UUID of entry we're going to create
             var entryUUID = data['0']['UUID'];
 
             //Try to create or edit backend node
@@ -92,10 +92,10 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
 
 
 
-    //Sync activity entry to backend
+    //Sync Body condition report entry to backend
     this.bodyconditions = function(UUID){
 
-        //Get Checkin entry from DB
+        //Get Body condition entry from DB
         indexedDBexo.getEntry('bodyconditions', UUID).then(function(data){
 
             //Put first of retrieved objects to variable. We retrieve object by UUID, so there should be just one object.
@@ -115,11 +115,9 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
                              '&node[field_datetime][und][0][value][time]=' + data['0']['time'] +
                              '&node[field_datetime][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
-            console.log(dataToSend);
-
             //Last part of the URL to create or update backend entry
             var URLpart = '/rest/node.json';
-            //UUID of entry we're going to update
+            //UUID of entry we're going to create
             var entryUUID = data['0']['UUID'];
 
             //Try to create or edit backend node
@@ -134,7 +132,7 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
                         //Mark local entry object as synced
                         retrievedObj["lastUpdatedLocally"] = "";
 
-                        //And modify corresponding Checkin entry at DB
+                        //And modify corresponding Body condition entry at DB
                         indexedDBexo.addEntry(retrievedObj, "bodyconditions").then(function(data){
                             //console.log(data);
                         });

@@ -5,6 +5,14 @@
     <!-- Interface elements to work with GPS-->
     <span ng-controller="checkinController">
 
+        <span ng-controller="allEntriesController">
+            <!-- Button to sync to and from backend-->
+            <button ng-click="syncAllTo()">Sync</button>
+        </span>
+
+        <!-- Open Body condition report adding page -->
+        <button exo-href="/bodycondition-add">Add condition</button>
+
         <!-- Button to check GPS-->
         <br>
         <button ng-click="testGPS()">Test GPS</button>
@@ -13,14 +21,6 @@
 
         <!-- Button to check-in-->
         <button ng-click="addEntry()">Check-in</button>
-
-    </span>
-
-    <!-- Interface elements to work with GPS-->
-    <span ng-controller="allEntriesController">
-
-        <!-- Button to sync to and from backend-->
-        <button ng-click="syncAllTo()">Sync</button>
 
     </span>
 
