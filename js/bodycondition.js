@@ -54,7 +54,7 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
         //ECMA-262 requires .toPrecision() precision of up to 21 digits, and Chrome 32 can get arguments between 1 and 21 (Firefox 26 - between 1 and 100)
         //Switch to .toPrecision(32) in the future, as backend can store up to 32 digits for latLonAccuracy, altitude, altitudeAccuracy and speed
         if (angular.isNumber(bodycondition.temperature)) {
-            var temperature = (bodycondition.temperature).toPrecision(21);;
+            var temperature = (bodycondition.temperature).toPrecision(11);;
         } else {
             var temperature = "";
         }
