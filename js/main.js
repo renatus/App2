@@ -766,6 +766,8 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
                              '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
                              '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
+            console.log(dataToSend);
+
             //Last part of the URL to create or update backend entry
             var URLpart = '/rest/node.json';
             //UUID of entry we're going to update
