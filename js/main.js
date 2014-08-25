@@ -762,9 +762,9 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
             //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB
             var dataToSend = 'node[type]=body_condition&node[language]=en&node[title]=' + encodeURIComponent('Body condition report') +
                              '&node[field_body_temperature][und][0][value]=' + data['0']['temperature'] +
-                             '&node[field_datetime_start][und][0][value][date]=' + data['0']['date'] +
-                             '&node[field_datetime_start][und][0][value][time]=' + data['0']['time'] +
-                             '&node[field_datetime_start][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
+                             '&node[field_datetime][und][0][value][date]=' + data['0']['date'] +
+                             '&node[field_datetime][und][0][value][time]=' + data['0']['time'] +
+                             '&node[field_datetime][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
 
             console.log(dataToSend);
 
