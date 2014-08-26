@@ -49,11 +49,11 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
         //ECMA-262 requires .toPrecision() precision of up to 21 digits, and Chrome 32 can get arguments between 1 and 21 (Firefox 26 - between 1 and 100)
 
         //If body temperature value is numerical
-        if (angular.isNumber(bodycondition.temperature)) {
-            var temperature = (bodycondition.temperature).toPrecision(11);;
-        } else {
-            var temperature = "";
-        }
+        //if (angular.isNumber(bodycondition.temperature)) {
+        //    var temperature = (bodycondition.temperature).toPrecision(11);;
+        //} else {
+        //    var temperature = "";
+        //}
 
         //Get universally unique identifier for a new entry
         var entryID = UUID4.generate();
@@ -69,8 +69,20 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
             "dateTimeTimestamp":curTimestamp,
             "dateTimeTZ":timeZoneName,
             "dateTimeOffset":timeZoneOffset,
-            //like 36.3. (Number)
-            "temperature":temperature,
+            //like 36.3 (number)
+            "temperature":bodycondition.temperature,
+            //like 120 (number)
+            "bloodPressureMax":bodycondition.bloodPressureMax,
+            //like 80 (number)
+            "bloodPressureMin":bodycondition.bloodPressureMin,
+            //like 60 (number)
+            "pulse":bodycondition.pulse,
+            //like 70000 (number, gram)
+            "mass":bodycondition.mass,
+            //like 1800 (number, mm)
+            "height":bodycondition.height,
+            //like 4.5 (number, mmol/L)
+            "bloodSugar":bodycondition.bloodSugar,
             //Backend URL probably should not be synced to backend, as it knows it's URL
             //It should be used on client to sync to right backend
             "backendURL":window.localStorage.getItem("backendURL"),

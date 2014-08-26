@@ -5,6 +5,24 @@
     <label>Body temperature:</label>
     <input type="number" ng-model="bodycondition.temperature" placeholder="36.6">
 
+    <label>Blood pressure max:</label>
+    <input type="number" ng-model="bodycondition.bloodPressureMax" placeholder="120">
+
+    <label>Blood pressure min:</label>
+    <input type="number" ng-model="bodycondition.bloodPressureMin" placeholder="80">
+
+    <label>Pulse:</label>
+    <input type="number" ng-model="bodycondition.pulse" placeholder="60">
+
+    <label>Body mass:</label>
+    <input type="number" ng-model="bodycondition.mass" placeholder="70000">
+
+    <label>Height:</label>
+    <input type="number" ng-model="bodycondition.height" value="1780">
+
+    <label>Blood sugar:</label>
+    <input type="number" ng-model="bodycondition.bloodSugar" placeholder="4.5">
+
     <!--Button to add entered values to the model-->
     <button class="btn" type="submit" ng-disabled="editorActivity.$invalid">Save</button>
 </form>
