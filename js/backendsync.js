@@ -111,6 +111,12 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
             //We'll get error trying to limit empty value, so we've limited all numbers while adding them to app DB
             var dataToSend = 'node[type]=body_condition&node[language]=en&node[title]=' + encodeURIComponent('Body condition report') +
                              '&node[field_body_temperature][und][0][value]=' + data['0']['temperature'] +
+                             '&node[field_blood_pressure_max][und][0][value]=' + data['0']['bloodPressureMax'] +
+                             '&node[field_blood_pressure_min][und][0][value]=' + data['0']['bloodPressureMin'] +
+                             '&node[field_pulse][und][0][value]=' + data['0']['pulse'] +
+                             '&node[field_mass][und][0][value]=' + data['0']['mass'] +
+                             '&node[field_height][und][0][value]=' + data['0']['height'] +
+                             '&node[field_blood_sugar][und][0][value]=' + data['0']['bloodSugar'] +
                              '&node[field_datetime][und][0][value][date]=' + data['0']['date'] +
                              '&node[field_datetime][und][0][value][time]=' + data['0']['time'] +
                              '&node[field_datetime][und][0][timezone][timezone]=' + data['0']['dateTimeTZ'];
