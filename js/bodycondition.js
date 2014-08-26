@@ -1,5 +1,5 @@
-//Controller to work with activities
-app.controller('bodyconditionsController', function ($scope, $rootScope, $q, $routeParams, indexedDBexo, UUID4, bodyconditionService) {
+//Controller to work with Body condition reports
+app.controller('bodyconditionsController', function ($scope, $rootScope, bodyconditionService) {
     //Get all entries from $rootScope and put them to $scope object to use all AngularJS goodness (not always possible with $rootScope)
     $scope.bodycondition = $rootScope.exo.bodycondition;
 
@@ -7,7 +7,6 @@ app.controller('bodyconditionsController', function ($scope, $rootScope, $q, $ro
 
     //Method to add new Body Condition report entry to $scope and DB
     $scope.addEntry = function(bodycondition){
-        console.log(bodycondition.temperature);
         bodyconditionService.save(bodycondition);
     }
 
@@ -18,41 +17,38 @@ app.controller('bodyconditionsController', function ($scope, $rootScope, $q, $ro
 //Service to work with Body condition reports data
 app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, userInterface, backendSync){
 
-    //Method to save position to AngularJS model, and to IndexedDB
+    //Method to save Body condition to AngularJS model, and to IndexedDB
     this.save = function(bodycondition){
-        //Date, Time and Timezone format examples:
-        //var curDate = "2013-05-30";
-        //var curTime = "23:00";
-        //var timeZoneName = "Europe/Moscow";
 
-        //Usually timestamp is at seconds, and JavaScript works with milliseconds
-        //So we have to multiply timestamp value by 1000, but with position.timestamp we don't have to do that
-        //Date and time from GPS can be wrong in Android emulator, that's OK.
         //Drupal Date (and hence Services) module can't handle ISO 8601-formatted dates, but Views module can
         //So for now we'll use such dates as "2013-12-07 00:00:00", and in future - such as "1997-07-16T19:20+01:00"
         //Get current Date, Time, Timestamp and Timezone
         var curDateTime = new Date();
-        //Device-provided time can be wrong or obsolete (position request process can be long), use GPS-provided time
+        //Unix timestamp, like "1408993213"
         var curTimestamp = moment(curDateTime).format('X');
+        //Like "2013-05-30"
         var curDate = moment(curDateTime).format('YYYY-MM-DD');
+        //Like "23:00:15"
         var curTime = moment(curDateTime).format('HH:mm:ss');
         //Determine the time zone of the browser client, jstz.min.js required
         var timeZone = jstz.determine();
-        //Determine time zone name
+        //Determine time zone name, like "Europe/Moscow"
         var timeZoneName = timeZone.name();
         //.getTimezoneOffset() will return result in minutes, Drupal uses seconds
+        //Like "-14400"
         var timeZoneOffset = curDateTime.getTimezoneOffset() * 60;
 
 
         //IndexedDB may save all JS data types, but for now we shouldn't put inappropriate values, like NULL, to app DB
-        //So we can't put geolocation object directly to DB, we should check it's properties first
+        //So we can't put Body condition object directly to DB, we should check it's properties first
         //NULL and other non-numeric values should be replaced by an empty field
 
         //Attempt to save more digits, than allowed by Drupal Field's Scale setting will give us error
         //We can put more digits, than specified in Scale setting, though, so we've to limit number of all digits in decimal number
         //.toPrecision(13) will round number to 13 digits, it will return string rather than number
         //ECMA-262 requires .toPrecision() precision of up to 21 digits, and Chrome 32 can get arguments between 1 and 21 (Firefox 26 - between 1 and 100)
-        //Switch to .toPrecision(32) in the future, as backend can store up to 32 digits for latLonAccuracy, altitude, altitudeAccuracy and speed
+
+        //If body temperature value is numerical
         if (angular.isNumber(bodycondition.temperature)) {
             var temperature = (bodycondition.temperature).toPrecision(11);;
         } else {
@@ -78,11 +74,14 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
             //Backend URL probably should not be synced to backend, as it knows it's URL
             //It should be used on client to sync to right backend
             "backendURL":window.localStorage.getItem("backendURL"),
+            //Unix timestamp, like "1408993213"
             "createdTimeStamp": curTimestamp,
+            //Unix timestamp, like "1408993213"
             "modifiedTimeStamp": curTimestamp,
-            //Looks like we should not bother about timezone here
             //Mark entry as updated locally, by putting in last update timestamp
-            "lastUpdatedLocally":moment(curDateTime).format('X')
+            //Looks like we should not bother about timezone here
+            //Unix timestamp, like "1408993213"
+            "lastUpdatedLocally":curTimestamp
 		};
 
         //Add new entry to DB
