@@ -4,6 +4,10 @@ app.controller('checkinController', function ($rootScope, $scope, positionServic
     //Get all entries from $rootScope and put them to $scope object to use all AngularJS goodness (not always possible with $rootScope)
     $scope.checkins = $rootScope.exo.checkins;
 
+    $scope.openLeftMenu = function() {
+        $materialSidenav('left').toggle();
+    };
+
 
 
     //Method to add new Checkin entry to $scope and DB

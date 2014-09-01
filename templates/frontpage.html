@@ -5,6 +5,12 @@
     <!-- Interface elements to work with GPS-->
     <span ng-controller="checkinController">
 
+        <material-sidenav class="material-sidenav-left">
+            Left Nav!
+        </material-sidenav>
+
+        <material-button ng-click="openLeftMenu()">Open Left Menu</material-button>
+
         <span ng-controller="allEntriesController">
             <!-- Button to sync to and from backend-->
             <button ng-click="syncAllTo()">Sync</button>
