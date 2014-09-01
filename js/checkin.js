@@ -1,5 +1,5 @@
 //Controller to work with Geolocation
-app.controller('checkinController', function ($rootScope, $scope, positionService) {
+app.controller('checkinController', function ($rootScope, $scope, $materialSidenav, positionService) {
 
     //Get all entries from $rootScope and put them to $scope object to use all AngularJS goodness (not always possible with $rootScope)
     $scope.checkins = $rootScope.exo.checkins;
