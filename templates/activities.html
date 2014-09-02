@@ -32,7 +32,7 @@
             <a ng-hide="editing" ng-href="#/activities/{{activity.uuid}}">Details</a>
 
             <!--Button to delete this particular entry-->
-            <button ng-hide="editing" ng-click="deleteEntry(activity)">Del</button>
+            <material-button class="material-button-raised" ng-hide="editing" ng-click="deleteEntry(activity)">Del</material-button>
 
             <!--Here activity editing form will be placed-->
             <edit-activity></edit-activity>
@@ -53,7 +53,7 @@
         <br/>
 
         <!--Button to add entered values to the model-->
-        <button class="btn" type="submit" ng-disabled="addActivity.$invalid">Add</button>
+        <material-button class="material-button-raised" type="submit" ng-disabled="addActivity.$invalid">Add</material-button>
     </form>
 
 </span>
