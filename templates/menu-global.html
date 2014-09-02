@@ -3,11 +3,6 @@
 
         <!--App global menu buttons-->
 
-        <!-- Open frontpage -->
-        <!-- ng-click="close()" will close Material dialog button is placed in-->
-        <material-button class="material-button-raised" ng-click="close()" exo-href="/">Frontpage</material-button>
-        <br>
-
         <!-- Open activities list -->
         <!-- ng-click="close()" will close Material dialog button is placed in-->
         <material-button class="material-button-raised" ng-click="close()" exo-href="/activities">Activities</material-button>
@@ -17,6 +12,15 @@
         <!-- ng-click="close()" will close Material dialog button is placed in-->
         <material-button class="material-button-raised" ng-click="close()" exo-href="/login">Login</material-button>
         <br>
+
+        <!-- Syn to and from backend -->
+        <!-- ng-click="close()" will close Material dialog button is placed in-->
+        <span ng-controller="allEntriesController">
+            <!-- Button to sync to and from backend-->
+            <material-button class="material-button-raised"  ng-click="syncAllTo(); close()">Sync</material-button>
+        </span>
+        <br>
+
     </div>
 
 
