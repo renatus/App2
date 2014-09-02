@@ -19,11 +19,12 @@
 
 
     <!--List of all activities-->
-    <ul>
+    <material-list>
+    <!--<ul>-->
         <!-- Single activity line -->
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
-        <li ng-repeat="activity in activities | filter:userQuery | filter:langcode | filter:filterNot123 | orderObjectByINT:'title':orderChoice track by activity.uuid">
+        <material-item ng-repeat="activity in activities | filter:userQuery | filter:langcode | filter:filterNot123 | orderObjectByINT:'title':orderChoice track by activity.uuid">
 
             <!-- Something like "ActivityTitle | en |"-->
             <span ng-hide="editing" ng-click="editing = true">{{activity[activity['lastVersion']]['title'][activity[activity['lastVersion']]['langcode']]}} | {{activity[activity['lastVersion']]['langcode']}} | </span>
@@ -37,8 +38,11 @@
             <!--Here activity editing form will be placed-->
             <edit-activity></edit-activity>
 
-        </li>
-    </ul>
+        <!--</li>-->
+        </material-item>
+
+    <!--</ul>-->
+    </material-list>
 
 
 
