@@ -53,7 +53,8 @@
         <br/>
 
         <!--Button to add entered values to the model-->
-        <material-button class="material-button-raised" type="submit" ng-disabled="addActivity.$invalid">Add</material-button>
+        <!-- Material button is not compatible with type="submit" -->
+        <button class="btn" type="submit" ng-disabled="addActivity.$invalid">Add</button>
     </form>
 
 </span>
