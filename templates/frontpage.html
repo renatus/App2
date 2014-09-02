@@ -5,11 +5,7 @@
     <!-- Interface elements to work with GPS-->
     <span ng-controller="checkinController">
 
-        <material-sidenav class="material-sidenav-left material-whiteframe-z2" component-id="left">
-            Left Nav!
-        </material-sidenav>
-
-        <material-button ng-click="openLeftMenu()">Open Left Menu</material-button>
+        <material-button class="material-button-raised" ng-click="dialog($event)">Menu</material-button>
 
         <span ng-controller="allEntriesController">
             <!-- Button to sync to and from backend-->
