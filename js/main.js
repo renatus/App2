@@ -730,3 +730,25 @@ app.controller('allEntriesController', function($scope, $rootScope, backendSyncA
     }
 
 });
+
+
+
+//Controller to work with interface elements we need globallly
+app.controller('globalController', function ($rootScope, $scope, $materialDialog) {
+
+
+
+    //Global menu dialog
+    $scope.dialog = function(e) {
+        $materialDialog({
+            templateUrl: 'templates/menu-global.html',
+            targetEvent: e,
+            controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
+                $scope.close = function() {
+                    $hideDialog();
+                };
+            }]
+        });
+    };
+
+});

@@ -6,20 +6,6 @@ app.controller('checkinController', function ($rootScope, $scope, $materialDialo
 
 
 
-    $scope.dialog = function(e) {
-        $materialDialog({
-            templateUrl: 'templates/menu-global.html',
-            targetEvent: e,
-            controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
-                $scope.close = function() {
-                    $hideDialog();
-                };
-            }]
-        });
-    };
-
-
-
     //Method to add new Checkin entry to $scope and DB
     $scope.addEntry = function(){
         //Get current position

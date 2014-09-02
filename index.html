@@ -49,18 +49,15 @@
     
     
 
-    <body>
+    <body ng-controller="globalController">
         
         <!--App global menu buttons-->
 
         <!-- Open frontpage -->
         <material-button class="material-button-raised" exo-href="/">Frontpage</material-button>
 
-        <!-- Open activities list -->
-        <material-button class="material-button-raised" exo-href="/activities">Activities</material-button>
-
-        <!-- Open login page -->
-        <material-button class="material-button-raised" exo-href="/login">Login</material-button>
+        <!-- Open global menu dialog -->
+        <material-button class="material-button-raised" ng-click="dialog($event)">Menu</material-button>
 
         <br>
 
