@@ -1,0 +1,16 @@
+{
+  "name": "simple2",
+  "version": "0.0.0.6",
+  "app": {
+    "launch":{
+      "local_path": "index.html"
+    }
+  },
+  "xwalk_permissions": [
+    "Geolocation",
+    "Vibration"
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}

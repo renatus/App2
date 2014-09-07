@@ -1,0 +1,25 @@
+{
+    "name": "Exocortex",
+    "version": "0.7.1",
+    "app": {
+        "launch":{
+            "local_path": "index.html"
+        }
+    },
+
+    "xwalk_launch_screen": {
+        "ready_when": "custom",
+        "portrait": {
+            "background_color": "#ff0000",
+        }
+    }
+
+    "xwalk_permissions": [
+        "Geolocation",
+        "Vibration"
+    ],
+
+    "icons": {
+        "128": "pics/exocortex.png"
+    }
+}
