@@ -1,6 +1,6 @@
 {
     "name": "Exocortex",
-    "version": "0.7.4",
+    "version": "0.7.7",
     "app": {
         "launch":{
             "local_path": "index.html"
@@ -10,6 +10,11 @@
     "xwalk_permissions": [
         "Geolocation",
         "Vibration"
+    ],
+
+    "xwalk_hosts": [
+        "http://*.renat.biz/",
+        "http://ren.sky37.pp.ua/"
     ],
 
     "icons": {
