@@ -4,22 +4,22 @@
     <!--You should put nothing outside root tag (<form> in this case), even comments-->
     <!--Form to login to your server account-->
     
-    <h2>Login</h2>
+    <h2 class="exo-left">Login</h2>
     
     <!-- Server domain -->
-    <div>
+    <div class="exo-left">
         <label for="page_login_domain">Backend domain</label>
         <input type="url" ng-model="pageLogin.backendURL" id="page_login_domain" required />
     </div>
     
     <!-- Server user username -->
-    <div>
+    <div class="exo-left">
         <label for="page_login_name">Username</label>
         <input type="text" ng-model="pageLogin.name" id="page_login_name" required />
     </div>
     
     <!-- Server user password -->
-    <div>
+    <div class="exo-left">
         <label for="page_login_pass">Password</label>
         <input type="password" ng-model="pageLogin.password" id="page_login_pass" required />
     </div>
@@ -28,7 +28,7 @@
     <!--Button to login to server-->
     <!--As of Material 0.0.2, <material-button> don't work with ng-disabled-->
     <!-- Or with type="submit" -->
-    <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
+    <button class="exo-left" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
     <!--<material-button class="material-button-raised" type="submit">Login</material-button>-->
 
     <!--Button to logout from server-->

@@ -14,8 +14,13 @@
 
 
 
-/* CSS code for buttons */
+/* CSS code for positioning */
 .exo-right {
     position: absolute;
-    right: 5px;
+    right: 10px;
+}
+
+.exo-left {
+    position: relative;
+    left: 10px;
 }
