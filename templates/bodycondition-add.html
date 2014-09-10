@@ -1,6 +1,8 @@
+<span>
+    <!--You should put nothing outside root tag (<span> in this case), even comments-->
+    <!--Form to add new Body Condition Reports-->
+
 <form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >
-    <!--You should put nothing outside root tag (<form> in this case), even comments-->
-    <!--Form to add new Body Condition Report-->
 
     <label>Body temperature:</label>
     <input type="number" ng-model="bodycondition.temperature" min="0" max="45" placeholder="36.6">
@@ -15,7 +17,7 @@
     <input type="number" ng-model="bodycondition.pulse" min="0" max="350" placeholder="60">
 
     <label>Body mass:</label>
-    <input type="number" ng-model="bodycondition.mass" min="1500" max="500000" placeholder="70000">
+    <input type="number" ng-model="bodycondition.mass" min="30000" max="500000" placeholder="70000">
 
     <label>Height:</label>
     <input type="number" ng-model="bodycondition.height" min="0" max="2600" placeholder="1780">
@@ -23,8 +25,13 @@
     <label>Blood sugar:</label>
     <input type="number" ng-model="bodycondition.bloodSugar" min="1" max="20" placeholder="4.5">
 
-    <!--Button to add entered values to the model-->
+
     <button type="submit" ng-disabled="editorActivity.$invalid">Save</button>
 </form>
 
-<material-button class="material-button-raised" ng-click="addEntry(bodycondition)">Material - Save</material-button>
+<!--Button to add entered values to the model-->
+<!--<button type="submit"></button> is a bit problematic, especially in case you use many buttons in a single page-->
+<!--It's better to use standard button with ng-click property outside of the form-->
+<material-button class="material-button-raised" ng-click="addEntry(bodycondition)" ng-disabled="editorActivity.$invalid">Material - Save</material-button>
+
+</span>
