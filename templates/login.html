@@ -1,6 +1,5 @@
 <span ng-controller="serverInteract">
 
-<div>
 <form name="serverLogin" ng-submit="login(pageLogin)" novalidate >
     <!--You should put nothing outside root tag (<form> in this case), even comments-->
     <!--Form to login to your server account-->
@@ -31,13 +30,9 @@
     <!-- Or with type="submit" -->
     <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
     <!--<material-button class="material-button-raised" type="submit">Login</material-button>-->
-    <p class="exo-right">123</p>
+
+    <!--Button to logout from server-->
+    <material-button class="material-button-raised exo-right" ng-click="logout()">Logout</material-button>
 </form>
-
-<!--Button to logout from server-->
-<material-button class="material-button-raised exo-right" ng-click="logout()">Logout</material-button>
-
-
-</div>
 
 </span>
