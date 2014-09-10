@@ -16,6 +16,6 @@
 
 /* CSS code for buttons */
 .exo-right {
-    position: relative;
+    position: absolute;
     right: 5px;
 }
