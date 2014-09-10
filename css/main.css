@@ -24,3 +24,8 @@
     position: relative;
     left: 10px;
 }
+
+.exo-center {
+    margin-left: auto;
+    margin-right: auto;
+}
