@@ -1,4 +1,4 @@
-<form name="addBodyCondition" ng-submit="addEntry(bodycondition)" novalidate >
+<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >
     <!--You should put nothing outside root tag (<form> in this case), even comments-->
     <!--Form to add new Body Condition Report-->
 
@@ -24,5 +24,5 @@
     <input type="number" ng-model="bodycondition.bloodSugar" placeholder="4.5">
 
     <!--Button to add entered values to the model-->
-    <material-button class="material-button-raised" type="submit" ng-disabled="editorActivity.$invalid">Save</material-button>
+    <button type="submit" ng-disabled="editorActivity.$invalid">Save</button>
 </form>
