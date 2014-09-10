@@ -11,3 +11,11 @@
     border-color:#ec3f41;
     border-width:medium;
 }
+
+
+
+/* CSS code for buttons */
+.exo-right {
+    position: relative;
+    right: 5px;
+}

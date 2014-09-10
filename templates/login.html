@@ -23,13 +23,15 @@
         <input type="password" ng-model="pageLogin.password" id="page_login_pass" required />
     </div>
     
-    <br><br><br>
+    <br><br>
     <!--Button to login to server-->
-    <!--<material-button class="material-button-raised" type="submit" ng-disabled="serverLogin.$invalid">Login</material-button>-->
-    <material-button class="material-button-raised" type="submit">Login</material-button>
+    <!--As of Material 0.0.2, <material-button> don't work with ng-disabled-->
+    <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
+    <!--<material-button class="material-button-raised" type="submit">Login</material-button>-->
 </form>
 
-<br><br><br>
 <!--Button to logout from server-->
-<material-button class="material-button-raised" ng-click="logout()">Logout</material-button>
+<material-button class="material-button-raised exo-right" ng-click="logout()">Logout</material-button>
+<p class="exo-right">123</p>
+
 </span>
