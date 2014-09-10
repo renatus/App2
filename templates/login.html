@@ -28,13 +28,15 @@
     <br><br>
     <!--Button to login to server-->
     <!--As of Material 0.0.2, <material-button> don't work with ng-disabled-->
+    <!-- Or with type="submit" -->
     <button class="btn" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
     <!--<material-button class="material-button-raised" type="submit">Login</material-button>-->
+    <p class="exo-right">123</p>
 </form>
 
 <!--Button to logout from server-->
 <material-button class="material-button-raised exo-right" ng-click="logout()">Logout</material-button>
-<p class="exo-right">123</p>
+
 
 </div>
 
