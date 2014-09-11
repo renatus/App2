@@ -37,4 +37,15 @@
 
     <button ng-click="addEntry(bodycondition)" ng-disabled="editorActivity.$invalid">2 - Save</button>
 
+
+
+
+<form name="testForm">
+    <label>Test number, from 5 to 20:</label>
+    <input type="number" ng-model="tst.number" min="5" max="20" placeholder="10">
+
+    <button ng-click="alert(tst.number)" ng-disabled="testForm.$invalid">Test button</button>
+    <material-button ng-click="alert(tst.number)" ng-disabled="testForm.$invalid">Test Material button</material-button>
+</form>
+
 </span>
