@@ -27,12 +27,14 @@
 
 
     <button type="submit" ng-disabled="editorActivity.$invalid">Save</button>
+    <material-button class="material-button-raised" ng-click="addEntry(bodycondition)" ng-disabled="editorActivity.$invalid">Material - Save</material-button>
+
 </form>
 
 <!--Button to add entered values to the model-->
 <!--<button type="submit"></button> is a bit problematic, especially in case you use many buttons in a single page-->
 <!--It's better to use standard button with ng-click property outside of the form-->
-<material-button class="material-button-raised" ng-click="addEntry(bodycondition)" ng-disabled="editorActivity.$invalid">Material - Save</material-button>
+
     <button ng-click="addEntry(bodycondition)" ng-disabled="editorActivity.$invalid">2 - Save</button>
 
 </span>
