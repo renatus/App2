@@ -40,7 +40,7 @@
 
 
 
-<form name="testForm" novalidate >
+<form name="testForm" ng-submit="addEntry(tst)" novalidate >
     <label>Test number, from 5 to 20:</label>
     <input type="number" ng-model="tst.number" min="5" max="20" placeholder="10">
 
