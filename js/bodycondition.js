@@ -136,7 +136,7 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
 
         //Add new entry to DB
         indexedDBexo.addEntry(newEntry, "bodyconditions").then(function(){
-            console.log('Check-in saved to DB!');
+            console.log('Body condition report saved to DB!');
 
             //Add new entry to $rootScope
             $rootScope.exo.bodyconditions.push(newEntry);
