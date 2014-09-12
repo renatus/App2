@@ -49,11 +49,49 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
         //ECMA-262 requires .toPrecision() precision of up to 21 digits, and Chrome 32 can get arguments between 1 and 21 (Firefox 26 - between 1 and 100)
 
         //If body temperature value is numerical
-        //if (angular.isNumber(bodycondition.temperature)) {
-        //    var temperature = (bodycondition.temperature).toPrecision(11);;
-        //} else {
-        //    var temperature = "";
-        //}
+        if (angular.isNumber(bodycondition.temperature)) {
+            var temperature = (bodycondition.temperature).toPrecision(6);
+        } else {
+            var temperature = "";
+        }
+
+        if (angular.isNumber(bodycondition.bloodPressureMax)) {
+            var bloodPressureMax = (bodycondition.bloodPressureMax).toPrecision(6);
+        } else {
+            var bloodPressureMax = "";
+        }
+
+        if (angular.isNumber(bodycondition.bloodPressureMin)) {
+            var bloodPressureMin = (bodycondition.bloodPressureMin).toPrecision(6);
+        } else {
+            var bloodPressureMin = "";
+        }
+
+        if (angular.isNumber(bodycondition.pulse)) {
+            var pulse = (bodycondition.pulse).toPrecision(6);
+        } else {
+            var pulse = "";
+        }
+
+        if (angular.isNumber(bodycondition.mass)) {
+            var mass = (bodycondition.mass).toPrecision(10);;
+        } else {
+            var mass = "";
+        }
+
+        if (angular.isNumber(bodycondition.height)) {
+            var height = (bodycondition.height).toPrecision(10);
+        } else {
+            var height = "";
+        }
+
+        if (angular.isNumber(bodycondition.bloodSugar)) {
+            var bloodSugar = (bodycondition.bloodSugar).toPrecision(6);
+        } else {
+            var bloodSugar = "";
+        }
+
+
 
         //Get universally unique identifier for a new entry
         var entryID = UUID4.generate();
@@ -70,19 +108,19 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
             "dateTimeTZ":timeZoneName,
             "dateTimeOffset":timeZoneOffset,
             //like 36.3 (number)
-            "temperature":bodycondition.temperature,
+            "temperature":temperature,
             //like 120 (number)
-            "bloodPressureMax":bodycondition.bloodPressureMax,
+            "bloodPressureMax":bloodPressureMax,
             //like 80 (number)
-            "bloodPressureMin":bodycondition.bloodPressureMin,
+            "bloodPressureMin":bloodPressureMin,
             //like 60 (number)
-            "pulse":bodycondition.pulse,
+            "pulse":pulse,
             //like 70000 (number, gram)
-            "mass":bodycondition.mass,
+            "mass":mass,
             //like 1800 (number, mm)
-            "height":bodycondition.height,
+            "height":height,
             //like 4.5 (number, mmol/L)
-            "bloodSugar":bodycondition.bloodSugar,
+            "bloodSugar":bloodSugar,
             //Backend URL probably should not be synced to backend, as it knows it's URL
             //It should be used on client to sync to right backend
             "backendURL":window.localStorage.getItem("backendURL"),

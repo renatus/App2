@@ -5,7 +5,7 @@
 <form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >
 
     <label>Body temperature:</label>
-    <input type="number" ng-model="bodycondition.temperature" min="0" max="45" placeholder="36.6">
+    <input type="number" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
 
     <label>Blood pressure max:</label>
     <input type="number" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">
@@ -14,16 +14,16 @@
     <input type="number" ng-model="bodycondition.bloodPressureMin" min="0" max="200" placeholder="80">
 
     <label>Pulse:</label>
-    <input type="number" ng-model="bodycondition.pulse" min="0" max="350" placeholder="60">
+    <input type="number" ng-model="bodycondition.pulse" min="0" max="330" placeholder="60">
 
     <label>Body mass:</label>
-    <input type="number" ng-model="bodycondition.mass" min="30000" max="500000" placeholder="70000">
+    <input type="number" ng-model="bodycondition.mass" min="30000" max="200000" placeholder="70000">
 
     <label>Height:</label>
-    <input type="number" ng-model="bodycondition.height" min="0" max="2600" placeholder="1780">
+    <input type="number" ng-model="bodycondition.height" min="0" max="2100" placeholder="1780">
 
     <label>Blood sugar:</label>
-    <input type="number" ng-model="bodycondition.bloodSugar" min="1" max="20" placeholder="4.5">
+    <input type="number" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">
 
 
     <button type="submit" ng-disabled="editorActivity.$invalid">Save</button>
