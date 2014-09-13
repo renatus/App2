@@ -3,10 +3,10 @@
     <!--Form to add new Body Condition Reports-->
 
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
-<form name="addBodyCondition" class="exo-right exo-input" novalidate >
+<form name="addBodyCondition" class="exo-left" novalidate >
 
-    <label>Body temperature:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
+    <label class="exo-right">Body temperature:</label>
+    <input type="number" class="exo-input exo-right" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
 
     <label>Blood pressure max:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">
