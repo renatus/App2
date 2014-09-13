@@ -26,16 +26,12 @@
     <label>Blood sugar:</label>
     <input type="number" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">
 
-
+    <!--Button to add entered values to the model-->
+    <!--As of Material 0.0.2, <material-button> don't work with ng-disabled, or with type="submit"-->
+    <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
+    <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
+    <!--It's better to use ng-click directive for buttons-->
     <button ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</button>
-    <material-button class="material-button-raised" ng-click="addEntry(bodycondition)"  ng-disabled="addBodyCondition.$invalid">Material - Save</material-button>
-
 </form>
-
-<!--Button to add entered values to the model-->
-<!--<button type="submit"></button> is a bit problematic, especially in case you use many buttons in a single page-->
-<!--It's better to use standard button with ng-click property outside of the form-->
-
-    <button ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Outside - Save</button>
 
 </span>
