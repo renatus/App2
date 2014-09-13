@@ -28,6 +28,7 @@
 }
 
 .exo-right-r {
+    position: relative;
     right: 10px;
 }
 
