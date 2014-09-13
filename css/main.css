@@ -1,3 +1,5 @@
+/* CSS code to work with forms */
+
 /* CSS code to indicate correctly and incorrectly filled fields */
 
 /* Show green border when something has been typed in, and it is valid */
@@ -10,6 +12,11 @@
 .ng-dirty.ng-invalid {
     border-color:#ec3f41;
     border-width:medium;
+}
+
+/* Spread form input to match screen width */
+.exo-input {
+    width: 100%;
 }
 
 
