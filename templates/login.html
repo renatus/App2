@@ -1,6 +1,6 @@
 <span ng-controller="serverInteract">
 
-<form name="serverLogin" ng-submit="login(pageLogin)" novalidate >
+<form name="serverLogin" novalidate >
     <!--You should put nothing outside root tag (<form> in this case), even comments-->
     <!--Form to login to your server account-->
     
@@ -28,7 +28,7 @@
     <!--Button to login to server-->
     <!--As of Material 0.0.2, <material-button> don't work with ng-disabled-->
     <!-- Or with type="submit" -->
-    <button class="exo-left" type="submit" ng-disabled="serverLogin.$invalid">Login</button>
+    <button class="exo-left" ng-click="login(pageLogin)" ng-disabled="serverLogin.$invalid">Login</button>
     <!--<material-button class="material-button-raised" type="submit">Login</material-button>-->
 
     <!--Button to logout from server-->
