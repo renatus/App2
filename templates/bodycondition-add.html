@@ -28,7 +28,7 @@
 
 
     <button ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</button>
-    <material-button class="material-button-raised" ng-click="addEntry(bodycondition)">Material - Save</material-button>
+    <material-button class="material-button-raised" ng-click="addEntry(bodycondition)"  ng-disabled="addBodyCondition.$invalid">Material - Save</material-button>
 
 </form>
 
@@ -37,16 +37,5 @@
 <!--It's better to use standard button with ng-click property outside of the form-->
 
     <button ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Outside - Save</button>
-
-
-
-
-<form name="testForm" novalidate >
-    <label>Test number, from 5 to 20:</label>
-    <input type="number" ng-model="tst.number" min="5" max="20" placeholder="10">
-
-    <button ng-click="console.log('Button works')">Test button</button>
-    <material-button ng-click="$log.warn('message')">Test Material button</material-button>
-</form>
 
 </span>
