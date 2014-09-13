@@ -8,6 +8,9 @@ app.controller('bodyconditionsController', function ($scope, $rootScope, bodycon
     //Method to add new Body Condition report entry to $scope and DB
     $scope.addEntry = function(bodycondition){
         bodyconditionService.save(bodycondition);
+
+        //Clean form from now saved user-entered data
+        this.bodycondition = {};
     }
 
 });
