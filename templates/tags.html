@@ -48,14 +48,15 @@
 
 
     <!--Form to add new tag-->
+    <br/><br/>
     <form name="addTag" ng-submit="addEntry(tag)" novalidate >
-        <label>Title:</label>
+        <label>Add new tag</label>
         <input type="text" ng-model="tag.title" placeholder="Title" required />
         <select ng-model="tag.langcode" required >
             <option value="en">English</option>
             <option value="ru">Russian</option>
         </select>
-        <br/>
+        <br/><br/>
 
         <!--Button to add entered values to the model-->
         <!-- Material button is not compatible with type="submit" and ng-disabled directive -->
