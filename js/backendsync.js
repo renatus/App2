@@ -92,6 +92,13 @@ app.service('backendSync', function($rootScope, $q, indexedDBexo, backend){
 
 
 
+    //Sync tag entry to backend
+    this.tags = function(UUID){
+
+    };
+
+
+
     //Sync Body condition report entry to backend
     this.bodyconditions = function(UUID){
 

@@ -1,0 +1,65 @@
+<span ng-controller="tagsController">
+    <!--You should put nothing outside root tag (<span> in this case), even comments-->
+    <!--Page for tags list-->
+
+    <!--Fulltext search, all object properties are indexed, so "1" query will result in list of all entries, containing number 1 in, say, UUID-->
+    Search: <input ng-model="userQuery">
+
+    <!--Select sorting order for list of all tags-->
+    <select ng-model="orderChoice">
+        <option value="ascend">Ascending</option>
+        <option value="descend">Descending</option>
+    </select>
+
+    <!-- This filter will search through all the fields, nod only through tag[tag['lastVersion']]['langcode'] -->
+    <select ng-model="langcode">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+    </select>
+
+
+
+    <!--List of all tags-->
+    <material-list>
+    <!--<ul>-->
+        <!-- Single tag line -->
+        <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
+        <!-- orderBy standard filter works with arrays only, not with objects -->
+        <material-item ng-repeat="tag in tags | filter:userQuery | filter:langcode | orderObjectByTXT:'title':orderChoice track by tag.uuid">
+
+            <!-- Will give something like "TagTitle | en |"-->
+            <span ng-hide="editing" ng-click="editing = true">{{tag[tag['lastVersion']]['title'][tag[tag['lastVersion']]['langcode']]}} | {{tag[tag['lastVersion']]['langcode']}} | </span>
+            <!--"Details" link, click will open subpage with this particular tag details-->
+            <!--You can get wrong URL in case you use dynamic parts (like {{tag.uuid}}) at href URL, use ng-href instead-->
+            <a ng-hide="editing" ng-href="#/tags/{{tag.uuid}}">Details</a>
+
+            <!--Button to delete this particular entry-->
+            <material-button class="material-button-raised" ng-hide="editing" ng-click="deleteEntry(tag)">Del</material-button>
+
+            <!--Here tag editing form will be placed-->
+            <edit-tag></edit-tag>
+
+        <!--</li>-->
+        </material-item>
+
+    <!--</ul>-->
+    </material-list>
+
+
+
+    <!--Form to add new tag-->
+    <form name="addTag" ng-submit="addEntry(tag)" novalidate >
+        <label>Title:</label>
+        <input type="text" ng-model="tag.title" placeholder="Title" required />
+        <select ng-model="tag.langcode" required >
+            <option value="en">English</option>
+            <option value="ru">Russian</option>
+        </select>
+        <br/>
+
+        <!--Button to add entered values to the model-->
+        <!-- Material button is not compatible with type="submit" and ng-disabled directive -->
+        <button class="btn" type="submit" ng-disabled="addTag.$invalid">Add</button>
+    </form>
+
+</span>

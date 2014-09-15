@@ -1,0 +1,9 @@
+<span ng-controller="showTagController">
+    <!--You should put nothing outside root tag (<form> in this case), even comments-->
+    <!--Single tag's page-->
+    <h2>Tag UUID {{tagID}}</h2>
+    Here are the details for tag <b>{{tag.uuid}}</b>.</br>
+    Last version: <b>{{tag.lastVersion}}</b></br>
+    Created: <b>{{tag[tag['lastVersion']]['createdTimeStamp']}}</b></br>
+    Modified: <b>{{tag[tag['lastVersion']]['modifiedTimeStamp']}}</b></br>
+</span>

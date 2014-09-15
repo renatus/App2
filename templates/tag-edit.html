@@ -1,0 +1,20 @@
+<form name="editorTag" ng-show="editing" novalidate >
+    <!--You should put nothing outside root tag (<form> in this case), even comments-->
+    <!--Form to edit existing tag-->
+    <!--We work with tag copy (editTag object) to prevent changes from taking immediate effect-->
+
+    <!--Tag title-->
+    <label>Title:</label>
+    <input type="text" ng-model="editTag[editTag['lastVersion']]['title'][editTag[editTag['lastVersion']]['langcode']]" placeholder="Title" required >
+
+    <!--Tag language-->
+    <label>Langcode:</label>
+    <select ng-model="editTagLangcode" required >
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+    </select>
+    <br/>
+
+    <!--Button to add entered values to the model-->
+    <button ng-click="editing = false; editEntry(editTag, editTagLangcode)" ng-disabled="editorTag.$invalid">Save</button>
+</form>
