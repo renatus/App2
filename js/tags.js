@@ -25,6 +25,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             "lastUpdatedLocally": curTimestamp,
             "0": {
                 "title": {},
+                "urllink": $scope.tag.urllink,
                 "langcode": $scope.tag.langcode,
                 "createdTimeStamp": curTimestamp,
                 "modifiedTimeStamp": curTimestamp
