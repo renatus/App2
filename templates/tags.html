@@ -49,8 +49,9 @@
 
     <!--Form to add new tag-->
     <br/><br/>
+    <h2>Add new tag</h2>
     <form name="addTag" novalidate >
-        <label>Add new tag</label>
+        <label>Language</label>
         <select ng-model="tag.langcode" required >
             <option value="en">English</option>
             <option value="ru">Russian</option>
@@ -58,7 +59,7 @@
         <br/><br/>
         <input type="text" class="exo-input" ng-model="tag.title" placeholder="Title" required />
         <br/>
-        <input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com" required />
+        <input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com"/>
 
         <!--Button to add entered values to the model-->
         <material-button class="material-button-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</material-button>
