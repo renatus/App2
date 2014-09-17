@@ -30,7 +30,7 @@
     <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
-    <button class="exo-left" ng-click="login(pageLogin)" ng-disabled="serverLogin.$invalid">Login</button>
+    <material-button class="material-button-raised exo-left" ng-click="login(pageLogin)" ng-disabled="serverLogin.$invalid">Login</material-button>
 
     <!--Button to logout from server-->
     <material-button class="material-button-raised exo-right" ng-click="logout()">Logout</material-button>

@@ -61,8 +61,7 @@
         <input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com" required />
 
         <!--Button to add entered values to the model-->
-        <!-- Material button is not compatible with type="submit" and ng-disabled directive -->
-        <button class="btn" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</button>
+        <material-button class="material-button-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</material-button>
     </form>
 
 </span>
