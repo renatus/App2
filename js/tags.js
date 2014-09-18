@@ -25,7 +25,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             "lastUpdatedLocally": curTimestamp,
             "0": {
                 "title": {},
-                "urllink": $scope.tag.urllink,
+                "urllink": [],
                 "langcode": $scope.tag.langcode,
                 "createdTimeStamp": curTimestamp,
                 "modifiedTimeStamp": curTimestamp
@@ -34,6 +34,11 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Set entry title
         //Entry is new, so revision number is "0"
         newEntry["0"]["title"][langcode] = tag.title;
+
+        //Set URLlink URL and title
+        //Entry is new, so revision number is "0"
+        var newArrElement = {'url':$scope.tag.urllink, "title":{'en': 'EnTitle'} };
+        newEntry["0"]["urllink"].push(newArrElement);
 
         //Clean form from now saved user-entered data
         this.tag = {};
