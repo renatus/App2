@@ -55,6 +55,7 @@
         <material-item ng-repeat="input in inputs">
             <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="console.log('Changed')" placeholder="http://site.com"/>
             <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
+            <material-button ng-click="addArrItem()">Add</material-button>
         </material-item>
     </material-list>
 
