@@ -4,6 +4,12 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Get all entries from $rootScope and put them to $scope object
     $scope.tags = $rootScope.exo.tags;
 
+    $scope.inputs = [1, 2, 3]
+
+    $scope.addArrItem = function(){
+
+    }
+
 
 
     //Add new tag entry to $scope and DB

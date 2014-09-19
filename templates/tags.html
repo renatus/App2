@@ -47,6 +47,18 @@
 
 
 
+    <!--List of addable inputs-->
+    <material-list>
+        <!-- Single tag line -->
+        <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
+        <!-- orderBy standard filter works with arrays only, not with objects -->
+        <material-item ng-repeat="input in inputs">
+            {{input}}
+        </material-item>
+    </material-list>
+
+
+
     <!--Form to add new tag-->
     <br/><br/>
     <h2>Add new tag</h2>
