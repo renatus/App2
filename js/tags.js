@@ -7,7 +7,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     $scope.inputs = [1];
 
     $scope.addArrItem = function(){
-        $scope.inputs.push("1");
+        $scope.inputs.push($scope.inputs.length + 1);
     }
 
 
