@@ -1,434 +1,11 @@
 /*!
  * Angular Material Design
- * WIP Banner
+ * https://github.com/angular/material
+ * @license MIT
+ * v0.0.3
  */
 (function(){
-angular.module('ngMaterial', [ 'ng', 'ngAnimate', 'material.services.attrBind', 'material.services.compiler', 'material.services.position', 'material.services.registry', 'material.services.throttle', 'material.decorators', 'material.services.aria', "material.components.button","material.components.card","material.components.checkbox","material.components.content","material.components.dialog","material.components.form","material.components.icon","material.components.list","material.components.radioButton","material.components.sidenav","material.components.slider","material.components.switch","material.components.tabs","material.components.toast","material.components.toolbar","material.components.whiteframe"]);
-angular.module('ngAnimateSequence', ['ngAnimate'])
-
-  .factory('$$animateAll', function() {
-    return function all(arr, fn) {
-      var count = 0;
-      for(var i = 0; i < arr.length; i++) {
-        arr[i](onChainDone);
-      }
-
-      function onChainDone() {
-        if(++count == arr.length) fn();
-      }
-    };
-  })
-
-  .provider('$$animateStyler', ['$provide', function($provide) {
-    var register = this.register = function(name, factory) {
-      $provide.factory(name + 'Styler', factory);
-    };
-
-    this.$get = ['$injector', function($injector) {
-      register('default', function() {
-        return function(element, pre) {
-          element.css(pre);
-          return function(post, done) {
-            element.css(post);
-            done();
-          }
-        };
-      });
-
-      return function(name) {
-        return $injector.get(name + 'Styler');
-      }
-    }];
-  }])
-
-  .factory('$animateRunner', ['$$animateReflow', '$animate', '$$animateStyler', '$$animateAll', '$timeout',
-    function($$animateReflow,   $animate,   $$animateStyler,   $$animateAll,   $timeout) {
-      return function(element, options, queue, duration, completeFn) {
-        options = options || {};
-
-        var node = element[0];
-        var self;
-        var index = 0;
-        var paused = false;
-        var cancelAnimation = angular.noop;
-
-        var styler = angular.isFunction(options.styler)
-          ? options.styler
-          : angular.isString(options.styler)
-          ? $$animateStyler(options.styler)
-          : $$animateStyler('default');
-
-        var style = function(element, duration, cssStyles) {
-          cssStyles = cssStyles || {};
-          var delay = cssStyles.delay;
-          delete cssStyles.delay;
-          return styler(element, cssStyles, duration, delay);
-        };
-
-
-        completeFn = completeFn || angular.noop;
-
-        function tick(initialTimeout) {
-          if (paused) return;
-
-          var step = queue[index++];
-          if(!step || !$animate.enabled()) {
-            completeFn();
-            queue = null;
-            return;
-          }
-
-          if(angular.isString(step)) {
-            self[step].apply(self);
-            tick();
-            return;
-          }
-
-          var time  = step[0];
-          var pre   = step[1];
-          var post  = step[2];
-          var fn    = step[3];
-
-          if(!initialTimeout && index == 1 && time > 0 && time <= 1 && duration > 0) {
-            index--;
-            $timeout(function() {
-              tick(true);
-            }, time * duration, false);
-            return;
-          }
-
-          var animationDuration = time;
-          if(duration > 0 && time <= 1) { //Keyframes
-            var nextEntry = queue[index];
-            var next = angular.isArray(nextEntry) ? nextEntry[0] : 1;
-            if(next <= 1) {
-              animationDuration = (next - time) * duration;
-            }
-          }
-
-          var postStyle = style(element, animationDuration, pre);
-
-          accumulatedStyles = angular.extend(accumulatedStyles, pre);
-          accumulatedStyles = angular.extend(accumulatedStyles, post);
-
-          $$animateReflow(function() {
-            $$animateAll([
-              function(done) { postStyle(post || {}, done); },
-              function(done) {
-                cancelAnimation = fn(element, animationDuration, done) || angular.noop;
-              }
-            ], tick);
-          });
-
-          return self;
-        }
-
-        var startingClassName = node.className;
-        var accumulatedStyles = {};
-
-        return self = {
-          revertStyles : function() {
-            angular.forEach(accumulatedStyles, function(_, prop) {
-              node.style.removeProperty(prop);
-            });
-            accumulatedStyles = {};
-            return this;
-          },
-
-          revertClasses : function() {
-            node.className = startingClassName;
-            return this;
-          },
-
-          next : function() {
-            cancelAnimation();
-            return tick();
-          },
-
-          redo : function() {
-            cancelAnimation();
-            index--;
-            return tick();
-          },
-
-          run : function() {
-            if (paused) {
-              paused = false;
-              cancelAnimation();
-            }
-            return tick();
-          },
-
-          pause : function() {
-            paused = true;
-            cancelAnimation();
-            return self;
-          },
-
-          restart : function() {
-            cancelAnimation();
-            index = 0;
-
-            return tick();
-          }
-
-        };
-      }
-    }])
-
-  .factory('$animateSequence', ['$animate', '$animateRunner', '$sniffer',
-    function($animate,   $animateRunner,   $sniffer) {
-      return function(options) {
-        var self, queue = [];
-
-        return self = {
-          run : function(element, duration, completeFn) {
-            return $animateRunner(element, options, queue, duration, completeFn).next();
-          },
-
-          then : function(fn) {
-            return addToChain(0, null, null, function(element, duration, done) {
-              fn(element, done);
-            });
-          },
-
-          animate : function(preOptions, postOptions, time ) {
-            if (arguments.length == 2 && !angular.isObject(postOptions)) {
-              time = postOptions;
-              postOptions = preOptions;
-              preOptions  = {};
-            } else if(arguments.length == 1) {
-              postOptions = preOptions;
-              preOptions = {};
-            } else {
-              postOptions = postOptions || {};
-            }
-
-            return addToChain(time || postOptions.duration, preOptions, postOptions, function(_, duration, done) {
-              done();
-            });
-          },
-
-          revertStyles : function() {
-            queue.push('revertStyles');
-            return self;
-          },
-
-          revertClasses : function() {
-            queue.push('revertClasses');
-            return self;
-          },
-
-          revertElement : function() {
-            return this.revertStyles().revertClasses();
-          },
-
-          enter : function(parent, after, preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.enter(element, parent, after, done);
-            });
-          },
-
-          move : function(parent, after, preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.move(element, parent, after, done);
-            });
-          },
-
-          leave : function(preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.leave(element, done);
-            });
-          },
-
-          addClass : function(className, preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.addClass(element, className, done);
-            });
-          },
-
-          removeClass : function(className, preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.removeClass(element, className, done);
-            });
-          },
-
-          setClass : function(add, remove, preOptions, postOptions, time ) {
-            return addToChain(time, preOptions, postOptions, function(element, duration, done) {
-              return $animate.setClass(element, add, remove, done)
-            });
-          }
-
-        };
-
-        /**
-         * Append chain step into queue
-         * @returns {*} this
-         */
-        function addToChain(time, pre, post, fn) {
-          queue.push([time || 0, addSuffix(pre), addSuffix(post), fn]);
-          queue = queue.sort(function(a,b) {
-            return a[0] > b[0];
-          });
-          return self;
-        };
-
-        /**
-         * For any positional fields, ensure that a `px` suffix
-         * is provided.
-         * @param target
-         * @returns {*}
-         */
-        function addSuffix(target) {
-          var styles = 'top left right bottom ' +
-            'x y width height ' +
-            'border-width border-radius borderWidth borderRadius' +
-            'margin margin-top margin-bottom margin-left margin-right ' +
-            'padding padding-left padding-right padding-top padding-bottom'.split(' ');
-
-          angular.forEach(target, function(val, key) {
-            var isPositional = styles.indexOf(key) > -1;
-            var hasPx        = String(val).indexOf('px') > -1;
-
-            if (isPositional && !hasPx) {
-              target[key] = val + 'px';
-            }
-          });
-
-          return target;
-        }
-      };
-    }]);
-
-angular.module('ngAnimateStylers', ['ngAnimateSequence'])
-
-  .config(['$$animateStylerProvider', function($$animateStylerProvider) {
-    var isDefined = angular.isDefined;
-
-    //JQUERY
-    $$animateStylerProvider.register('jQuery', function() {
-      return function(element, pre, duration, delay) {
-        delay = delay || 0;
-        element.css(pre);
-        return function(post, done) {
-          element.animate(post, duration, null, done);
-        }
-      };
-    });
-
-    //Web Animations API
-    $$animateStylerProvider.register('webAnimations', ['$window', '$sniffer',
-                                               function($window,   $sniffer) {
-      // TODO(matias): figure out other styles to add here
-      var specialStyles = 'transform,transition,animation'.split(',');
-      var webkit = $sniffer.vendorPrefix.toLowerCase() == 'webkit';
-
-      return function(element, pre, duration, delay) {
-        var node = element[0];
-        if (!node.animate) {
-          throw new Error("WebAnimations (element.animate) is not defined for use within $$animationStylerProvider.");
-        }
-
-        delay = delay || 0;
-        duration = duration || 1000;
-        var iterations = 1; // FIXME(matias): make sure this can be changed
-        pre = camelCaseStyles(pre);
-
-        return function(post, done) {
-          var finalStyles = normalizeVendorPrefixes(post);
-
-          post = camelCaseStyles(post);
-
-          var missingProperties = [];
-          angular.forEach(post, function(_, key) {
-            if (!isDefined(pre[key])) {
-              missingProperties.push(key);
-            }
-          });
-
-          // The WebAnimations API requires that each of the to-be-animated styles
-          // are provided a starting value at the 0% keyframe. Since the sequencer
-          // API does not require this then let's figure out each of the styles using
-          // computeStartingStyles(...) and merge that with the existing pre styles
-          if (missingProperties.length) {
-            pre = angular.extend(pre, computeStartingStyles(node, missingProperties));
-          }
-
-          var animation = node.animate([pre, post], {
-            duration : duration,
-            delay : delay,
-            iterations : iterations
-          });
-          animation.onfinish = function() {
-            element.css(finalStyles);
-            done();
-          };
-        }
-      };
-
-      function computeStartingStyles(node, props) {
-        var computedStyles = $window.getComputedStyle(node);
-        var styles = {};
-        angular.forEach(props, function(prop) {
-          var value = computedStyles[prop];
-
-          // TODO(matias): figure out if webkit is the only prefix we need
-          if (!isDefined(value) && webkit && specialStyles.indexOf(prop) >= 0) {
-            prop = 'webkit' + prop.charAt(0).toUpperCase() + prop.substr(1);
-            value = computedStyles[prop];
-          }
-          if (isDefined(value)) {
-            styles[prop] = value;
-          }
-        });
-        return styles;
-      }
-
-      function normalizeVendorPrefixes(styles) {
-        var newStyles = {};
-        angular.forEach(styles, function(value, prop) {
-          if(webkit && specialStyles.indexOf(prop) >= 0) {
-            newStyles['webkit' + prop.charAt(0).toUpperCase() + prop.substr(1)] = value;
-          }
-          newStyles[prop]=value;
-        });
-        return newStyles;
-      }
-    }]);
-
-    // Greensock Animation Platform (GSAP)
-    $$animateStylerProvider.register('gsap', function() {
-      return function(element, pre, duration, delay) {
-        var styler = TweenMax || TweenLite;
-
-        if ( !styler) {
-          throw new Error("GSAP TweenMax or TweenLite is not defined for use within $$animationStylerProvider.");
-        }
-
-
-        return function(post, done) {
-          styler.fromTo(
-            element,
-            (duration || 0)/1000,
-            pre || { },
-            angular.extend( post, {onComplete:done, delay: (delay || 0)/1000} )
-          );
-        }
-      };
-    });
-
-    function camelCaseStyles(styles) {
-      var newStyles = {};
-      angular.forEach(styles, function(value, prop) {
-        prop = prop.toLowerCase().replace(/-(.)/g, function(match, group1) {
-          return group1.toUpperCase();
-        });
-        newStyles[prop]=value;
-      });
-      return newStyles;
-    }
-  }]);
-
+angular.module('ngMaterial', [ 'ng', 'ngAnimate', 'material.services.attrBind', 'material.services.compiler', 'material.services.registry', 'material.services.throttle', 'material.decorators', 'material.services.aria', "material.components.button","material.components.card","material.components.checkbox","material.components.content","material.components.dialog","material.components.divider","material.components.icon","material.components.linearProgress","material.components.list","material.components.radioButton","material.components.sidenav","material.components.slider","material.components.switch","material.components.tabs","material.components.textField","material.components.toast","material.components.toolbar","material.components.whiteframe"]);
 /*
  * iterator is a list facade to easily support iteration and accessors
  *
@@ -773,10 +350,41 @@ var Util = {
       return target;
     }
 
+  },
+
+  // Returns a function, that, as long as it continues to be invoked, will not
+  // be triggered. The function will be called after it stops being called for
+  // N milliseconds. If `immediate` is passed, trigger the function on the
+  // leading edge, instead of the trailing.
+  debounce: function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this, args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      }, wait);
+      if (immediate && !timeout) func.apply(context, args);
+    };
   }
+
 
 };
 
+/*
+ * Since removing jQuery from the demos, some code that uses `element.focus()` is broken.
+ *
+ * We need to add `element.focus()`, because it's testable unlike `element[0].focus`.
+ *
+ * TODO(ajoslin): This should be added in a better place later.
+ */
+angular.element.prototype.focus = angular.element.prototype.focus || function() {
+  if (this.length) {
+    this[0].focus();
+  }
+  return this;
+};
 
 var Constant = {
   ARIA : {
@@ -788,6 +396,7 @@ var Constant = {
       LIST_ITEM : 'listitem',
       RADIO : 'radio',
       RADIO_GROUP : 'radiogroup',
+      SLIDER : 'slider',
       TAB_LIST : 'tablist',
       TAB : 'tab',
       TAB_PANEL : 'tabpanel'
@@ -833,17 +442,13 @@ var KEY  = Constant.KEY_CODE;
  * Ink and Popup Effects
  */
 angular.module('material.animations', [
-  'ngAnimateStylers',
-  'ngAnimateSequence',
-  'material.services.position',
   'material.services.throttle'
 ])
   .service('$materialEffects', [
-    '$animateSequence',
     '$rootElement',
-    '$position',
     '$$rAF',
     '$sniffer',
+    '$q',
     MaterialEffects
   ]);
 
@@ -863,11 +468,7 @@ angular.module('material.animations', [
  * - `{function(element,parentElement)}` `popOut` - animated close of popup overlay
  *
  */
-function MaterialEffects($animateSequence, $rootElement, $position, $$rAF, $sniffer) {
-
-  var styler = angular.isDefined( $rootElement[0].animate ) ? 'webAnimations' :
-               angular.isDefined( window['TweenMax'] || window['TweenLite'] ) ? 'gsap'   :
-               angular.isDefined( window['jQuery'] ) ? 'jQuery' : 'default';
+function MaterialEffects($rootElement, $$rAF, $sniffer, $q) {
 
   var webkit = /webkit/i.test($sniffer.vendorPrefix);
   function vendorProperty(name) {
@@ -879,10 +480,7 @@ function MaterialEffects($animateSequence, $rootElement, $position, $$rAF, $snif
   var self;
   // Publish API for effects...
   return self = {
-    makeSequence : makeSequence,
-
     popIn: popIn,
-    popOut: popOut,
 
     /* Constants */
     TRANSITIONEND_EVENT: 'transitionend' + (webkit ? ' webkitTransitionEnd' : ''),
@@ -901,27 +499,16 @@ function MaterialEffects($animateSequence, $rootElement, $position, $$rAF, $snif
   // **********************************************************
   // API Methods
   // **********************************************************
-
-  function makeSequence( from, to, duration )
-  {
-    var animate = $animateSequence({ styler: styler }).animate,
-       sequence = animate( from, to , safeDuration(duration) );
-
-    return sequence;
-  }
-
-  /**
-   *
-   */
-  function popIn(element, parentElement, clickElement, done) {
+  function popIn(element, parentElement, clickElement) {
+    var deferred = $q.defer();
     parentElement.append(element);
 
     var startPos;
     if (clickElement) {
-      var clickPos = $position.offset(clickElement);
+      var clickRect = clickElement[0].getBoundingClientRect();
       startPos = translateString(
-        clickPos.left - element[0].offsetWidth / 2,
-        clickPos.top - element[0].offsetHeight / 2,
+        clickRect.left - element[0].offsetWidth,
+        clickRect.top - element[0].offsetHeight,
         0
       ) + ' scale(0.2)';
     } else {
@@ -946,33 +533,12 @@ function MaterialEffects($animateSequence, $rootElement, $position, $$rAF, $snif
       //Make sure this transitionend didn't bubble up from a child
       if (ev.target === element[0]) {
         element.off(self.TRANSITIONEND_EVENT, finished);
-        (done || angular.noop)();
+        deferred.resolve();
       }
     }
+
+    return deferred.promise;
   }
-
-  /**
-   *
-   *
-   */
-  function popOut(element, parentElement, done) {
-    var endPos = $position.positionElements(parentElement, element, 'bottom-center');
-
-    element.css({
-      '-webkit-transform': translateString(endPos.left, endPos.top, 0) + ' scale(0.5)',
-      opacity: 0
-    });
-    element.on(self.TRANSITIONEND_EVENT, finished);
-
-    function finished(ev) {
-      //Make sure this transitionend didn't bubble up from a child
-      if (ev.target === element[0]) {
-        element.off(self.TRANSITIONEND_EVENT, finished);
-        (done || angular.noop)();
-      }
-    }
-  }
-
 
   // **********************************************************
   // Utility Methods
@@ -981,26 +547,6 @@ function MaterialEffects($animateSequence, $rootElement, $position, $$rAF, $snif
 
   function translateString(x, y, z) {
     return 'translate3d(' + Math.floor(x) + 'px,' + Math.floor(y) + 'px,' + Math.floor(z) + 'px)';
-  }
-
-
-  /**
-   * Support values such as 0.65 secs or 650 msecs
-   */
-  function safeDuration(value) {
-    var duration = isNaN(value) ? 0 : Number(value);
-    return (duration < 1.0) ? (duration * 1000) : duration;
-  }
-
-  /**
-   * Convert all values to decimal;
-   * eg 150 msecs -> 0.15sec
-   */
-  function safeVelocity(value) {
-    var duration = isNaN(value) ? 0 : Number(value);
-    return (duration > 100) ? (duration / 1000) :
-      (duration > 10 ) ? (duration / 100) :
-        (duration > 1  ) ? (duration / 10) : duration;
   }
 
 }
@@ -1044,7 +590,7 @@ angular.module('material.animations')
 .directive({
   noink: attrNoDirective(),
   nobar: attrNoDirective(),
-  nostretch: attrNoDirective(),
+  nostretch: attrNoDirective()
 });
 
 function attrNoDirective() {
@@ -1093,7 +639,7 @@ function InkRippleService($window, $$rAF, $materialEffects, $timeout) {
   return {
     attachButtonBehavior: attachButtonBehavior,
     attachCheckboxBehavior: attachCheckboxBehavior,
-    attach: attach,
+    attach: attach
   };
 
   function attachButtonBehavior(element) {
@@ -1147,18 +693,19 @@ function InkRippleService($window, $$rAF, $materialEffects, $timeout) {
       function onPointerDown(ev) {
         if (!rippleIsAllowed()) return;
 
-        // Stop listening to pointer down for now, until the user lifts his finger/mouse
-        element.off(POINTERDOWN_EVENT, onPointerDown);
 
         var rippleEl = createRippleFromEvent(ev);
         var ripplePauseTimeout = $timeout(pauseRipple, options.mousedownPauseTime, false);
-
         rippleEl.on('$destroy', cancelRipplePause);
-        element.one(POINTERUP_EVENT, onPointerUp);
+
+        // Stop listening to pointer down for now, until the user lifts their finger/mouse
+        element.off(POINTERDOWN_EVENT, onPointerDown);
+        element.on(POINTERUP_EVENT, onPointerUp);
 
         function onPointerUp() {
           cancelRipplePause();
           rippleEl.css($materialEffects.ANIMATION_PLAY_STATE, 'running');
+          element.off(POINTERUP_EVENT, onPointerUp);
           element.on(POINTERDOWN_EVENT, onPointerDown);
         }
         function pauseRipple() {
@@ -1177,18 +724,9 @@ function InkRippleService($window, $$rAF, $materialEffects, $timeout) {
     function createRipple(left, top, positionsAreAbsolute) {
 
       var rippleEl = angular.element('<div class="material-ripple">')
-        .css(
-          $materialEffects.ANIMATION_DURATION,
-          options.animationDuration + 'ms'
-        )
-        .css(
-          $materialEffects.ANIMATION_NAME,
-          options.animationName
-        )
-        .css(
-          $materialEffects.ANIMATION_TIMING,
-          options.animationTimingFunction
-        )
+        .css($materialEffects.ANIMATION_DURATION, options.animationDuration + 'ms')
+        .css($materialEffects.ANIMATION_NAME, options.animationName)
+        .css($materialEffects.ANIMATION_TIMING, options.animationTimingFunction)
         .on($materialEffects.ANIMATIONEND_EVENT, function() {
           rippleEl.remove();
         });
@@ -1199,8 +737,10 @@ function InkRippleService($window, $$rAF, $materialEffects, $timeout) {
       }
       rippleContainer.append(rippleEl);
 
+      var containerWidth = rippleContainer.prop('offsetWidth');
+
       if (options.center) {
-        left = rippleContainer.prop('offsetWidth') / 2;
+        left = containerWidth / 2;
         top = rippleContainer.prop('offsetHeight') / 2;
       } else if (positionsAreAbsolute) {
         var elementRect = node.getBoundingClientRect();
@@ -1208,19 +748,16 @@ function InkRippleService($window, $$rAF, $materialEffects, $timeout) {
         top -= elementRect.top;
       }
 
-      var finalSize = rippleContainer.prop('offsetWidth');
-
-      // TODO don't use px, make setRippleCss fix that
       var css = {
         'background-color': $window.getComputedStyle(rippleEl[0]).color ||
           $window.getComputedStyle(node).color,
-        'border-radius': (finalSize / 2) + 'px',
+        'border-radius': (containerWidth / 2) + 'px',
 
-        left: (left - finalSize / 2) + 'px',
-        width: finalSize + 'px',
+        left: (left - containerWidth / 2) + 'px',
+        width: containerWidth + 'px',
 
-        top: (top - finalSize / 2) + 'px',
-        height: finalSize + 'px',
+        top: (top - containerWidth / 2) + 'px',
+        height: containerWidth + 'px'
       };
       css[$materialEffects.ANIMATION_DURATION] = options.fadeoutDuration + 'ms';
       rippleEl.css(css);
@@ -1686,7 +1223,7 @@ function MaterialDialogService($timeout, $materialCompiler, $rootElement, $rootS
       targetEvent: null,
       transformTemplate: function(template) {
         return '<div class="material-dialog-container">' + template + '</div>';
-      },
+      }
       // Also supports all options from $materialCompiler.compile
     }, options || {});
 
@@ -1715,15 +1252,19 @@ function MaterialDialogService($timeout, $materialCompiler, $rootElement, $rootS
         backdrop = angular.element('<material-backdrop class="opaque ng-enter">');
         $animate.enter(backdrop, options.appendTo, null);
       }
-      $materialEffects.popIn(element, options.appendTo, popInTarget, function() {
-        if (options.escapeToClose) {
-          $rootElement.on('keyup', onRootElementKeyup);
-        }
-        if (options.clickOutsideToClose) {
-          element.on('click', dialogClickOutside);
-        }
-        closeButton.focus();
-      });
+
+      $materialEffects.popIn(element, options.appendTo, popInTarget)
+        .then(function() {
+
+          if (options.escapeToClose) {
+            $rootElement.on('keyup', onRootElementKeyup);
+          }
+          if (options.clickOutsideToClose) {
+            element.on('click', dialogClickOutside);
+          }
+          closeButton.focus();
+
+        });
 
       return destroyDialog;
 
@@ -1750,7 +1291,7 @@ function MaterialDialogService($timeout, $materialCompiler, $rootElement, $rootS
         if (options.clickOutsideToClose) {
           element.off('click', dialogClickOutside);
         }
-        $materialEffects.popOut(element, options.appendTo, function() {
+        $animate.leave(element).then(function() {
           element.remove();
           scope.$destroy();
           scope = null;
@@ -1762,12 +1303,12 @@ function MaterialDialogService($timeout, $materialCompiler, $rootElement, $rootS
         });
       }
       function onRootElementKeyup(e) {
-        if (e.keyCode == Constant.KEY_CODE.ESCAPE) {
+        if (e.keyCode === Constant.KEY_CODE.ESCAPE) {
           $timeout(destroyDialog);
         }
       }
       function dialogClickOutside(e) {
-        // If we click the flex container outside the backdrop
+        // Only close if we click the flex container outside the backdrop
         if (e.target === element[0]) {
           $timeout(destroyDialog);
         }
@@ -1798,11 +1339,11 @@ function MaterialDialogService($timeout, $materialCompiler, $rootElement, $rootS
 
 /**
  * @ngdoc module
- * @name material.components.form
+ * @name material.components.textField
  * @description
  * Form
  */
-angular.module('material.components.form', [])
+angular.module('material.components.textField', [])
   .directive('materialInputGroup', [
     materialInputGroupDirective
   ])
@@ -1813,15 +1354,15 @@ angular.module('material.components.form', [])
 /**
  * @ngdoc directive
  * @name materialInputGroup
- * @module material.components.form
+ * @module material.components.textField
  * @restrict E
  * @description
- * Use the `<material-input-group>` directive as the grouping parent of an `<material-input>` elements
+ * Use the `<material-input-group>` directive as the grouping parent of a `<material-input>` element.
  *
  * @usage
  * <hljs lang="html">
  * <material-input-group>
- *   <material-input type="text" ng-model="myText">
+ *   <material-input type="text" ng-model="myText"></material-input>
  * </material-input-group>
  * </hljs>
  */
@@ -1842,7 +1383,7 @@ function materialInputGroupDirective() {
 /**
  * @ngdoc directive
  * @name materialInput
- * @module material.components.form
+ * @module material.components.textField
  *
  * @restrict E
  *
@@ -2534,115 +2075,326 @@ function materialSidenavDirective($timeout) {
 /**
  * @ngdoc module
  * @name material.components.slider
- * @description Slider module!
  */
-angular.module('material.components.slider', [])
-  .directive('materialSlider', [
-    '$window',
-    materialSliderDirective
-  ]);
+angular.module('material.components.slider', [
+  'material.animations',
+  'material.services.aria'
+])
+.directive('materialSlider', [
+  SliderDirective
+]);
 
 /**
  * @ngdoc directive
  * @name materialSlider
  * @module material.components.slider
  * @restrict E
- *
  * @description
- * The `material-slider` directive creates a slider bar that you can use.
+ * The `<material-slider>` component allows the user to choose from a range of
+ * values.
  *
- * Simply put a native `<input type="range">` element inside of a
- * `<material-slider>` container.
+ * It has two modes: 'normal' mode, where the user slides between a wide range
+ * of values, and 'discrete' mode, where the user slides between only a few
+ * select values.
  *
- * On the range input, all HTML5 range attributes are supported.
+ * To enable discrete mode, add the `discrete` attribute to a slider,
+ * and use the `step` attribute to change the distance between
+ * values the user is allowed to pick.
  *
  * @usage
+ * <h4>Normal Mode</h4>
  * <hljs lang="html">
- * <material-slider>
- *   <input type="range" ng-model="slideValue" min="0" max="100">
+ * <material-slider ng-model="myValue" min="5" max="500">
  * </material-slider>
  * </hljs>
+ * <h4>Discrete Mode</h4>
+ * <hljs lang="html">
+ * <material-slider discrete ng-model="myDiscreteValue" step="10" min="10" max="130">
+ * </material-slider>
+ * </hljs>
+ *
+ * @param {boolean=} discrete Whether to enable discrete mode.
+ * @param {number=} step The distance between values the user is allowed to pick. Default 1.
+ * @param {number=} min The minimum value the user is allowed to pick. Default 0.
+ * @param {number=} max The maximum value the user is allowed to pick. Default 100.
  */
-function materialSliderDirective($window) {
-
-  var MIN_VALUE_CSS = 'material-slider-min';
-  var ACTIVE_CSS = 'material-active';
-
-  function rangeSettings(rangeEle) {
-    return {
-      min: parseInt( rangeEle.min !== "" ? rangeEle.min : 0, 10 ),
-      max: parseInt( rangeEle.max !== "" ? rangeEle.max : 100, 10 ),
-      step: parseInt( rangeEle.step !== "" ? rangeEle.step : 1, 10 )
-    };
-  }
-
+function SliderDirective() {
   return {
-    restrict: 'E',
-    scope: true,
-    transclude: true,
-    template: '<div class="material-track" ng-transclude></div>',
-    link: link
+    scope: {},
+    require: ['?ngModel', 'materialSlider'],
+    controller: [
+      '$scope',
+      '$element',
+      '$attrs',
+      '$$rAF',
+      '$timeout',
+      '$window',
+      '$materialEffects',
+      '$aria',
+      SliderController
+    ],
+    template:
+      '<div class="slider-track-container">' +
+        '<div class="slider-track"></div>' +
+        '<div class="slider-track slider-track-fill"></div>' +
+        '<div class="slider-track-ticks"></div>' +
+      '</div>' +
+      '<div class="slider-thumb-container">' +
+        '<div class="slider-thumb"></div>' +
+        '<div class="slider-focus-thumb"></div>' +
+        '<div class="slider-focus-ring"></div>' +
+        '<div class="slider-sign">' +
+          '<span class="slider-thumb-text" ng-bind="modelValue"></span>' +
+        '</div>' +
+        '<div class="slider-disabled-thumb"></div>' +
+      '</div>',
+    link: postLink
   };
 
-  // **********************************************************
-  // Private Methods
-  // **********************************************************
+  function postLink(scope, element, attr, ctrls) {
+    var ngModelCtrl = ctrls[0] || {
+      // Mock ngModelController if it doesn't exist to give us
+      // the minimum functionality needed
+      $setViewValue: function(val) {
+        this.$viewValue = val;
+        this.$viewChangeListeners.forEach(function(cb) { cb(); });
+      },
+      $parsers: [],
+      $formatters: [],
+      $viewChangeListeners: []
+    };
 
-  function link(scope, element, attr) {
-    var input = element.find('input');
-    var ngModelCtrl = angular.element(input).controller('ngModel');
-
-    if(!input || !ngModelCtrl || input[0].type !== 'range') return;
-
-    var rangeEle = input[0];
-    var trackEle = angular.element( element[0].querySelector('.material-track') );
-
-    trackEle.append('<div class="material-fill"><div class="material-thumb"></div></div>');
-    var fillEle = trackEle[0].querySelector('.material-fill');
-
-    if(input.attr('step')) {
-      var settings = rangeSettings(rangeEle);
-      var tickCount = (settings.max - settings.min) / settings.step;
-      var tickMarkersEle = angular.element('<div class="material-tick-markers"></div>');
-      for(var i=0; i<tickCount; i++) {
-        tickMarkersEle.append('<div class="material-tick"></div>');
-      }
-      if (tickCount > 0) {
-        tickMarkersEle.addClass('visible');
-      }
-      trackEle.append(tickMarkersEle);
-    }
-
-    input.on('mousedown touchstart', function(e){
-      trackEle.addClass(ACTIVE_CSS);
-    });
-
-    input.on('mouseup touchend', function(e){
-      trackEle.removeClass(ACTIVE_CSS);
-    });
-
-
-    function render() {
-      var settings = rangeSettings(rangeEle);
-      var adjustedValue = parseInt(ngModelCtrl.$viewValue, 10) - settings.min;
-      var fillRatio = (adjustedValue / (settings.max - settings.min));
-
-      fillEle.style.width = (fillRatio * 100) + '%';
-
-      if(fillRatio <= 0) {
-        element.addClass(MIN_VALUE_CSS);
-      } else {
-        element.removeClass(MIN_VALUE_CSS);
-      }
-
-    }
-
-    scope.$watch( function () { return ngModelCtrl.$viewValue; }, render );
-
+    var sliderCtrl = ctrls[1];
+    sliderCtrl.init(ngModelCtrl);
   }
-
 }
 
+/**
+ * We use a controller for all the logic so that we can expose a few
+ * things to unit tests
+ */
+function SliderController(scope, element, attr, $$rAF, $timeout, $window, $materialEffects, $aria) {
+
+  this.init = function init(ngModelCtrl) {
+    var thumb = angular.element(element[0].querySelector('.slider-thumb'));
+    var thumbContainer = thumb.parent();
+    var trackContainer = angular.element(element[0].querySelector('.slider-track-container'));
+    var activeTrack = angular.element(element[0].querySelector('.slider-track-fill'));
+    var tickContainer = angular.element(element[0].querySelector('.slider-track-ticks'));
+
+    // Default values, overridable by attrs
+    attr.min ? attr.$observe('min', updateMin) : updateMin(0);
+    attr.max ? attr.$observe('max', updateMax) : updateMax(100);
+    attr.step ? attr.$observe('step', updateStep) : updateStep(1);
+
+    // We have to manually stop the $watch on ngDisabled because it exists
+    // on the parent scope, and won't be automatically destroyed when
+    // the component is destroyed.
+    var stopDisabledWatch = angular.noop;
+    if (attr.ngDisabled) {
+      stopDisabledWatch = scope.$parent.$watch(attr.ngDisabled, updateAriaDisabled);
+    } else {
+      updateAriaDisabled(!!attr.disabled);
+    }
+
+    $aria.expect(element, 'aria-label');
+    element.attr('tabIndex', 0);
+    element.attr('role', Constant.ARIA.ROLE.SLIDER);
+    element.on('keydown', keydownListener);
+
+    var hammertime = new Hammer(element[0], {
+      recognizers: [
+        [Hammer.Pan, { direction: Hammer.DIRECTION_HORIZONTAL }]
+      ]
+    });
+    hammertime.on('hammer.input', onInput);
+    hammertime.on('panstart', onPanStart);
+    hammertime.on('pan', onPan);
+
+    // On resize, recalculate the slider's dimensions and re-render
+    var updateAll = $$rAF.debounce(function() {
+      refreshSliderDimensions();
+      ngModelRender();
+      redrawTicks();
+    });
+    updateAll();
+    angular.element($window).on('resize', updateAll);
+
+    scope.$on('$destroy', function() {
+      angular.element($window).off('resize', updateAll);
+      hammertime.destroy();
+      stopDisabledWatch();
+    });
+
+    ngModelCtrl.$render = ngModelRender;
+    ngModelCtrl.$viewChangeListeners.push(ngModelRender);
+    ngModelCtrl.$formatters.push(minMaxValidator);
+    ngModelCtrl.$formatters.push(stepValidator);
+
+    /**
+     * Attributes
+     */
+    var min;
+    var max;
+    var step;
+    function updateMin(value) {
+      min = parseFloat(value);
+      element.attr('aria-valuemin', value);
+    }
+    function updateMax(value) {
+      max = parseFloat(value);
+      element.attr('aria-valuemax', value);
+    }
+    function updateStep(value) {
+      step = parseFloat(value);
+      redrawTicks();
+    }
+    function updateAriaDisabled(isDisabled) {
+      element.attr('aria-disabled', !!isDisabled);
+    }
+
+    // Draw the ticks with canvas.
+    // The alternative to drawing ticks with canvas is to draw one element for each tick,
+    // which could quickly become a performance bottleneck.
+    var tickCanvas, tickCtx;
+    function redrawTicks() {
+      if (!angular.isDefined(attr.discrete)) return;
+
+      var numSteps = Math.floor( (max - min) / step );
+      if (!tickCanvas) {
+        tickCanvas = angular.element('<canvas style="position:absolute;">');
+        tickCtx = tickCanvas[0].getContext('2d');
+        tickCtx.fillStyle = 'black';
+        tickContainer.append(tickCanvas);
+      }
+      var dimensions = getSliderDimensions();
+      tickCanvas[0].width = dimensions.width;
+      tickCanvas[0].height = dimensions.height;
+
+      var distance;
+      for (var i = 0; i <= numSteps; i++) {
+        distance = Math.floor(dimensions.width * (i / numSteps));
+        tickCtx.fillRect(distance - 1, 0, 2, dimensions.height);
+      }
+    }
+
+
+    /**
+     * Refreshing Dimensions
+     */
+    var sliderDimensions = {};
+    var debouncedRefreshDimensions = Util.debounce(refreshSliderDimensions, 5000);
+    refreshSliderDimensions();
+    function refreshSliderDimensions() {
+      sliderDimensions = trackContainer[0].getBoundingClientRect();
+    }
+    function getSliderDimensions() {
+      debouncedRefreshDimensions();
+      return sliderDimensions;
+    }
+
+    /**
+     * left/right arrow listener
+     */
+    function keydownListener(ev) {
+      var changeAmount;
+      if (ev.which === Constant.KEY_CODE.LEFT_ARROW) {
+        changeAmount = -step;
+      } else if (ev.which === Constant.KEY_CODE.RIGHT_ARROW) {
+        changeAmount = step;
+      }
+      if (changeAmount) {
+        if (ev.metaKey || ev.ctrlKey || ev.altKey) {
+          changeAmount *= 4;
+        }
+        ev.preventDefault();
+        ev.stopPropagation();
+        scope.$evalAsync(function() {
+          setModelValue(ngModelCtrl.$viewValue + changeAmount);
+        });
+      }
+    }
+
+    /**
+     * ngModel setters and validators
+     */
+    function setModelValue(value) {
+      ngModelCtrl.$setViewValue( minMaxValidator(stepValidator(value)) );
+    }
+    function ngModelRender() {
+      var percent = (ngModelCtrl.$viewValue - min) / (max - min);
+      scope.modelValue = ngModelCtrl.$viewValue;
+      element.attr('aria-valuenow', ngModelCtrl.$viewValue);
+      setSliderPercent(percent);
+    }
+
+    function minMaxValidator(value) {
+      if (angular.isNumber(value)) {
+        return Math.max(min, Math.min(max, value));
+      }
+    }
+    function stepValidator(value) {
+      if (angular.isNumber(value)) {
+        return Math.round(value / step) * step;
+      }
+    }
+
+    /**
+     * @param percent 0-1
+     */
+    function setSliderPercent(percent) {
+      activeTrack.css('width', (percent * 100) + '%');
+      thumbContainer.css(
+        $materialEffects.TRANSFORM,
+        'translate3d(' + getSliderDimensions().width * percent + 'px,0,0)'
+      );
+      element.toggleClass('slider-min', percent === 0);
+    }
+
+
+    /**
+     * Slide listeners
+     */
+    var isSliding = false;
+    function onInput(ev) {
+      if (!isSliding && ev.eventType === Hammer.INPUT_START &&
+          !element[0].hasAttribute('disabled')) {
+
+        isSliding = true;
+        element.addClass('active');
+        element[0].focus();
+        refreshSliderDimensions();
+        doSlide(ev.center.x);
+
+      } else if (isSliding && ev.eventType === Hammer.INPUT_END) {
+        isSliding = false;
+        element.removeClass('panning active');
+      }
+    }
+    function onPanStart() {
+      if (!isSliding) return;
+      element.addClass('panning');
+    }
+    function onPan(ev) {
+      if (!isSliding) return;
+      doSlide(ev.center.x);
+      ev.preventDefault();
+    }
+
+    /**
+     * Expose for testing
+     */
+    this._onInput = onInput;
+    this._onPanStart = onPanStart;
+    this._onPan = onPan;
+
+    function doSlide(x) {
+      var percent = (x - sliderDimensions.left) / (sliderDimensions.width);
+      scope.$evalAsync(function() { setModelValue(min + percent * (max - min)); });
+    }
+
+  };
+}
 
 /**
  * @ngdoc module
@@ -2651,7 +2403,7 @@ function materialSliderDirective($window) {
 
 angular.module('material.components.switch', [
   'material.components.checkbox',
-  'material.components.radioButton',
+  'material.components.radioButton'
 ])
 
 .directive('materialSwitch', [
@@ -2818,7 +2570,7 @@ function linkTabInk(scope, element, tabsCtrl, $q, $materialEffects) {
  *
  * @returns {updatePagination}
  */
-function linkTabPagination(scope, element, tabsCtrl, $q, $log, $materialEffects ) {
+function linkTabPagination(scope, element, tabsCtrl, $q, $materialEffects ) {
 
   // TODO allow configuration of TAB_MIN_WIDTH
   var TAB_MIN_WIDTH = 8 * 12;           // Must match tab min-width rule in _tabs.scss
@@ -2838,7 +2590,7 @@ function linkTabPagination(scope, element, tabsCtrl, $q, $log, $materialEffects 
     }
   };
 
-  scope.$on(Constant.EVENTS.FOCUS_CHANGED, function() {
+  scope.$on( EVENT.FOCUS_CHANGED, function() {
 
   });
 
@@ -2848,14 +2600,21 @@ function linkTabPagination(scope, element, tabsCtrl, $q, $log, $materialEffects 
    * When the window resizes [`resize`] or the tabs are added/removed
    * [$materialTabsChanged], then calculate pagination-width and
    * update both the current page (if needed) and the tab headers width...
+   *
+   * @returns Promise that is resolved when the pagination transition finishes
    */
   function updatePagination() {
     var dfd = $q.defer();
-
     var tabs = buttonBar.children();
     var tabsWidth = element.prop('clientWidth') - PAGINATORS_WIDTH;
+
     var needPagination = (tabsWidth > 0) && ((TAB_MIN_WIDTH * tabs.length) > tabsWidth);
     var paginationToggled = (needPagination !== pagination.active);
+
+    if (tabsWidth <= 0) {
+      //tabsWidth is 0 on initial load. Just instantly resolve the promise if it's 0
+      return $q.when();
+    }
 
     pagination.active = needPagination;
 
@@ -2941,9 +2700,9 @@ function linkTabPagination(scope, element, tabsCtrl, $q, $log, $materialEffects 
     var lastTab = (pagination.itemsPerPage * pagination.pagesCount) - 1;
     var lastPage = pagination.pagesCount - 1;
 
-    return (numPages < 1)       ? -1       :
-      (tabIndex < 0)       ?  0       :
-      (tabIndex > lastTab) ? lastPage : Math.floor(tabIndex / pagination.itemsPerPage);
+    return  (numPages < 1)       ? -1       :
+            (tabIndex < 0)       ?  0       :
+            (tabIndex > lastTab) ? lastPage : Math.floor(tabIndex / pagination.itemsPerPage);
   }
 
   /**
@@ -2967,7 +2726,7 @@ function linkTabPagination(scope, element, tabsCtrl, $q, $log, $materialEffects 
    */
   function isTabInRange( tabIndex ){
     return (tabIndex >= pagination.startIndex) &&
-      (tabIndex <= pagination.endIndex);
+           (tabIndex <= pagination.endIndex);
   }
 
 }
@@ -2976,6 +2735,7 @@ angular.module('material.components.tabs')
   .directive('materialTab', [
     '$attrBind',
     '$aria',
+    '$materialInkRipple',
     TabDirective
   ]);
 
@@ -3029,7 +2789,7 @@ angular.module('material.components.tabs')
  * </hljs>
  *
  */
-function TabDirective( $attrBind, $aria ) {
+function TabDirective( $attrBind, $aria, $materialInkRipple) {
   var noop = angular.noop;
 
   return {
@@ -3040,9 +2800,7 @@ function TabDirective( $attrBind, $aria ) {
     scope: true,
     link: linkTab,
     template:
-      '<material-tab-label ink-ripple ' +
-        'ng-class="{ disabled : disabled, active : active }"  >' +
-      '</material-tab-label>'
+      '<material-tab-label></material-tab-label>'
   };
 
   function linkTab(scope, element, attrs, tabsCtrl, $transclude) {
@@ -3059,6 +2817,12 @@ function TabDirective( $attrBind, $aria ) {
       selected: '&onSelect'
     }, defaults);
 
+    scope.$watch('active', function(isActive) {
+      element.toggleClass('active', isActive);
+    });
+
+    $materialInkRipple.attachButtonBehavior(element);
+
     configureWatchers();
     updateTabContent(scope);
 
@@ -3069,6 +2833,7 @@ function TabDirective( $attrBind, $aria ) {
       {
         // Click support for entire <material-tab /> element
         if ( !scope.disabled ) tabsCtrl.select(scope);
+        else                   tabsCtrl.focusSelected();
 
       })
       .on('keydown', function onRequestSelect(event)
@@ -3320,7 +3085,7 @@ function TabsController($scope, $attrs, $materialComponentRegistry, $timeout ) {
     onSelectedChange.queued = true;
 
     $scope.$evalAsync(function() {
-      $scope.$broadcast(Constant.EVENTS.TABS_CHANGED, selected);
+      $scope.$broadcast(EVENT.TABS_CHANGED, selected);
       onSelectedChange.queued = false;
     });
   }
@@ -3348,7 +3113,7 @@ function TabsController($scope, $attrs, $materialComponentRegistry, $timeout ) {
     if ( focusIndex != list.indexOf(selected)) {
 
       // Announce focus change
-      $scope.$broadcast(Constant.EVENTS.FOCUS_CHANGED, focusIndex);
+      $scope.$broadcast(EVENT.FOCUS_CHANGED, focusIndex);
     }
     return focusIndex;
   }
@@ -3363,7 +3128,7 @@ function TabsController($scope, $attrs, $materialComponentRegistry, $timeout ) {
 
     if ( focusIndex != list.indexOf(selected)) {
       // Announce focus change
-      $scope.$broadcast(Constant.EVENTS.FOCUS_CHANGED, focusIndex);
+      $scope.$broadcast(EVENT.FOCUS_CHANGED, focusIndex);
     }
 
     return focusIndex;
@@ -3746,30 +3511,42 @@ function TabsDirective($q, $window, $timeout, $compile, $materialEffects, $$rAF,
           }
         };
 
-        var updateInk = linkTabInk(scope, element, tabsCtrl, $q, $materialEffects);
+        var allowFocus = 0;   // do not auto-focus on default tab selection
+        var updateInk = linkTabInk(scope, element, tabsCtrl, $q, $materialEffects) || angular.noop;
         var updatePagination = linkTabPagination( scope, element, tabsCtrl, $q, $materialEffects );
 
-        var updateAll =  function() {
+        var updateAll = function(event) {
 
-              updatePagination().then( function(){
-                tabsCtrl.focusSelected();
+          scope.$evalAsync(function() {
+            updatePagination().then( function(){
 
-                // Make sure the ink positioning is correct
-                $timeout( updateInk );
-              });
+              // Make sure the ink positioning is correct
+              $timeout( function() {
+                updateInk();
 
-              // Make sure ink changes start just after pagination transitions have started...
-              $$rAF( updateInk );
-            };
+                // Key focus synced with tab selection...
+                if (  (event.name == EVENT.TABS_CHANGED) && allowFocus++) {
+                  tabsCtrl.focusSelected();
+                }
+
+              },60);
+            });
+
+            // Make sure ink changes start just after pagination transitions have started...
+            $$rAF( updateInk );
+          });
+        };
 
         var onWindowResize = $$rAF.debounce( updateAll );
         var onWindowRelease = function() {
-              angular.element($window).off('resize', onWindowResize);
-            };
+          angular.element($window).off('resize', onWindowResize);
+        };
 
-        angular.element($window).on( Constant.EVENTS.WINDOW_RESIZE, onWindowResize);
-        scope.$on( Constant.EVENTS.TABS_CHANGED, updateAll );
-        scope.$on( Constant.EVENTS.SCOPE_DESTROY,onWindowRelease );
+        $$rAF(updateAll);
+
+        angular.element($window).on( EVENT.WINDOW_RESIZE, onWindowResize);
+        scope.$on( EVENT.TABS_CHANGED, updateAll );
+        scope.$on( EVENT.SCOPE_DESTROY, onWindowRelease );
 
         transcludeHeaderItems();
         transcludeContentItems();
@@ -4249,7 +4026,7 @@ function QpToastService($timeout, $rootScope, $materialCompiler, $rootElement, $
       swipeDisabled: false,
       // Supports any combination of these class names: 'bottom top left right fit'.
       // Default: 'bottom left'
-      position: 'bottom left',
+      position: 'bottom left'
     }, options || {});
 
     recentToast && recentToast.then(function(destroy) { destroy(); });
@@ -4266,18 +4043,35 @@ function QpToastService($timeout, $rootScope, $materialCompiler, $rootElement, $
       toastParent.addClass(toastParentClass);
 
       var delayTimeout;
-      $animate.enter(element, toastParent, null, function() {
+      $animate.enter(element, toastParent).then(function() {
         if (options.duration) {
           delayTimeout = $timeout(destroy, options.duration);
         }
       });
 
+      var hammertime = new Hammer(element[0], {
+        recognizers: [
+          [Hammer.Swipe, { direction: Hammer.DIRECTION_HORIZONTAL }]
+        ]
+      });
+      hammertime.on('swipeleft swiperight', onSwipe);
+
+      function onSwipe(ev) {
+        //Add swipeleft/swiperight class to element so it can animate correctly
+        element.addClass(ev.type);
+        $timeout(destroy);
+      }
+
       return destroy;
 
       function destroy() {
+        if (destroy.called) return;
+        destroy.called = true;
+
+        hammertime.destroy();
         toastParent.removeClass(toastParentClass);
         $timeout.cancel(delayTimeout);
-        $animate.leave(element, function() {
+        $animate.leave(element).then(function() {
           scope.$destroy();
         });
       }
@@ -4339,9 +4133,13 @@ angular.module('material.components.toolbar', [
  *
  * @param {boolean=} scrollShrink Whether the header should shrink away as
  * the user scrolls down, and reveal itself as the user scrolls up.
- *
  * Note: for scrollShrink to work, the toolbar must be a sibling of a
  * `material-content` element, placed before it. See the scroll shrink demo.
+ *
+ *
+ * @param {number=} shrinkSpeedFactor How much to change the speed of the toolbar's
+ * shrinking by. For example, if 0.25 is given then the toolbar will shrink
+ * at one fourth the rate at which the user scrolls down. Default 0.5.
  */
 function materialToolbarDirective($$rAF, $materialEffects) {
 
@@ -4355,56 +4153,76 @@ function materialToolbarDirective($$rAF, $materialEffects) {
       }
 
       function setupScrollShrink() {
-        //makes it take X times as long for header to dissapear
-        var HEIGHT_FACTOR = 2;
-        var height = element.prop("offsetHeight") * HEIGHT_FACTOR;
         // Current "y" position of scroll
         var y = 0;
         // Store the last scroll top position
         var prevScrollTop = 0;
+
+        var shrinkSpeedFactor = attr.shrinkSpeedFactor || 0.5;
+
+        var toolbarHeight;
+        var contentElement;
+
+        var debouncedContentScroll = $$rAF.debounce(onContentScroll);
+        var debouncedUpdateHeight = Util.debounce(updateToolbarHeight, 5 * 1000);
 
         // Wait for $materialContentLoaded event from materialContent directive.
         // If the materialContent element is a sibling of our toolbar, hook it up
         // to scroll events.
         scope.$on('$materialContentLoaded', onMaterialContentLoad);
 
-        var contentElement;
-        function onMaterialContentLoad($event, contentEl) {
-
-          if (Util.elementIsSibling(element, contentEl)) {
+        function onMaterialContentLoad($event, newContentEl) {
+          if (Util.elementIsSibling(element, newContentEl)) {
             // unhook old content event listener if exists
-            contentElement && contentElement.off('scroll', onScroll);
-            contentEl.on('scroll', onContentScroll).css('position','relative');
-            contentElement = contentEl;
-          }
+            if (contentElement) {
+              contentElement.off('scroll', debouncedContentScroll);
+            }
 
+            newContentEl.on('scroll', debouncedContentScroll);
+            newContentEl.attr('scroll-shrink', 'true');
+
+            contentElement = newContentEl;
+            $$rAF(updateToolbarHeight);
+          }
+        }
+
+        function updateToolbarHeight() {
+          toolbarHeight = element.prop('offsetHeight');
+          // Add a negative margin-top the size of the toolbar to the content el.
+          // The content will start transformed down the toolbarHeight amount,
+          // so everything looks normal.
+          //
+          // As the user scrolls down, the content will be transformed up slowly
+          // to put the content underneath where the toolbar was.
+          contentElement.css(
+            'margin-top',
+            (-toolbarHeight * shrinkSpeedFactor) + 'px'
+          );
+          onContentScroll();
         }
 
         function onContentScroll(e) {
-          shrink(e.target.scrollTop);
-          prevScrollTop = e.target.scrollTop;
+          var scrollTop = e ? e.target.scrollTop : prevScrollTop;
+
+          debouncedUpdateHeight();
+
+          y = Math.min(
+            toolbarHeight / shrinkSpeedFactor,
+            Math.max(0, y + scrollTop - prevScrollTop)
+          );
+
+          element.css(
+            $materialEffects.TRANSFORM,
+            'translate3d(0,' + (-y * shrinkSpeedFactor) + 'px,0)'
+          );
+          contentElement.css(
+            $materialEffects.TRANSFORM,
+            'translate3d(0,' + ((toolbarHeight - y) * shrinkSpeedFactor) + 'px,0)'
+          );
+
+          prevScrollTop = scrollTop;
         }
 
-        // Shrink the given target element based on the scrolling
-        // of the scroller element.
-        function shrink(scrollTop) {
-          y = Math.min(height, Math.max(0, y + scrollTop - prevScrollTop));
-          // If we are scrolling back "up", show the header condensed again
-          // if (prevScrollTop > scrollTop && scrollTop > margin) {
-          //   y = Math.max(y, margin);
-          // }
-          $$rAF(transform);
-        }
-
-        function transform() {
-          var translate = y ?
-            'translate3d(0,' + (-y / HEIGHT_FACTOR) + 'px, 0)' :
-            '';
-          element.css($materialEffects.TRANSFORM, translate);
-          contentElement.css('margin-top', y ?
-                             (-y / HEIGHT_FACTOR) + 'px' :
-                            '');
-        }
       }
 
     }
@@ -4414,6 +4232,128 @@ function materialToolbarDirective($$rAF, $materialEffects) {
 
 angular.module('material.components.whiteframe', []);
 
+/**
+ * @ngdoc module
+ * @name material.components.divider
+ * @description Divider module!
+ */
+angular.module('material.components.divider', [
+  'material.animations',
+  'material.services.aria'
+])
+  .directive('materialDivider', MaterialDividerDirective);
+
+function MaterialDividerController(){}
+
+/**
+ * @ngdoc directive
+ * @name materialDivider
+ * @module material.components.divider
+ * @restrict E
+ *
+ * @description
+ * Dividers group and separate content within lists and page layouts using strong visual and spatial distinctions. This divider is a thin rule, lightweight enough to not distract the user from content.
+ *
+ * @param {boolean=} inset Add this attribute to activate the inset divider style.
+ * @usage
+ * <hljs lang="html">
+ * <material-divider></material-divider>
+ *
+ * <material-divider inset></material-divider>
+ * </hljs>
+ *
+ */
+function MaterialDividerDirective() {
+  return {
+    restrict: 'E',
+    controller: [MaterialDividerController]
+  };
+}
+
+/**
+ * @ngdoc module
+ * @name material.components.linearProgress
+ * @description Linear Progress module!
+ */
+angular.module('material.components.linearProgress', [
+  'material.animations',
+  'material.services.aria'
+])
+  .directive('materialLinearProgress', ['$timeout', MaterialLinearProgressDirective]);
+
+/**
+ * @ngdoc directive
+ * @name materialLinearProgress
+ * @module material.components.linearProgress
+ * @restrict E
+ *
+ * @description
+ * The linear progress directive is used to make loading content in your app as delightful and painless as possible by minimizing the amount of visual change a user sees before they can view and interact with content. Each operation should only be represented by one activity indicator—for example, one refresh operation should not display both a refresh bar and an activity circle.
+ *
+ * For operations where the percentage of the operation completed can be determined, use a determinate indicator. They give users a quick sense of how long an operation will take.
+ *
+ * For operations where the user is asked to wait a moment while something finishes up, and it’s not necessary to expose what's happening behind the scenes and how long it will take, use an indeterminate indicator.
+ *
+ * @param {string} mode Select from one of four modes: determinate, indeterminate, buffer or query.
+ * @param {number=} value In determinate and buffer modes, this number represents the percentage of the primary progress bar. Default: 0
+ * @param {number=} secondaryValue In the buffer mode, this number represents the precentage of the secondary progress bar. Default: 0
+ *
+ * @usage
+ * <hljs lang="html">
+ * <material-linear-progress mode="determinate" value="..."></material-linear-progress>
+ *
+ * <material-linear-progress mode="determinate" ng-value="..."></material-linear-progress>
+ *
+ * <material-linear-progress mode="indeterminate"></material-linear-progress>
+ *
+ * <material-linear-progress mode="buffer" value="..." secondaryValue="..."></material-linear-progress>
+ *
+ * <material-linear-progress mode="query"></material-linear-progress>
+ * </hljs>
+ */
+function MaterialLinearProgressDirective($timeout) {
+  return {
+    restrict: 'E',
+    template: '<div class="container">' +
+      '<div class="dashed"></div>' +
+      '<div class="bar bar1"></div>' +
+      '<div class="bar bar2"></div>' +
+      '</div>',
+    link: function(scope, element, attr) {
+      var bar1 = angular.element(element[0].querySelector('.bar1')),
+          bar2 = angular.element(element[0].querySelector('.bar2')),
+          container = angular.element(element[0].querySelector('.container'));
+
+      attr.$observe('value', function(value) {
+        bar2.css('width', clamp(value).toString() + '%');
+      });
+
+      attr.$observe('secondaryvalue', function(value) {
+        bar1.css('width', clamp(value).toString() + '%');
+      });
+
+      $timeout(function() {
+        container.addClass('ready');
+      });
+    }
+  };
+}
+
+// **********************************************************
+// Private Methods
+// **********************************************************
+
+function clamp(value) {
+  if (value > 100) {
+    return 100;
+  }
+
+  if (value < 0) {
+    return 0;
+  }
+
+  return value || 0;
+}
 angular.module('material.decorators', [])
 .config(['$provide', function($provide) {
   $provide.decorator('$$rAF', ['$delegate', '$rootScope', rAFDecorator]);
@@ -4431,12 +4371,8 @@ angular.module('material.decorators', [])
      * event that happened before that frame.
      *
      * @param {function} callback function to debounce
-     * @param {boolean=} invokeApply If set to false skips dirty checking, otherwise will invoke fn within the $apply block.
      */
-    $$rAF.debounce = function(cb, invokeApply) {
-      if (arguments.length === 1) {
-        invokeApply = true;
-      }
+    $$rAF.debounce = function(cb) {
       var queueArgs, alreadyQueued, queueCb, context;
       return function debounced() {
         queueArgs = arguments;
@@ -4445,11 +4381,7 @@ angular.module('material.decorators', [])
         if (!alreadyQueued) {
           alreadyQueued = true;
           $$rAF(function() {
-            invokeApply ?
-              $rootScope.$apply(function() {
-                queueCb.apply(context, queueArgs);
-              }) :
-                queueCb.apply(context, queueArgs);
+            queueCb.apply(context, queueArgs);
             alreadyQueued = false;
           });
         }
@@ -4767,169 +4699,6 @@ function materialCompilerService($q, $http, $injector, $compile, $controller, $t
 }
 
 /**
- * Adapted from ui.bootstrap.position
- * https://github.com/angular-ui/bootstrap/blob/master/src/position/position.js
- * https://github.com/angular-ui/bootstrap/blob/master/LICENSE
- */
-
-angular.module('material.services.position', [])
-  .factory('$position', [
-    '$document',
-    '$window',
-    MaterialPositionService
-  ]);
-
-/**
- * A set of utility methods that can be use to retrieve position of DOM elements.
- * It is meant to be used where we need to absolute-position DOM elements in
- * relation to other, existing elements (this is the case for tooltips, popovers,
- * typeahead suggestions etc.).
- */
-function MaterialPositionService($document, $window) {
-  function getStyle(el, cssprop) {
-    if (el.currentStyle) { //IE
-      return el.currentStyle[cssprop];
-    } else if ($window.getComputedStyle) {
-      return $window.getComputedStyle(el)[cssprop];
-    }
-    // finally try and get inline style
-    return el.style[cssprop];
-  }
-
-  /**
-   * Checks if a given element is statically positioned
-   * @param element - raw DOM element
-   */
-  function isStaticPositioned(element) {
-    return (getStyle(element, 'position') || 'static' ) === 'static';
-  }
-
-  /**
-   * returns the closest, non-statically positioned parentOffset of a given element
-   * @param element
-   */
-  var parentOffsetEl = function (element) {
-    var docDomEl = $document[0];
-    var offsetParent = element.offsetParent || docDomEl;
-    while (offsetParent && offsetParent !== docDomEl && isStaticPositioned(offsetParent) ) {
-      offsetParent = offsetParent.offsetParent;
-    }
-    return offsetParent || docDomEl;
-  };
-
-  return {
-    /**
-     * Provides read-only equivalent of jQuery's position function:
-     * http://api.jquery.com/position/
-     */
-    position: function (element) {
-      var elBCR = this.offset(element);
-      var offsetParentBCR = { top: 0, left: 0 };
-      var offsetParentEl = parentOffsetEl(element[0]);
-      if (offsetParentEl != $document[0]) {
-        offsetParentBCR = this.offset(angular.element(offsetParentEl));
-        offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
-        offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-      }
-
-      var boundingClientRect = element[0].getBoundingClientRect();
-      return {
-        width: boundingClientRect.width || element.prop('offsetWidth'),
-        height: boundingClientRect.height || element.prop('offsetHeight'),
-        top: elBCR.top - offsetParentBCR.top,
-        left: elBCR.left - offsetParentBCR.left
-      };
-    },
-
-    /**
-     * Provides read-only equivalent of jQuery's offset function:
-     * http://api.jquery.com/offset/
-     */
-    offset: function (element) {
-      var boundingClientRect = element[0].getBoundingClientRect();
-      return {
-        width: boundingClientRect.width || element.prop('offsetWidth'),
-        height: boundingClientRect.height || element.prop('offsetHeight'),
-        top: boundingClientRect.top + ($window.pageYOffset || $document[0].documentElement.scrollTop),
-        left: boundingClientRect.left + ($window.pageXOffset || $document[0].documentElement.scrollLeft)
-      };
-    },
-
-    /**
-     * Provides coordinates for the targetEl in relation to hostEl
-     */
-    positionElements: function (hostEl, targetEl, positionStr, appendToBody) {
-
-      var positionStrParts = positionStr.split('-');
-      var pos0 = positionStrParts[0], pos1 = positionStrParts[1] || 'center';
-
-      var hostElPos,
-      targetElWidth,
-      targetElHeight,
-      targetElPos;
-
-      hostElPos = appendToBody ? this.offset(hostEl) : this.position(hostEl);
-
-      targetElWidth = targetEl.prop('offsetWidth');
-      targetElHeight = targetEl.prop('offsetHeight');
-
-      var shiftWidth = {
-        center: function () {
-          return hostElPos.left + hostElPos.width / 2 - targetElWidth / 2;
-        },
-        left: function () {
-          return hostElPos.left;
-        },
-        right: function () {
-          return hostElPos.left + hostElPos.width;
-        }
-      };
-
-      var shiftHeight = {
-        center: function () {
-          return hostElPos.top + hostElPos.height / 2 - targetElHeight / 2;
-        },
-        top: function () {
-          return hostElPos.top;
-        },
-        bottom: function () {
-          return hostElPos.top + hostElPos.height;
-        }
-      };
-
-      switch (pos0) {
-        case 'right':
-          targetElPos = {
-          top: shiftHeight[pos1](),
-          left: shiftWidth[pos0]()
-        };
-        break;
-        case 'left':
-          targetElPos = {
-          top: shiftHeight[pos1](),
-          left: hostElPos.left - targetElWidth
-        };
-        break;
-        case 'bottom':
-          targetElPos = {
-          top: shiftHeight[pos0](),
-          left: shiftWidth[pos1]()
-        };
-        break;
-        default:
-          targetElPos = {
-          top: shiftHeight[pos0](),
-          left: shiftWidth[pos1]()
-        };
-        break;
-      }
-
-      return targetElPos;
-    }
-  };
-}
-
-/**
  * @ngdoc overview
  * @name material.services.registry
  *
@@ -4998,7 +4767,7 @@ function materialComponentRegistry($log) {
           instances.splice(index, 1);
         }
       };
-    },
+    }
   }
 }
 
