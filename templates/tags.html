@@ -53,6 +53,7 @@
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
         <material-item ng-repeat="input in inputs">
+            <!--ng-change will only work after field became filled correctly-->
             <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem()" placeholder="http://site.com"/>
             <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
             <br/>
