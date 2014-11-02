@@ -4,7 +4,7 @@
 //Even if you'll put two ng-app directives to tags, that reside on a single page, but not as parent and child, only first one will work by default (there are workarounds, though)
 //So we only use "exoApp" module for all parts of our app
 //Multiple dependencies of the module should be declared like this: ['exoFilters', 'exoApp']);
-var app = angular.module('exoApp', ['ngRoute', 'ngMaterial']);
+var app = angular.module('exoApp', ['ngRoute', 'ngMaterial', 'ngAria']);
 
 
 
