@@ -3,8 +3,7 @@
     <!--Form to add new Body Condition Reports-->
 
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
-<form name="addBodyCondition" novalidate >
-<!--<form name="addBodyCondition" class="exo-left" novalidate >-->
+<form name="addBodyCondition" class="exo-left" novalidate >
 
     <label>Body temperature:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
@@ -32,7 +31,8 @@
     <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
-    <md-button class="md-raised exo-right" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
+    <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
+    <!--<md-button class="md-raised exo-right" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>-->
 </form>
 
 </span>
