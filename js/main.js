@@ -766,13 +766,13 @@ app.controller('allEntriesController', function($scope, $rootScope, backendSyncA
 
 
 //Controller to work with interface elements we need globallly
-app.controller('globalController', function ($rootScope, $scope, $materialDialog) {
+app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
 
 
 
     //Global menu dialog
     $scope.dialog = function(e) {
-        $materialDialog({
+        $mdDialog({
             templateUrl: 'templates/menu-global.html',
             targetEvent: e,
             controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
