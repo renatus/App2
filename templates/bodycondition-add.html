@@ -28,14 +28,14 @@
     <label>Blood sugar:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">
 
+    <br><br>
+
     <!--Button to add entered values to the model-->
     <!--As of Material 0.0.2, <material-button> don't work with ng-disabled, or with type="submit"-->
     <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
-    <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
-    <!--<md-button class="md-raised exo-right" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>-->
-    <br><br><br>
+    <md-button class="md-raised exo-right" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
 </form>
 
 </span>
