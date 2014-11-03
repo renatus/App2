@@ -5,6 +5,8 @@
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
 <form name="addBodyCondition" class="exo-left" novalidate >
 
+    <br><br>
+
     <label>Body temperature:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
 
@@ -33,6 +35,7 @@
     <!--It's better to use ng-click directive for buttons-->
     <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
     <!--<md-button class="md-raised exo-right" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>-->
+    <br><br><br>
 </form>
 
 </span>
