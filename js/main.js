@@ -771,15 +771,27 @@ app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
 
 
     //Global menu dialog
-    $scope.dialog = function(e) {
-        $mdDialog({
+    $scope.dialog = function(ev) {
+        $mdDialog.show({
             templateUrl: 'templates/menu-global.html',
-            targetEvent: e,
-            controller: ['$scope', '$hideDialog', function($scope, $hideDialog) {
-                $scope.close = function() {
-                    $hideDialog();
+            targetEvent: ev,
+            controller: [function($scope, $mdDialog) {
+                $scope.hide = function() {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function(answer) {
+                    $mdDialog.hide(answer);
                 };
             }]
+        }).then(function() {
+            //$scope.alert = 'You said "Okay".';
+        }, function() {
+            //$scope.alert = 'You cancelled the dialog.';
         });
     };
 
