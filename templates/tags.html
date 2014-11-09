@@ -2,6 +2,8 @@
     <!--You should put nothing outside root tag (<span> in this case), even comments-->
     <!--Page for tags list-->
 
+    <md-content>
+
     <!--Fulltext search, all object properties are indexed, so "1" query will result in list of all entries, containing number 1 in, say, UUID-->
     Search: <input ng-model="userQuery">
 
@@ -81,5 +83,7 @@
         <!--Button to add entered values to the model-->
         <md-button class="md-button-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</md-button>
     </form>
+
+</md-content>
 
 </span>
