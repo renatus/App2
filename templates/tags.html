@@ -20,12 +20,12 @@
 
 
     <!--List of all tags-->
-    <material-list>
+    <md-list>
     <!--<ul>-->
         <!-- Single tag line -->
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
-        <material-item ng-repeat="tag in tags | filter:userQuery | filter:langcode | orderObjectByTXT:'title':orderChoice track by tag.uuid">
+        <md-item ng-repeat="tag in tags | filter:userQuery | filter:langcode | orderObjectByTXT:'title':orderChoice track by tag.uuid">
 
             <!-- Will give something like "TagTitle | en |"-->
             <span ng-hide="editing" ng-click="editing = true">{{tag[tag['lastVersion']]['title'][tag[tag['lastVersion']]['langcode']]}} | {{tag[tag['lastVersion']]['langcode']}} | </span>
@@ -34,33 +34,33 @@
             <a ng-hide="editing" ng-href="#/tags/{{tag.uuid}}">Details</a>
 
             <!--Button to delete this particular entry-->
-            <material-button class="material-button-raised" ng-hide="editing" ng-click="deleteEntry(tag)">Del</material-button>
+            <md-button class="md-button-raised" ng-hide="editing" ng-click="deleteEntry(tag)">Del</md-button>
 
             <!--Here tag editing form will be placed-->
             <edit-tag></edit-tag>
 
         <!--</li>-->
-        </material-item>
+        </md-item>
 
     <!--</ul>-->
-    </material-list>
+    </md-list>
 
 
 
     <!--List of addable inputs-->
-    <material-list>
+    <md-list>
         <!-- Single tag line -->
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
-        <material-item ng-repeat="input in inputs">
+        <md-item ng-repeat="input in inputs">
             <!--ng-change will only work after field became filled correctly-->
             <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem()" placeholder="http://site.com"/>
             <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
             <br/>
             {{input}}
-            <material-button ng-click="addArrItem()">Add</material-button>
-        </material-item>
-    </material-list>
+            <md-button ng-click="addArrItem()">Add</md-button>
+        </md-item>
+    </md-list>
 
 
 
@@ -79,7 +79,7 @@
         <input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com"/>
 
         <!--Button to add entered values to the model-->
-        <material-button class="material-button-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</material-button>
+        <md-button class="md-button-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Add</md-button>
     </form>
 
 </span>
