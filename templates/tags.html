@@ -29,6 +29,8 @@
         <!-- orderBy standard filter works with arrays only, not with objects -->
         <md-item ng-repeat="tag in tags | filter:userQuery | filter:langcode | orderObjectByTXT:'title':orderChoice track by tag.uuid">
 
+            <md-item-content>
+
             <!-- Will give something like "TagTitle | en |"-->
             <span ng-hide="editing" ng-click="editing = true">{{tag[tag['lastVersion']]['title'][tag[tag['lastVersion']]['langcode']]}} | {{tag[tag['lastVersion']]['langcode']}} | </span>
             <!--"Details" link, click will open subpage with this particular tag details-->
@@ -40,6 +42,8 @@
 
             <!--Here tag editing form will be placed-->
             <edit-tag></edit-tag>
+
+            </md-item-content>
 
         <!--</li>-->
         </md-item>
@@ -55,12 +59,18 @@
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
         <md-item ng-repeat="input in inputs">
+
+            <md-item-content>
+
             <!--ng-change will only work after field became filled correctly-->
             <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem()" placeholder="http://site.com"/>
             <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
             <br/>
             {{input}}
             <md-button ng-click="addArrItem()">Add</md-button>
+
+            </md-item-content>
+
         </md-item>
     </md-list>
 
