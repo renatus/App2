@@ -1,23 +1,27 @@
 {
-    "name": "Exocortex",
-    "version": "0.7.8",
-    "app": {
-        "launch":{
-            "local_path": "index.html"
-        }
-    },
+  "name": "Exocortex",
+  "xwalk_version": "0.7.9",
+  "start_url": "index.html",
+  "display": "standalone",
+  "orientation": "any",
 
-    "xwalk_permissions": [
-        "Geolocation",
-        "Vibration"
-    ],
-
-    "xwalk_hosts": [
-        "http://*.renat.biz/",
-        "http://ren.sky37.pp.ua/"
-    ],
-
-    "icons": {
-        "128": "pics/exocortex.png"
+  "icons": [
+    {
+      "src": "pics/exocortex.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "density": "2.5"
     }
+  ],
+
+  "xwalk_hosts": [
+    "http://*.renat.biz/",
+    "http://ren.sky37.pp.ua/"
+  ],
+
+  "xwalk_permissions": [
+    "Geolocation",
+    "Vibration"
+  ]
+
 }
