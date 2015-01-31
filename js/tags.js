@@ -51,8 +51,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Set URLlink URL and title
         //Entry is new, so revision number is "0"
         //var newArrElement = {'url':$scope.tag.urllink.url, "title":{'en': $scope.tag.urllink.title} };
-        //var newArrElement = {'url':$scope['tag']['urllink'][0]['url'], "title":{'en': $scope['tag']['urllink'][0]['title']} };
-        var newArrElement = {'url':$scope['tag']['urllink'], "title":{'en': $scope['tag']['urllink']} };
+        var newArrElement = {'url':$scope['tag']['urllink'][1]['url'], "title":{'en': $scope['tag']['urllink'][1]['title']} };
+        //var newArrElement = {'url':$scope['tag']['urllink'], "title":{'en': $scope['tag']['urllink']} };
         newEntry["0"]["urllink"].push(newArrElement);
 
         //Clean form from now saved user-entered data
