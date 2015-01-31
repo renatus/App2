@@ -102,8 +102,12 @@
 
                 <md-item-content>
                     <!--ng-change will only work after field became filled correctly-->
-                    <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem(input)" placeholder="http://site.com"/>
-                    <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
+                    <!--<input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem(input)" placeholder="http://site.com"/>
+                    <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>-->
+
+                    <input type="url" class="exo-input" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)" placeholder="http://site.com"/>
+                    <input type="text" class="exo-input" ng-model="tag['urllink'][input]['title']" placeholder="Title (optional)"/>
+
                     <br/>
                 </md-item-content>
 
