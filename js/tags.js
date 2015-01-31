@@ -53,6 +53,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Entry is new, so revision number is "0"
         var newArrElement = {};
 
+        console.log($scope.tag.urllink.length);
         for (var i = 0; i < $scope.tag.urllink.length; i++){
             console.log(i);
             var newArrSubElement = { 'url':$scope['tag']['urllink'][i]['url'], "title":{'en': $scope['tag']['urllink'][i]['title']} };
