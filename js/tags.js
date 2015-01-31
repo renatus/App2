@@ -4,15 +4,14 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Get all entries from $rootScope and put them to $scope object
     $scope.tags = $rootScope.exo.tags;
 
+    //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
     $scope.inputs = [1];
 
-
+    //Add new field to enter URL, if previous one was filled
     $scope.addArrItem = function(inputNum){
-        //inputNum variable only contains number (like 1, 2 or 3), which corresponds to form element number
+        //inputNum variable only contains number (like 1, 2 or 3), which corresponds to filled form element number
         //We should only add new form element only in case user has filled latest form element available
         //Otherwise there will emerge many empty form elements
-        console.log("inputNum: ");
-        console.log(inputNum);
         if(inputNum === $scope.inputs.length) {
             $scope.inputs.push($scope.inputs.length + 1);
         }
