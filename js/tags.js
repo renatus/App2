@@ -56,6 +56,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         var i = 0;
         for (arrElement in $scope.tag.urllink){
             console.log(i);
+            console.log($scope['tag']['urllink']);
             var newArrSubElement = { 'url':$scope['tag']['urllink'][i]['url'], "title":{'en': $scope['tag']['urllink'][i]['title']} };
             newArrElement.push(newArrSubElement);
             i++;
