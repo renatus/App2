@@ -11,6 +11,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //inputNum variable only contains number (like 1, 2 or 3), which corresponds to form element number
         //We should only add new form element only in case user has filled latest form element available
         //Otherwise there will emerge many empty form elements
+        console.log(inputNum);
+        console.log($scope.inputs.length);
         if(inputNum === $scope.inputs.length) {
             $scope.inputs.push($scope.inputs.length + 1);
         }
