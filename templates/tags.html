@@ -58,6 +58,7 @@
         <!-- Single tag line -->
         <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
         <!-- orderBy standard filter works with arrays only, not with objects -->
+        <!-- "input" variable only contains number (like 1, 2 or 3), which corresponds to form element number
         <md-item ng-repeat="input in inputs">
 
             <md-item-content>
@@ -66,7 +67,6 @@
             <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem()" placeholder="http://site.com"/>
             <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
             <br/>
-            {{input}}
             <md-button ng-click="addArrItem(input)">Add</md-button>
 
             </md-item-content>
