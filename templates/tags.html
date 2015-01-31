@@ -83,9 +83,38 @@
             <option value="ru">Russian</option>
         </select>
         <br/><br/>
-        <input type="text" class="exo-input" ng-model="tag.title" placeholder="Title" required />
+        <input type="text" class="exo-input" ng-model="tag.title" placeholder="Tag Title" required />
         <br/>
-        <input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com"/>
+        <!--<input type="url" class="exo-input" ng-model="tag.urllink" placeholder="http://site.com"/>-->
+
+
+
+
+
+
+        <!--List of addable inputs-->
+        <md-list>
+            <!-- Single tag line -->
+            <!-- Use "track by object.someUniqueKey" with ng-repeat to improve performance and prevent [ngRepeat:dupes] errors -->
+            <!-- orderBy standard filter works with arrays only, not with objects -->
+            <!-- "input" variable only contains number (like 1, 2 or 3), which corresponds to form element number-->
+            <md-item ng-repeat="input in inputs">
+
+                <md-item-content>
+                    <!--ng-change will only work after field became filled correctly-->
+                    <input type="url" class="exo-input" ng-model="tag.urllink.url" ng-change="addArrItem(input)" placeholder="http://site.com"/>
+                    <input type="text" class="exo-input" ng-model="tag.urllink.title" placeholder="Title (optional)"/>
+                    <br/>
+                </md-item-content>
+
+            </md-item>
+        </md-list>
+
+
+
+
+
+
 
         <br/>
         <!--Button to add entered values to the model-->
