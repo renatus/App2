@@ -5,7 +5,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     $scope.tags = $rootScope.exo.tags;
 
     //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
-    $scope.inputs = [1];
+    $scope.inputs = [0];
 
     //Add new field to enter URL, if previous one was filled
     $scope.addArrItem = function(inputNum){
@@ -51,8 +51,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Set URLlink URL and title
         //Entry is new, so revision number is "0"
         //var newArrElement = {'url':$scope.tag.urllink.url, "title":{'en': $scope.tag.urllink.title} };
-        var newArrElement = {'url':$scope['tag']['urllink'][1]['url'], "title":{'en': $scope['tag']['urllink'][1]['title']} };
-        //var newArrElement = {'url':$scope['tag']['urllink'], "title":{'en': $scope['tag']['urllink']} };
+        var newArrElement = {'url':$scope['tag']['urllink'][0]['url'], "title":{'en': $scope['tag']['urllink'][0]['title']} };
         newEntry["0"]["urllink"].push(newArrElement);
 
         //Clean form from now saved user-entered data
