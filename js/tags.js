@@ -51,22 +51,26 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
         //Set URLlink URL and title
         //Entry is new, so revision number is "0"
+        //There may be more than one link, so we have to iterate through all form inputs of URL type
+        //Array to put link objects into
         var newArrElement = [];
 
+        //Iterate through all urllink form inputs
         var i = 1;
         for (arrElement in $scope.tag.urllink){
-            //var newArrSubElement = { 'url':$scope['tag']['urllink'][i]['url'], "title":{'en': $scope['tag']['urllink'][i]['title']} };
+            //Object to store particular link and it's title
             var newArrSubElement = {};
             newArrSubElement['url'] = $scope['tag']['urllink'][i]['url'];
+            //Sybobject to store title in one or multiple languages
             newArrSubElement['title'] = {};
             newArrSubElement['title'][$scope.tag.langcode] = $scope['tag']['urllink'][i]['title'];
+            //Add link object to array
             newArrElement.push(newArrSubElement);
             i++;
         }
 
-
-
-        //var newArrElement = {'url':$scope['tag']['urllink'][0]['url'], "title":{'en': $scope['tag']['urllink'][0]['title']} };
+        //Put array with links to entry object
+        //Entry is new, so revision number is "0"
         newEntry["0"]["urllink"] = newArrElement;
 
         //Clean form from now saved user-entered data
