@@ -65,7 +65,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
 
         //var newArrElement = {'url':$scope['tag']['urllink'][0]['url'], "title":{'en': $scope['tag']['urllink'][0]['title']} };
-        newEntry["0"]["urllink"].push(newArrElement);
+        newEntry["0"]["urllink"] = newArrElement;
 
         //Clean form from now saved user-entered data
         this.tag = {};
