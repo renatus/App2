@@ -51,7 +51,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
         //Set URLlink URL and title
         //Entry is new, so revision number is "0"
-        var newArrElement = {};
+        var newArrElement = [];
 
         var i = 0;
         for (arrElement in $scope.tag.urllink){
