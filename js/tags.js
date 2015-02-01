@@ -57,9 +57,9 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         for (arrElement in $scope.tag.urllink){
             //var newArrSubElement = { 'url':$scope['tag']['urllink'][i]['url'], "title":{'en': $scope['tag']['urllink'][i]['title']} };
             var newArrSubElement = {};
-            var newArrSubElement['url'] = $scope['tag']['urllink'][i]['url'];
-            var newArrSubElement['title'] = {};
-            var newArrSubElement['title'][$scope.tag.langcode] = $scope['tag']['urllink'][i]['title'];
+            newArrSubElement['url'] = $scope['tag']['urllink'][i]['url'];
+            //newArrSubElement['title'] = {};
+            newArrSubElement['title'][$scope.tag.langcode] = $scope['tag']['urllink'][i]['title'];
             newArrElement.push(newArrSubElement);
             i++;
         }
