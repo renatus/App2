@@ -6,7 +6,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
     //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
     //It's more convenient to start fields numeration from 0 rather than from 1
-    $scope.inputs = [0];
+    $scope.inputs = [1];
 
     //Add new field to enter URL, if previous one was filled
     $scope.addArrItem = function(inputNum){
