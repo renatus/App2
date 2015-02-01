@@ -5,7 +5,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     $scope.tags = $rootScope.exo.tags;
 
     //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
-    //It's more convenient to start fields numeration from 0 rather than from 1
+    //We can't start fields numeration from 0 rather than from 1
     $scope.inputs = [1];
 
     //Add new field to enter URL, if previous one was filled
@@ -53,10 +53,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Entry is new, so revision number is "0"
         var newArrElement = [];
 
-        var i = 0;
+        var i = 1;
         for (arrElement in $scope.tag.urllink){
-            console.log(i);
-            console.log($scope['tag']['urllink']);
             var newArrSubElement = { 'url':$scope['tag']['urllink'][i]['url'], "title":{'en': $scope['tag']['urllink'][i]['title']} };
             newArrElement.push(newArrSubElement);
             i++;
