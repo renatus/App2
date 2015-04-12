@@ -11,7 +11,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Add new field to enter URL, if previous one was filled
     $scope.addArrItem = function(inputNum){
         //inputNum variable only contains number (like 1, 2 or 3), which corresponds to filled form element number
-        //We should only add new form element only in case user has filled latest form element available
+        //We should only add new form element in case user has filled latest form element available
         //Otherwise there will emerge many empty form elements
         if(inputNum === $scope.inputs.length) {
             $scope.inputs.push($scope.inputs.length + 1);
@@ -104,6 +104,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
         //If user have changed entry's language, we should change it for all language-specific properties
         //without creation dupes, such as en: "Title" ru: "Title"
+        //LANGFIELDADDED
         var oldLangcode = tag[tag["lastVersion"]]["langcode"];
         if (oldLangcode != langcode){
             //Set entry's new langcode
