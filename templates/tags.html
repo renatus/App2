@@ -85,6 +85,15 @@
 
 
 
+        <ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="tags" theme="bootstrap" sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
+            <ui-select-match placeholder="Select colors...">{{$item}}</ui-select-match>
+            <ui-select-choices repeat="tag in tags | filter:$select.search">
+                {{tag}}
+            </ui-select-choices>
+        </ui-select>
+
+
+
         <br/>
         <!--Button to add entered values to the model-->
         <md-button class="md-raised exo-right" ng-click="addEntry(tag)" ng-disabled="addTag.$invalid">Save</md-button>
