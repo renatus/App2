@@ -87,8 +87,8 @@
 
         <ui-select multiple tagging tagging-label="(custom 'new' label)" ng-model="tags" theme="bootstrap" sortable="true" ng-disabled="disabled" style="width: 300px;" title="Choose a color">
             <ui-select-match placeholder="Select colors...">{{$item}}</ui-select-match>
-            <ui-select-choices repeat="tag in tags | filter:$select.search">
-                {{tag}}
+            <ui-select-choices repeat="tag2 in tags | filter:$select.search">
+                {{tag2[tag2['lastVersion']]['title'][tag2[tag2['lastVersion']]['langcode']]}}
             </ui-select-choices>
         </ui-select>
 
