@@ -19,7 +19,10 @@
         <!-- Material design elements for Angular lib CSS -->
         <link rel="stylesheet" type="text/css" href="libs/angular-material.css" />
 
-        <!-- We need UI-Select lib for tagging fields -->
+        <!--We need main CSS file of Bootstrap framework to style UI-Select-based tagging fields-->
+        <!--As for now, OTHER PARTS OF BOOTSTRAP are NOT IN APP-->
+        <link rel="stylesheet" type="text/css" href="libs/bootstrap.css" />
+        <!-- We need UI-Select lib (2 files, .js and .css) from Angular-UI package for tagging fields -->
         <script type="text/javascript" src="libs/select.min.css"></script>
 
         <!-- Custom CSS we need globally -->
@@ -33,7 +36,7 @@
         <script type="text/javascript" src="libs/IndexedDBShim.min.js"></script>
         <script type="text/javascript" src="libs/angular.js"></script>
         <script type="text/javascript" src="libs/angular-route.js"></script>
-        <!-- We need ngSanitize to sanitize HTML input -->
+        <!-- We need ngSanitize to sanitize HTML input, including UI-Select-based tagging fields -->
         <script type="text/javascript" src="libs/angular-sanitize.js"></script>
         <!-- We need ngAnimate for Material design elements for Angular lib -->
         <script type="text/javascript" src="libs/angular-animate.js"></script>
@@ -44,7 +47,7 @@
         <!-- Material design elements for Angular lib -->
         <!--Don't forget to add CSS file and ngMaterial dependency to app-->
         <script type="text/javascript" src="libs/angular-material.js"></script>
-        <!-- We need UI-Select lib for tagging fields -->
+        <!-- We need UI-Select lib (2 files, .js and .css) from Angular-UI package for tagging fields -->
         <script type="text/javascript" src="libs/select.min.js"></script>
         
         <!--Code we use across all aplication-->
