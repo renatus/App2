@@ -1,6 +1,6 @@
 {
   "name": "Exocortex",
-  "xwalk_version": "0.7.10",
+  "xwalk_version": "0.7.9",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "any",
