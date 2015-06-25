@@ -195,6 +195,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     // Create filter function for a query string
     function createFilterFor(query) {
         // Convert query substring to lowercase
+        console.log(query);
         var lowercaseQuery = angular.lowercase(query);
         return function filterFn(state) {
             console.log(state);
