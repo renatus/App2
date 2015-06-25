@@ -168,10 +168,6 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
     //Array with all tag names
     self.tags7 = ["Tag1", "Tag2", "Тэг3"];
-
-
-    // Create list of 'state' value/display objects
-    self.states = loadAll();
     self.selectedItem = null;
     self.searchText = null;
     self.querySearch = querySearch;
