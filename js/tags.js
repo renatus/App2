@@ -176,6 +176,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
     //Search for states, which names begins with user-entered substring
     function querySearch(query) {
+        console.log('querySearch function 1 started');
 
         //If user made some query
         if(query){
@@ -204,6 +205,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //    }
         //};
 
+        console.log('createFilterFor function 2 started');
         return true;
     }
 
