@@ -164,8 +164,17 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
 
 
+    var self = this;
+
     //Array with all tag names
-    $scope.tags7 = ["Tag1", "Tag2", "Тэг3"];
+    self.tags7 = ["Tag1", "Tag2", "Тэг3"];
+
+
+    // Create list of 'state' value/display objects
+    self.states = loadAll();
+    self.selectedItem = null;
+    self.searchText = null;
+    self.querySearch = querySearch;
 
 
 
@@ -176,7 +185,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         if(query){
             //Filter() method creates a new array
             //with all elements that passed the test implemented by the provided function.
-            var results = $scope.tags7.filter(createFilterFor(query));
+            var results = self.tags7.filter(createFilterFor(query));
         } else {
             var results = [];
         }
