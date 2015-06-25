@@ -167,7 +167,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //var self = this;
 
     //Array with all tag names
-    $scope.tags7 = ["Tag1", "Tag2", "Тэг3"];
+    //$scope.tags7 = ["Tag1", "Tag2", "Тэг3"];
+    $scope.tags7 = ["tag1", "tag2", "тэг3"];
     $scope.selectedItem = null;
     $scope.searchText = null;
     $scope.querySearch = querySearch;
