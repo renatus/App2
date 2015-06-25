@@ -154,6 +154,64 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             console.log('Tag deleted!');
         });
     }
+
+
+
+
+
+
+
+
+
+
+    //Array with all tag names
+    $scope.tags7 = ["Tag1", "Tag2", "Тэг3"];
+
+
+
+    //Search for states, which names begins with user-entered substring
+    function querySearch(query) {
+
+        //If user made some query
+        if(query){
+            //Filter() method creates a new array
+            //with all elements that passed the test implemented by the provided function.
+            var results = $scope.tags7.filter(createFilterFor(query));
+        } else {
+            var results = [];
+        }
+
+        return results;
+    }
+
+
+
+    // Create filter function for a query string
+    function createFilterFor(query) {
+        // Convert query substring to lowercase
+        //var lowercaseQuery = angular.lowercase(query);
+        //return function filterFn(state) {
+            //.indexOf searches a string for the lowercase query substring
+            //True will be returned in case string begins with substring
+            //Because in this case index of substring will be equal to 0
+        //    if(state.value.indexOf(lowercaseQuery) === 0){
+        //        return true;
+        //    }
+        //};
+
+        return true;
+    }
+
+
+
+
+
+
+
+
+
+
+
 });
 
 
