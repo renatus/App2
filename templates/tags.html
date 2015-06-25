@@ -110,16 +110,17 @@
                          md-no-cache="ctrl.noCache"
                          md-selected-item="ctrl.selectedItem"
                          md-search-text="ctrl.searchText"
-                         md-items="item in ctrl.querySearch(ctrl.searchText)"
+                         md-items="item in ctrl.querySearch('Tag')"
                          md-item-text="item.display"
                          md-floating-label="Favorite state">
+            <!--md-items="item in ctrl.querySearch(ctrl.searchText)"-->
+
+
             <!-- md-no-cache disables caching completely-->
             <!-- md-search-text is a model to bind the search query text to -->
             <!-- md-items shows list of suggestions by calling search function with user-entered text as an argument-->
             <!-- md-item-text will convert your object to a single string -->
             <!-- md-floating-label - sets text of an input field floating label-->
-
-            {{ctrl.searchText}}
 
             <!-- Template for suggestions to show to user when he entered something -->
             <md-item-template>
