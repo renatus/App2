@@ -111,7 +111,7 @@
                          md-selected-item="ctrl.selectedItem"
                          md-search-text="ctrl.searchText"
                          md-items="item in querySearch(ctrl.searchText)"
-                         md-item-text="item.display"
+                         md-item-text="item"
                          md-floating-label="Favorite state">
             <!--md-items="item in ctrl.querySearch(ctrl.searchText)"-->
 
@@ -125,7 +125,7 @@
             <!-- Template for suggestions to show to user when he entered something -->
             <md-item-template>
                 <!-- Will results in something like "Alabama state" -->
-                <span md-highlight-text="ctrl.searchText">{{item.display}} state</span>
+                <span md-highlight-text="ctrl.searchText">{{item}} state</span>
             </md-item-template>
 
             <!-- Message to show when nothing was found-->
