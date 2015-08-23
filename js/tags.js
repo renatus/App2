@@ -11,7 +11,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     var i = 1;
     for (arrElement in $scope.tags){
         //Object to store particular link and it's title
-        console.log(arrElement.lastVersion);
+        console.log(arrElement);
         i++;
     }
 
