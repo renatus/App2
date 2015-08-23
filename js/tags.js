@@ -7,7 +7,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
 
 
-    console.log($scope.tags[1]);
+    console.log($scope['tags'][1]['lastVersion']);
     //Iterate through all urllink form inputs
     var i = 1;
     for (arrElement in $scope.tags){
