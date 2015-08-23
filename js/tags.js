@@ -4,16 +4,20 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Get all entries from $rootScope and put them to $scope object
     $scope.tags = $rootScope.exo.tags;
 
+    $scope.tagsNames = [];
 
 
 
-    console.log($scope['tags'][1]['lastVersion']);
-    //Iterate through all urllink form inputs
+
+    //console.log($scope['tags'][1]['lastVersion']);
     var i = 0;
     while (i < $scope.tags.length){
         //Get lastVersion of a current tag
-        lastVer = $scope['tags'][i]['lastVersion'];
-        console.log($scope['tags'][i][lastVer]["title"]["en"]);
+        var lastVer = $scope['tags'][i]['lastVersion'];
+        var entryLangcode = $scope['tags'][i][lastVer]["title"]["langcode"];
+        //Add new entry to $scope
+        $scope.tagsNames.push($scope['tags'][i][lastVer]["title"][entryLangcode]);
+        console.log($scope['tags'][i][lastVer]["title"][entryLangcode]);
         i++;
     }
 
