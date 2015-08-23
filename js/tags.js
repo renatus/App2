@@ -4,6 +4,22 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Get all entries from $rootScope and put them to $scope object
     $scope.tags = $rootScope.exo.tags;
 
+
+
+
+    //Iterate through all urllink form inputs
+    var i = 1;
+    for (arrElement in $scope.tags){
+        //Object to store particular link and it's title
+        console.log(arrElement.lastVersion);
+        i++;
+    }
+
+
+
+
+
+
     //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
     //We can't start fields numeration from 0 rather than from 1
     $scope.inputs = [1];
@@ -167,8 +183,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //var self = this;
 
     //Array with all tag names
-    //$scope.tags7 = ["tag1", "tag2", "тэг3"];
-    $scope.tags7 = $scope.tags;
+    $scope.tags7 = ["tag1", "tag2", "тэг3"];
+    //$scope.tags7 = $scope.tags;
     $scope.selectedItem = null;
     $scope.searchText = null;
     $scope.querySearch = querySearch;
