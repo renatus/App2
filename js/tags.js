@@ -9,11 +9,11 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
     console.log($scope['tags'][1]['lastVersion']);
     //Iterate through all urllink form inputs
-    var i = 1;
-    for (arrElement in $scope.tags){
-        //Object to store particular link and it's title
-        console.log(arrElement);
+    var i = 0;
+    while (i < $scope.tags.length){
         i++;
+        //Object to store particular link and it's title
+        console.log($scope['tags'][i]['lastVersion']);
     }
 
 
