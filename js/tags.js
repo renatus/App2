@@ -205,7 +205,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         if(query){
             //Filter() method creates a new array
             //with all elements that passed the test implemented by the provided function.
-            var results = $scope.tags7.filter(createFilterFor(query));
+            var results = $scope.tagsNames.filter(createFilterFor(query));
         } else {
             var results = [];
         }
