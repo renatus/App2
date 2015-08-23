@@ -4,25 +4,19 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //Get all entries from $rootScope and put them to $scope object
     $scope.tags = $rootScope.exo.tags;
 
+    //Array yo store all tag names for autocomplete, somethinglike ["tag1", "tag2", "тэг3"]
     $scope.tagsNames = [];
-
-
-
-
-    //console.log($scope['tags'][1]['lastVersion']);
+    //Iterate through all tags
     var i = 0;
     while (i < $scope.tags.length){
-        //Get lastVersion of a current tag
+        //Get lastVersion of a current tag entry (like 1)
         var lastVer = $scope['tags'][i]['lastVersion'];
+        //Get langcode of a current tag entry (like "en")
         var entryLangcode = $scope['tags'][i][lastVer]["langcode"];
-        //Add new entry to $scope
+        //Add new tag name to array
         $scope.tagsNames.push($scope['tags'][i][lastVer]["title"][entryLangcode]);
-        console.log($scope['tags'][i][lastVer]["title"][entryLangcode]);
         i++;
     }
-
-
-
 
 
 
@@ -186,11 +180,14 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
 
 
-    //var self = this;
 
-    //Array with all tag names
-    $scope.tags7 = ["tag1", "tag2", "тэг3"];
-    //$scope.tags7 = $scope.tags;
+
+
+
+
+
+
+
     $scope.selectedItem = null;
     $scope.searchText = null;
     $scope.querySearch = querySearch;
