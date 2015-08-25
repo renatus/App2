@@ -3,7 +3,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
     //TODO: newly-added tags are only added on app reload
     //Get all entries from $rootScope and put them to $scope object
-    //Somethig like {"0":
+    //Single entry looks like {"0":
     //{"title":{"en":"tst1"},"urllink":[],"langcode":"en","createdTimeStamp":1440337292905,"modifiedTimeStamp":1440337292905},
     //"uuid":"6b399b6e-48a9-4e05-807c-5927bf523862","lastVersion":0,"lastUpdatedLocally":1440337292905}
     $scope.tags = $rootScope.exo.tags;
@@ -167,6 +167,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     $scope.querySearch = querySearch;
 
     //Array to store all tag names for autocomplete, somethinglike ["tag1", "tag2", "тэг3"]
+    //TODO: move this code to more suitable place and/or reorganise it (to process newly-added tag names, for example)
     $scope.tagsNames = [];
     //Iterate through all tags
     var i = 0;
@@ -187,7 +188,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         if(query){
             //Filter() method creates a new array
             //with all the elements that passed the test implemented by the provided function createFilterFor.
-            var results = $scope.tagsNames.filter(createFilterFor(query));
+            var results = $scope.tags.filter(createFilterFor(query));
         } else {
             var results = [];
         }
@@ -205,6 +206,8 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //.indexOf searches a string for the lowercase query substring
             //True will be returned in case string begins with substring
             //Because in this case index of substring will be equal to 0
+            console.log(tagName);
+
             if(tagName.indexOf(lowercaseQuery) === 0){
                 return true;
             }
