@@ -177,35 +177,18 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //Tag input field autocomplete search backend
     $scope.selectedItem = null;
     $scope.searchText = null;
     $scope.querySearch = querySearch;
 
-
-
-    //Search for states, which names begins with user-entered substring
+    //Search for tags, which names begins with user-entered substring
     function querySearch(query) {
-        console.log('querySearch function 1 started');
 
         //If user made some query
         if(query){
             //Filter() method creates a new array
-            //with all elements that passed the test implemented by the provided function.
+            //with all the elements that passed the test implemented by the provided function createFilterFor.
             var results = $scope.tagsNames.filter(createFilterFor(query));
         } else {
             var results = [];
@@ -214,17 +197,13 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         return results;
     }
 
-
-
-    // Create filter function for a query string
+    // Filter function to determine, which array elements suits user-entered string
+    // Text entry is only suitable, if it begins with the user-entered symbols
     function createFilterFor(query) {
         // Convert query substring to lowercase
         var lowercaseQuery = angular.lowercase(query);
+        //tagName variable is only used in that function
         return function filterFn(tagName) {
-            //console.log(lowercaseQuery);
-            // console.log("State: ");
-            console.log(tagName);
-
             //.indexOf searches a string for the lowercase query substring
             //True will be returned in case string begins with substring
             //Because in this case index of substring will be equal to 0
@@ -232,18 +211,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
                 return true;
             }
         };
-
-        console.log('createFilterFor function 2 started');
-        //return true;
     }
-
-
-
-
-
-
-
-
 
 
 
