@@ -208,7 +208,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //Because in this case index of substring will be equal to 0
             console.log(entityToFilter);
 
-            if(entityToFilter['uuid']indexOf(lowercaseQuery) === 0){
+            if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
