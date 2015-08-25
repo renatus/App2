@@ -222,7 +222,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         var lowercaseQuery = angular.lowercase(query);
         return function filterFn(tagName) {
             //console.log(lowercaseQuery);
-            //console.log("State: ");
+            // console.log("State: ");
             console.log(tagName);
 
             //.indexOf searches a string for the lowercase query substring
