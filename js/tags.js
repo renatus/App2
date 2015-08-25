@@ -213,7 +213,6 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
 
             //var valueToFilter = entityToFilter[entityToFilterVer]['title'][entityToFilterLang];
 
-
             for (arrElement in titleObj){
 
                 var valueToFilterLowercase = angular.lowercase(titleObj[arrElement]);
@@ -225,12 +224,6 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
                 }
 
             }
-
-
-
-
-
-
         };
     }
 
