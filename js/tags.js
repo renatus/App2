@@ -208,15 +208,29 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //Because in this case index of substring will be equal to 0
             console.log(entityToFilter);
             var entityToFilterVer = entityToFilter['lastVersion'];
-            var entityToFilterLang = entityToFilter[entityToFilterVer]['langcode'];
-            var valueToFilter = entityToFilter[entityToFilterVer]['title'][entityToFilterLang];
-            var valueToFilterLowercase = angular.lowercase(valueToFilter);
+            //var entityToFilterLang = entityToFilter[entityToFilterVer]['langcode'];
+            var titleObj = entityToFilter[entityToFilterVer]['title'];
 
-            //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
-            //indexOf only works with strings, don't forget to convert numbers
-            if(valueToFilterLowercase.indexOf(lowercaseQuery) === 0){
-                return true;
+            //var valueToFilter = entityToFilter[entityToFilterVer]['title'][entityToFilterLang];
+
+
+            for (arrElement in titleObj){
+
+                var valueToFilterLowercase = angular.lowercase(titleObj[arrElement]);
+
+                //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
+                //indexOf only works with strings, don't forget to convert numbers
+                if(valueToFilterLowercase.indexOf(lowercaseQuery) === 0){
+                    return true;
+                }
+
             }
+
+
+
+
+
+
         };
     }
 
