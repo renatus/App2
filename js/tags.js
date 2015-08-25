@@ -210,10 +210,11 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             var entityToFilterVer = entityToFilter['lastVersion'];
             var entityToFilterLang = entityToFilter[entityToFilterVer]['langcode'];
             var valueToFilter = entityToFilter[entityToFilterVer]['title'][entityToFilterLang];
+            var valueToFilterLowercase = angular.lowercase(valueToFilter);
 
             //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
             //indexOf only works with strings, don't forget to convert numbers
-            if(valueToFilter.indexOf(lowercaseQuery) === 0){
+            if(valueToFilterLowercase.indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
