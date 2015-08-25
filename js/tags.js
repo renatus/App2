@@ -207,9 +207,10 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //True will be returned in case string begins with substring
             //Because in this case index of substring will be equal to 0
             console.log(entityToFilter);
+            console.log(entityToFilter['lastUpdatedLocally']);
 
             //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
-            if(entityToFilter['lastUpdatedLocally'].indexOf(lowercaseQuery) === 0){
+            if(entityToFilter['lastVersion'].indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
