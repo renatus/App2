@@ -207,10 +207,13 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //True will be returned in case string begins with substring
             //Because in this case index of substring will be equal to 0
             console.log(entityToFilter);
-            var textNum = entityToFilter['lastUpdatedLocally'].toString();
+            var entityToFilterVer = entityToFilter['lastVersion'];
+            var entityToFilterLang = entityToFilter[entityToFilterVer]['langcode'];
+            var valueToFilter = entityToFilter[entityToFilterVer]['title'][entityToFilterLang];
 
             //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
-            if(textNum.indexOf(lowercaseQuery) === 0){
+            //indexOf only works with strings, don't forget to convert numbers
+            if(valueToFilter.indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
