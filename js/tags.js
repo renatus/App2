@@ -175,9 +175,9 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         //Get lastVersion of a current tag entry (like 1)
         var lastVer = $scope['tags'][i]['lastVersion'];
         //Get langcode of a current tag entry (like "en")
-        var entryLangcode = $scope['tags'][i][lastVer]["langcode"];
+        var entryLangcode = $scope['tags'][i][lastVer]['langcode'];
         //Add new tag name to array
-        $scope.tagsNames.push($scope['tags'][i][lastVer]["title"][entryLangcode]);
+        $scope.tagsNames.push($scope['tags'][i][lastVer]['title'][entryLangcode]);
         i++;
     }
 
@@ -208,7 +208,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             //Because in this case index of substring will be equal to 0
             console.log(entityToFilter);
 
-            if(entityToFilter.uuid.indexOf(lowercaseQuery) === 0){
+            if(entityToFilter['uuid']indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
