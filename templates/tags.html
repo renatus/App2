@@ -104,6 +104,9 @@
 
 
         <!-- Autocomplete field. You can't put comments inside md-autocomplete tag-->
+        <!-- TODO: handle different entries with equal names, NOT NEEDED for tags -->
+        <!-- We may want to add edition date and time to to that names, rather than UUIDs, but collisions are possible-->
+        <!-- We may want to use "invisible" text to hide UUID -->
         <!-- https://material.angularjs.org/latest/#/api/material.components.autocomplete/directive/mdAutocomplete -->
         <md-autocomplete flex
                          md-input-name="parentTagRefInput"
