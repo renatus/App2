@@ -209,7 +209,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
             console.log(entityToFilter);
 
             //if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
-            if(entityToFilter['uuid'].indexOf(lowercaseQuery) === 0){
+            if(entityToFilter['lastUpdatedLocally'].indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
