@@ -188,7 +188,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         if(query){
             //Filter() method creates a new array
             //with all the elements that passed the test implemented by the provided function createFilterFor.
-            var results = $scope.tags.uuid.filter(createFilterFor(query));
+            var results = $scope.tags.filter(createFilterFor(query));
         } else {
             var results = [];
         }
@@ -201,14 +201,14 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     function createFilterFor(query) {
         // Convert query substring to lowercase
         var lowercaseQuery = angular.lowercase(query);
-        //tagName variable is only used in that function
-        return function filterFn(tagName) {
+        //entityToFilter variable is only used in that function
+        return function filterFn(entityToFilter) {
             //.indexOf searches a string for the lowercase query substring
             //True will be returned in case string begins with substring
             //Because in this case index of substring will be equal to 0
-            console.log(tagName);
+            console.log(entityToFilter);
 
-            if(tagName.indexOf(lowercaseQuery) === 0){
+            if(entityToFilter.uuid.indexOf(lowercaseQuery) === 0){
                 return true;
             }
         };
