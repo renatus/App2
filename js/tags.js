@@ -8,22 +8,6 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     //"uuid":"6b399b6e-48a9-4e05-807c-5927bf523862","lastVersion":0,"lastUpdatedLocally":1440337292905}
     $scope.tags = $rootScope.exo.tags;
 
-    //Array yo store all tag names for autocomplete, somethinglike ["tag1", "tag2", "тэг3"]
-    $scope.tagsNames = [];
-    //Iterate through all tags
-    var i = 0;
-    while (i < $scope.tags.length){
-        //Get lastVersion of a current tag entry (like 1)
-        var lastVer = $scope['tags'][i]['lastVersion'];
-        //Get langcode of a current tag entry (like "en")
-        var entryLangcode = $scope['tags'][i][lastVer]["langcode"];
-        //Add new tag name to array
-        $scope.tagsNames.push($scope['tags'][i][lastVer]["title"][entryLangcode]);
-        i++;
-    }
-
-
-
     //At first, we should only have one field to enter URL. If it'll be filled, we'll add more on the fly.
     //We can't start fields numeration from 0 rather than from 1
     $scope.inputs = [1];
@@ -181,6 +165,20 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
     $scope.selectedItem = null;
     $scope.searchText = null;
     $scope.querySearch = querySearch;
+
+    //Array to store all tag names for autocomplete, somethinglike ["tag1", "tag2", "тэг3"]
+    $scope.tagsNames = [];
+    //Iterate through all tags
+    var i = 0;
+    while (i < $scope.tags.length){
+        //Get lastVersion of a current tag entry (like 1)
+        var lastVer = $scope['tags'][i]['lastVersion'];
+        //Get langcode of a current tag entry (like "en")
+        var entryLangcode = $scope['tags'][i][lastVer]["langcode"];
+        //Add new tag name to array
+        $scope.tagsNames.push($scope['tags'][i][lastVer]["title"][entryLangcode]);
+        i++;
+    }
 
     //Search for tags, which names begins with user-entered substring
     function querySearch(query) {
