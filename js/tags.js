@@ -188,7 +188,7 @@ app.controller('tagsController', function ($scope, $rootScope, $q, $routeParams,
         if(query){
             //Filter() method creates a new array
             //with all the elements that passed the test implemented by the provided function createFilterFor.
-            var results = $scope.tags.filter(createFilterFor(query));
+            var results = $scope.tags.uuid.filter(createFilterFor(query));
         } else {
             var results = [];
         }
