@@ -65,14 +65,13 @@
         <br/><br/>
 
 
+
         <!-- Tag title input -->
         <md-input-container>
             <label>Tag Title</label>
             <input required name="tagTitle" ng-model="tag.title">
-            <div ng-message="required">This field is required.</div>
+            <!--<div ng-message="required">This field is required.</div>-->
         </md-input-container>
-
-        <!--<input type="text" class="exo-input" ng-model="tag.title" placeholder="Tag Title" required />-->
         <br/>
 
 
@@ -85,9 +84,30 @@
             <md-item ng-repeat="input in inputs">
                 <md-item-content>
                     <!--ng-change will only work after field became filled correctly-->
-                    <input type="url" class="exo-input" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)" placeholder="http://site.com"/>
-                    <input type="text" class="exo-input" ng-model="tag['urllink'][input]['title']" placeholder="Title (optional)"/>
-                    <br/>
+
+
+
+                    <div layout layout-sm="column">
+                        <!-- Link URL input -->
+                        <md-input-container>
+                            <label>Link URL</label>
+                            <!-- ng-change="addArrItem(input)" will trigger new input addition -->
+                            <input type="url" name="linkURL" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)">
+                        </md-input-container>
+
+                        <!-- Link Title input -->
+                        <md-input-container>
+                            <label>Link title (optional)</label>
+                            <input type="text" name="linkTitle" ng-model="tag['urllink'][input]['title']" placeholder="(opt)">
+                        </md-input-container>
+                        <br/>
+                    </div>
+
+                    <!--<input type="url" class="exo-input" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)" placeholder="http://site.com"/>
+                    <input type="text" class="exo-input" ng-model="tag['urllink'][input]['title']" placeholder="Title (optional)"/> -->
+
+
+
                 </md-item-content>
             </md-item>
         </md-list>
