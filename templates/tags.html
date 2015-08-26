@@ -63,7 +63,16 @@
             <option value="ru">Russian</option>
         </select>
         <br/><br/>
-        <input type="text" class="exo-input" ng-model="tag.title" placeholder="Tag Title" required />
+
+
+        <!-- Tag title input -->
+        <md-input-container>
+            <label>Tag Title</label>
+            <input required name="tagTitle" ng-model="tag.title">
+            <div ng-message="required">This field is required.</div>
+        </md-input-container>
+
+        <!--<input type="text" class="exo-input" ng-model="tag.title" placeholder="Tag Title" required />-->
         <br/>
 
 
@@ -114,7 +123,7 @@
                 <!--<span md-highlight-text="ctrl.searchText">{{item}}</span>-->
                 <span md-highlight-text="ctrl.searchText">{{item[item.lastVersion]["title"][item[item.lastVersion]["langcode"]]}}</span>
 
-                <span>{{item.uuid}}</span>;
+                <span>{{item.uuid}}</span>
 
 
             </md-item-template>
