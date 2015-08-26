@@ -7,8 +7,17 @@
 
     <br><br>
 
-    <label>Body temperature:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">
+    <div layout layout-sm="column">
+        <p>Body temperature:</p>
+
+        <md-input-container>
+            <label>36.6</label>
+            <input type="number" step="any" min="20" max="44" name="bodyTemp" ng-model="bodycondition.temperature" >
+        </md-input-container>
+    </div>
+
+    <!--<label>Body temperature:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">-->
 
     <label>Blood pressure max:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">

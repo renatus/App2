@@ -83,15 +83,14 @@
             <!-- Create input elements, accordind to numbers from "input" variable)-->
             <md-item ng-repeat="input in inputs">
                 <md-item-content>
+                    <!-- ng-change="addArrItem(input)" will trigger new input addition -->
                     <!--ng-change will only work after field became filled correctly-->
 
-
-
+                    <!-- layout-sm="column" will put elements inside in a single row -->
                     <div layout layout-sm="column">
                         <!-- Link URL input -->
                         <md-input-container>
                             <label>Link URL</label>
-                            <!-- ng-change="addArrItem(input)" will trigger new input addition -->
                             <input type="url" name="linkURL" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)">
                         </md-input-container>
 
@@ -102,11 +101,6 @@
                         </md-input-container>
                         <br/>
                     </div>
-
-                    <!--<input type="url" class="exo-input" ng-model="tag['urllink'][input]['url']" ng-change="addArrItem(input)" placeholder="http://site.com"/>
-                    <input type="text" class="exo-input" ng-model="tag['urllink'][input]['title']" placeholder="Title (optional)"/> -->
-
-
 
                 </md-item-content>
             </md-item>
