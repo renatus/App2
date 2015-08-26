@@ -7,35 +7,61 @@
 
     <br><br>
 
-    <div layout layout-sm="column">
-        <p>Body temperature:</p>
-
-        <md-input-container>
-            <label>36.6</label>
-            <input type="number" step="any" min="20" max="44" name="bodyTemp" ng-model="bodycondition.temperature" >
-        </md-input-container>
-    </div>
+    <md-input-container>
+        <label>Body temperature, like 36.6</label>
+        <input type="number" step="any" min="20" max="44" name="bodyTemp" ng-model="bodycondition.temperature" >
+    </md-input-container>
 
     <!--<label>Body temperature:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">-->
 
-    <label>Blood pressure max:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">
+    <md-input-container>
+        <label>Blood pressure max, like 120</label>
+        <input type="number" step="any" min="0" max="300" name="bpressMax" ng-model="bodycondition.bloodPressureMax" >
+    </md-input-container>
 
-    <label>Blood pressure min:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMin" min="0" max="200" placeholder="80">
+    <!--<label>Blood pressure max:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">-->
 
-    <label>Pulse:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.pulse" min="0" max="330" placeholder="60">
+    <md-input-container>
+        <label>Blood pressure min, like 80</label>
+        <input type="number" step="any" min="0" max="200" name="bpressMin" ng-model="bodycondition.bloodPressureMin" >
+    </md-input-container>
 
-    <label>Body mass:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.mass" min="30000" max="200000" placeholder="70000">
+    <!--<label>Blood pressure min:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMin" min="0" max="200" placeholder="80">-->
 
-    <label>Height:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.height" min="0" max="2100" placeholder="1780">
+    <md-input-container>
+        <label>Pulse, like 60</label>
+        <input type="number" step="any" min="0" max="330" name="bpulse" ng-model="bodycondition.pulse" >
+    </md-input-container>
 
-    <label>Blood sugar:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">
+    <!--<label>Pulse:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.pulse" min="0" max="330" placeholder="60">-->
+
+    <md-input-container>
+        <label>Body mass, like 70000</label>
+        <input type="number" step="any" min="30000" max="200000" name="bodyMass" ng-model="bodycondition.mass" >
+    </md-input-container>
+
+    <!--<label>Body mass:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.mass" min="30000" max="200000" placeholder="70000">-->
+
+    <md-input-container>
+        <label>Height, like 1780</label>
+        <input type="number" step="any" min="0" max="2300" name="bodyHeight" ng-model="bodycondition.height" >
+    </md-input-container>
+
+    <!--<label>Height:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.height" min="0" max="2100" placeholder="1780">-->
+
+    <md-input-container>
+        <label>Blood sugar, like 4.5</label>
+        <input type="number" step="any" min="1" max="30" name="bloodSugar" ng-model="bodycondition.bloodSugar" >
+    </md-input-container>
+
+    <!--<label>Blood sugar:</label>
+    <input type="number" class="exo-input" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">-->
 
     <br><br>
 
