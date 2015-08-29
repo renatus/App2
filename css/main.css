@@ -11,7 +11,7 @@
     src: local('Material Icons'),
          local('MaterialIcons-Regular'),
          url(../libs/MaterialIcons-Regular.woff2) format('woff2'),
-         url(../libs/MaterialIcons-Regular.woff) format('woff'),
+         url(../libs/MaterialIcons-Regular.woff) format('woff');
 }
 
 .material-icons {
