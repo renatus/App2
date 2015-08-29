@@ -1,3 +1,46 @@
+/* CSS code to use webfont-based Material Icons by Google */
+
+/* .woff is ubiquitos font format, it's not supported only by  IE <= 8 and by Android Browser <= 4.3 */
+/* To cover IE <= 8 and Android Browser <= 4.3, we need to add .ttf file */
+/* .woff2 is modern font format, but is only supported by Chrome, Android Browser, Firefox and Opera */
+/* Place modern format files first (i.e. .woff2, .woff, .ttf) as browser will use first format it supports */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Material Icons'),
+         local('MaterialIcons-Regular'),
+         url(../libs/MaterialIcons-Regular.woff2) format('woff2'),
+         url(../libs/MaterialIcons-Regular.woff) format('woff'),
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+
+
 /* CSS code to work with forms */
 
 /* CSS code to indicate correctly and incorrectly filled fields */
