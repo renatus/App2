@@ -5,9 +5,9 @@
 <!-- layout-margin or layout-padding helps to keep inputs inside page, even if it's narrow -->
 <!-- But do not prevent horizontal scrollbar from appearing, see https://github.com/angular/material/issues/1814 -->
 <!--<md-content layout-padding="">-->
-    <!--<md-content layout-padding="" name="addBodyCondition"> -->
+<md-content layout-padding="">
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
-<form layout-padding="" name="addBodyCondition" class="exo-left" novalidate >
+<form layout-padding="" name="addBodyCondition" novalidate>
 
     <md-input-container class="exo-input">
         <label>Body temperature, like 36.6</label>
@@ -56,6 +56,6 @@
     <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
 </form>
 
-    <!--</md-content>-->
+    </md-content>
 
 </span>
