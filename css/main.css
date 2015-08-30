@@ -14,6 +14,7 @@
          url(../libs/MaterialIcons-Regular.woff) format('woff');
 }
 
+/* Set icons appearance (they're just text, so CSS works fine for that) */
 .material-icons {
     font-family: 'Material Icons';
     font-weight: normal;
