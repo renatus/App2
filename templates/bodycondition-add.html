@@ -7,7 +7,7 @@
 <!--<md-content layout-padding="">-->
 <md-content layout-padding="">
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
-<form layout-padding="" name="addBodyCondition" novalidate>
+<form name="addBodyCondition" novalidate>
 
     <md-input-container class="exo-input">
         <label>Body temperature, like 36.6</label>
@@ -54,8 +54,9 @@
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
     <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
+
 </form>
 
-    </md-content>
+</md-content>
 
 </span>
