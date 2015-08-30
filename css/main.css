@@ -61,11 +61,12 @@
 /* Spread form input to match screen width */
 .exo-input {
     width: 98%;
+    /* Much smaller, than by default */
+    padding-bottom: 4px;
 }
 
 #md-input-container {
-    /* Much smaller, than by default */
-    padding-bottom: 4px;
+    /* padding-bottom: 4px; */
 }
 
 
