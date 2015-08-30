@@ -53,7 +53,7 @@
     <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
-    <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid">Save</md-button>
+    <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid && addBodyCondition.$dirty">Save</md-button>
 
     invalid: {{addBodyCondition.$invalid}}
     pristine: {{addBodyCondition.$pristine}}
