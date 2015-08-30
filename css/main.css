@@ -60,7 +60,7 @@
 
 /* Spread form input to match screen width */
 .exo-input {
-    width: 58%;
+    width: 98%;
     /* Much smaller, than by default, in line with padding from left, rigt or top side */
     padding-bottom: 2px;
 }
