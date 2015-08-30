@@ -4,70 +4,48 @@
 
 <!-- layout-margin or layout-padding helps to keep inputs inside page, even if it's narrow -->
 <!-- But do not prevent horizontal scrollbar from appearing, see https://github.com/angular/material/issues/1814 -->
-<!--<md-content layout-padding>-->
-    <md-content layout-padding="">
+<md-content layout-padding="">
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
 <form name="addBodyCondition" class="exo-left" novalidate >
 
-    <br>
-
-    <md-input-container flex="">
+    <md-input-container class="exo-input">
         <label>Body temperature, like 36.6</label>
         <input type="number" step="any" min="20" max="44" name="bodyTemp" ng-model="bodycondition.temperature">
     </md-input-container>
 
-    <!--<label>Body temperature:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.temperature" min="20" max="44" placeholder="36.6">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Blood pressure max, like 120</label>
-        <input type="number" step="any" min="0" max="300" name="bpressMax" ng-model="bodycondition.bloodPressureMax" class="exo-input">
+        <input type="number" step="any" min="0" max="300" name="bpressMax" ng-model="bodycondition.bloodPressureMax">
     </md-input-container>
 
-    <!--<label>Blood pressure max:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMax" min="0" max="300" placeholder="120">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Blood pressure min, like 80</label>
-        <input type="number" step="any" min="0" max="200" name="bpressMin" ng-model="bodycondition.bloodPressureMin" class="exo-input">
+        <input type="number" step="any" min="0" max="200" name="bpressMin" ng-model="bodycondition.bloodPressureMin">
     </md-input-container>
 
-    <!--<label>Blood pressure min:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.bloodPressureMin" min="0" max="200" placeholder="80">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Pulse, like 60</label>
-        <input type="number" step="any" min="0" max="330" name="bpulse" ng-model="bodycondition.pulse" class="exo-input">
+        <input type="number" step="any" min="0" max="330" name="bpulse" ng-model="bodycondition.pulse">
     </md-input-container>
 
-    <!--<label>Pulse:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.pulse" min="0" max="330" placeholder="60">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Body mass, like 70000</label>
-        <input type="number" step="any" min="30000" max="200000" name="bodyMass" ng-model="bodycondition.mass" class="exo-input">
+        <input type="number" step="any" min="30000" max="200000" name="bodyMass" ng-model="bodycondition.mass">
     </md-input-container>
 
-    <!--<label>Body mass:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.mass" min="30000" max="200000" placeholder="70000">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Height, like 1780</label>
-        <input type="number" step="any" min="0" max="2300" name="bodyHeight" ng-model="bodycondition.height" class="exo-input">
+        <input type="number" step="any" min="0" max="2300" name="bodyHeight" ng-model="bodycondition.height">
     </md-input-container>
 
-    <!--<label>Height:</label>
-    <input type="number" class="exo-input" ng-model="bodycondition.height" min="0" max="2100" placeholder="1780">-->
-
-    <md-input-container>
+    <md-input-container class="exo-input">
         <label>Blood sugar, like 4.5</label>
-        <input type="number" step="any" min="1" max="30" name="bloodSugar" ng-model="bodycondition.bloodSugar" class="exo-input">
+        <input type="number" step="any" min="1" max="30" name="bloodSugar" ng-model="bodycondition.bloodSugar">
     </md-input-container>
 
     <!--<label>Blood sugar:</label>
     <input type="number" class="exo-input" ng-model="bodycondition.bloodSugar" min="1" max="30" placeholder="4.5">-->
 
-    <br>
 
     <!--Button to add entered values to the model-->
     <!--As of Material 0.0.2, <material-button> don't work with ng-disabled, or with type="submit"-->
