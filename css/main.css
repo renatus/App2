@@ -61,6 +61,7 @@
 /* Spread form input to match screen width */
 .exo-input {
     width: 98%;
+    height: 65%;
 }
 
 #md-input-container {
