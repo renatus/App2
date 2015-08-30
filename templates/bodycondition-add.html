@@ -2,7 +2,9 @@
     <!--You should put nothing outside root tag (<span> in this case), even comments-->
     <!--Form to add new Body Condition Reports-->
 
-    <md-content layout-margin>
+<!-- layout-margin or layout-padding helps to keep inputs inside page, even if it's narrow -->
+<!-- But do not prevent horizontal scrollbar from appearing, see https://github.com/angular/material/issues/1814 -->
+<md-content layout-padding>
 <!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
 <form name="addBodyCondition" class="exo-left" novalidate >
 
