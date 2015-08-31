@@ -6,7 +6,8 @@
 <!-- But do not prevent horizontal scrollbar from appearing, see https://github.com/angular/material/issues/1814 -->
 <!--<md-content layout-padding="">-->
 <md-content layout-padding="">
-<!--<form name="addBodyCondition" class="exo-left" ng-submit="addEntry(bodycondition)" novalidate >-->
+
+<!--User-entered values will be validated by Angular, so we've to disable valiation by browser with novalidate-->
 <form name="addBodyCondition" novalidate>
 
     <md-input-container class="exo-input">
@@ -53,12 +54,12 @@
     <!--It's better not to use ng-submit directive for forms and type="submit" for buttons-->
     <!--ng-submit directive may be triggered by pressing other buttons on the same page-->
     <!--It's better to use ng-click directive for buttons-->
+    <!--We should deactivate Save button if the user has entered incorrect values into form -->
+    <!--OR if the user hadn't add anything to form inputs yet-->
+    <!--Note that empty form may still be submitted, if user has entered something, and then has deleted it-->
+    <!-- ng-pristine is set to True if form values weren't edited by user, ng-dirty - if they were -->
     <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid || !addBodyCondition.$dirty">Save</md-button>
 
-    invalid: {{addBodyCondition.$invalid}}
-    pristine: {{addBodyCondition.$pristine}}
-    dirty: {{addBodyCondition.$dirty}}
-    valid: {{addBodyCondition.$valid}}
 </form>
 
 </md-content>
