@@ -56,7 +56,8 @@
     <!--It's better to use ng-click directive for buttons-->
     <!--We should deactivate Save button if the user has entered incorrect values into form -->
     <!--OR if the user hadn't add anything to form inputs yet-->
-    <!--Note that empty form may still be submitted, if user has entered something, and then has deleted it-->
+    <!--Note that empty form may still be submitted, if there are no required fields in it-->
+    <!--As user can enter something, and then to delete it-->
     <!-- ng-pristine is set to True if form values weren't edited by user, ng-dirty - if they were -->
     <md-button class="md-raised" ng-click="addEntry(bodycondition)" ng-disabled="addBodyCondition.$invalid || !addBodyCondition.$dirty">Save</md-button>
 
