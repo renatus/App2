@@ -12,8 +12,8 @@ app.controller('bodyconditionsController', function ($scope, $rootScope, bodycon
         //Clean form from now saved user-entered data
         this.bodycondition = {};
         //Remove CSS classes indicating the fact that user interacted with form
-        bodycondition.$setPristine();
-        bodycondition.$setUntouched();
+        $scope.bodycondition.$setPristine();
+        $scope.bodycondition.$setUntouched();
     }
 
 });
