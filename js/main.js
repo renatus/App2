@@ -701,7 +701,7 @@ app.service('userInterface', function($window, $mdDialog){
         // to prevent interaction outside of dialog
         $mdDialog.show(
             $mdDialog.alert()
-            .parent(angular.element(document.querySelector('#popupContainer')))
+            //.parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
             .title('This is an alert title')
             .content(alertBody)
