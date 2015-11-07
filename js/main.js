@@ -506,8 +506,8 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
         backend.getServicesToken(pageLogin.backendURL).then(function(servicesToken){
             //Login to server
             backend.login(pageLogin.backendURL, pageLogin.name, pageLogin.password).then(function(serverReply){
-                //console.log(serverReply);
-                userInterface.alert(serverReply);
+                //alertTitle, alertButton, alertBody
+                userInterface.alert("Server replied:", "Ok", serverReply);
             });
             
         });
@@ -523,13 +523,13 @@ app.controller('serverInteract', function ($scope, $q, backend, userInterface) {
             backend.getServicesToken(backendURL).then(function(servicesToken){
                 //Logout from server
                 backend.logout(backendURL).then(function(serverReply){
-                    //console.log(serverReply);
-                    userInterface.alert(serverReply);
+                    //alertTitle, alertButton, alertBody
+                    userInterface.alert("Server replied:", "Ok", serverReply);
                 });
             });
         } else {
             //Notify user about missing server URL
-            userInterface.alert("Can't log out, server URL is not known");
+            userInterface.alert("Can't log out, server URL is not known", "Ok", "");
         }
     }
 });
@@ -686,34 +686,21 @@ app.service('backendSyncAll', function($rootScope, backendSync){
 
 
 //Service to work with random interface elements
-//TODO:$mdDialog - here or not?
-app.service('userInterface', function($window){
+//We need to use $mdDialog as an argument here to make Dialogs from this.alert to work
+app.service('userInterface', function($window, $mdDialog){
 
-	//Method to notify user about something by Alert
+	//Method to notify user about something by Material for Angular Dialog
     //alertBody argument should contain message text
-    this.alert = function(alertBody, $mdDialog) {
+    this.alert = function(alertTitle, alertButton, alertBody) {
 
-
-
-
-        // Appending dialog to document.body to cover sidenav in docs app
-        // Modal dialogs should fully cover application
-        // to prevent interaction outside of dialog
         $mdDialog.show(
             $mdDialog.alert()
-            //.parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
-            .title(alertBody)
-            //.content(alertBody)
-            .ariaLabel('Alert Dialog Demo')
-            .ok('Got it!')
-            //.targetEvent(ev)
+            .title(alertTitle)
+            .content(alertBody)
+            .ariaLabel(alertTitle)
+            .ok(alertButton)
         );
-
-
-
-
-
 
         //Show alert message to the user
         //$window.alert(alertBody);

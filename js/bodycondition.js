@@ -155,10 +155,11 @@ app.service('bodyconditionService', function($rootScope, indexedDBexo, UUID4, us
             }
 
             //Create text message to notify user about successfull check-in
-            var alertBody = "You've added Body condition report successfully!";
+            var alertTitle = "You've added Body condition report successfully!";
 
             //Notify user about successfull check-in
-            userInterface.alert(alertBody);
+            //alertTitle, alertButton, alertBody
+            userInterface.alert(alertTitle, "Ok", "");
         });
     }
 });

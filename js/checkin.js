@@ -187,7 +187,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
             }
 
             //Create text message to notify user about successfull check-in
-            var alertBody = "You've checked-in successfully! " + '\n' +
+            var alertTitle = "You've checked-in successfully!";
+            var alertBody = '' +
             'Latitude: '          + position.coords.latitude          + '\n' +
             'Longitude: '         + position.coords.longitude         + '\n' +
             'Altitude: '          + position.coords.altitude          + '\n' +
@@ -200,7 +201,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
             'Current time: '      + new Date()                        + '\n';
 
             //Notify user about successfull check-in
-            userInterface.alert(alertBody);
+            //alertTitle, alertButton, alertBody
+            userInterface.alert(alertTitle, "Ok", alertBody);
         });
     }
 
@@ -212,7 +214,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
         var curDateTime = new Date(position.timestamp);
 
         //Create text message to notify user about successfull check-in
-        var alertBody = "GPS works fine! " + '\n' +
+        var alertTitle = "GPS works fine!";
+        var alertBody = '' +
         'Latitude: '          + position.coords.latitude          + '\n' +
         'Longitude: '         + position.coords.longitude         + '\n' +
         'Altitude: '          + position.coords.altitude          + '\n' +
@@ -225,7 +228,8 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
         'Current time: '      + new Date()                        + '\n';
 
         //Notify user about successfull check-in
-        userInterface.alert(alertBody);
+        //alertTitle, alertButton, alertBody
+        userInterface.alert(alertTitle, "Ok", alertBody);
     }
 
 });
