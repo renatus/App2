@@ -703,7 +703,7 @@ app.service('userInterface', function($window, $mdDialog){
             $mdDialog.alert()
             //.parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
-            .title('This is an alert title')
+            //.title('This is an alert title')
             .content(alertBody)
             .ariaLabel('Alert Dialog Demo')
             .ok('Got it!')
