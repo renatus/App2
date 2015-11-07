@@ -716,7 +716,7 @@ app.service('userInterface', function($window, $mdDialog){
 
 
         //Show alert message to the user
-        $window.alert(alertBody);
+        //$window.alert(alertBody);
     }
 
 });
