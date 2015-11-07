@@ -686,6 +686,7 @@ app.service('backendSyncAll', function($rootScope, backendSync){
 
 
 //Service to work with random interface elements
+//TODO:$mdDialog - here or not?
 app.service('userInterface', function($window, $mdDialog){
 
 	//Method to notify user about something by Alert
@@ -703,7 +704,7 @@ app.service('userInterface', function($window, $mdDialog){
             .parent(angular.element(document.querySelector('#popupContainer')))
             .clickOutsideToClose(true)
             .title('This is an alert title')
-            .content('You can specify some description text in here.')
+            .content(alertBody)
             .ariaLabel('Alert Dialog Demo')
             .ok('Got it!')
             //.targetEvent(ev)
