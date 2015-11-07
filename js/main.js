@@ -706,7 +706,7 @@ app.service('userInterface', function($window, $mdDialog){
             .content('You can specify some description text in here.')
             .ariaLabel('Alert Dialog Demo')
             .ok('Got it!')
-            .targetEvent(ev)
+            //.targetEvent(ev)
         );
 
 
