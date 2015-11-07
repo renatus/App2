@@ -686,7 +686,7 @@ app.service('backendSyncAll', function($rootScope, backendSync){
 
 
 //Service to work with random interface elements
-app.service('userInterface', function($window){
+app.service('userInterface', function($window, $mdDialog){
 
 	//Method to notify user about something by Alert
     //alertBody argument should contain message text
