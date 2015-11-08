@@ -787,7 +787,7 @@ app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
     $scope.dialog = function(ev) {
         $mdDialog.show({
             templateUrl: 'templates/menu-global.html',
-            targetEvent: ev,
+            //targetEvent: ev,
             controller: function($scope, $mdDialog) {
                 $scope.hide = function() {
                     $mdDialog.hide();
