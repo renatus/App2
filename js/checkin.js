@@ -191,7 +191,7 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
             var alertBody = '' +
             'Latitude: '          + position.coords.latitude          + '\n' +
             'Longitude: '         + position.coords.longitude         + '\n' +
-            'Altitude: '          + position.coords.altitude          + '\n' +
+            '<p>Altitude: '          + position.coords.altitude          + '</p>' +
             'Accuracy: '          + position.coords.accuracy          + '\n' +
             'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
             'Heading: '           + position.coords.heading           + '\n' +
