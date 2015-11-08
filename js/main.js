@@ -712,6 +712,40 @@ app.service('userInterface', function($window, $mdDialog){
 
 
 
+//Controller to work with interface elements we need globallly
+app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
+
+
+
+    //Global menu dialog
+    $scope.dialog = function() {
+        $mdDialog.show({
+            templateUrl: 'templates/menu-global.html',
+            //targetEvent: ev,
+            controller: function($scope, $mdDialog) {
+                $scope.hide = function() {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function(answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
+        }).then(function() {
+            //$scope.alert = 'You said "Okay".';
+        }, function() {
+            //$scope.alert = 'You cancelled the dialog.';
+        });
+    };
+
+});
+
+
+
 //Directive to make buttons and other UI elements work like <a> tag
 //For example, you may create a button, that will open new page being clicked
 //http://stackoverflow.com/questions/15847726/is-there-a-simple-way-to-use-button-to-navigate-page-as-a-link-does-in-angularjs
@@ -773,40 +807,6 @@ app.controller('allEntriesController', function($scope, $rootScope, backendSyncA
     $scope.syncAllTo = function(){
         backendSyncAll.To();
     }
-
-});
-
-
-
-//Controller to work with interface elements we need globallly
-app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
-
-
-
-    //Global menu dialog
-    $scope.dialog = function(ev) {
-        $mdDialog.show({
-            templateUrl: 'templates/menu-global.html',
-            //targetEvent: ev,
-            controller: function($scope, $mdDialog) {
-                $scope.hide = function() {
-                    $mdDialog.hide();
-                };
-
-                $scope.cancel = function() {
-                    $mdDialog.cancel();
-                };
-
-                $scope.answer = function(answer) {
-                    $mdDialog.hide(answer);
-                };
-            }
-        }).then(function() {
-            //$scope.alert = 'You said "Okay".';
-        }, function() {
-            //$scope.alert = 'You cancelled the dialog.';
-        });
-    };
 
 });
 
