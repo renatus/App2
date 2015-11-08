@@ -747,7 +747,7 @@ app.controller('globalController', function ($rootScope, $scope, $mdDialog, $mdS
 
 
     $scope.dialog2 = function() {
-        $mdSidenav(navID).toggle({
+        $mdSidenav().toggle({
             templateUrl: 'templates/sidebar-menu-global.html',
         });
     };
