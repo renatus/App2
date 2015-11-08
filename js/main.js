@@ -690,9 +690,9 @@ app.service('backendSyncAll', function($rootScope, backendSync){
 app.service('userInterface', function($window, $mdDialog){
 
 	//Method to notify user about something by Material for Angular Dialog
-    //alertTitle argument should contain message title
-    //alertBody argument should contain text to display in button
-    //alertBody argument should contain message text
+    //alertTitle argument should contain message title. HTML markup is accepted.
+    //alertButton argument should contain text to display in button
+    //alertBody argument should contain message text. HTML markup is accepted.
     this.alert = function(alertTitle, alertButton, alertBody) {
 
         $mdDialog.show(

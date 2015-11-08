@@ -189,16 +189,17 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
             //Create text message to notify user about successfull check-in
             var alertTitle = "You've checked-in successfully!";
             var alertBody = '' +
-            'Latitude: '          + position.coords.latitude          + '\n' +
-            'Longitude: '         + position.coords.longitude         + '\n' +
+            // 'Latitude: '          + position.coords.latitude          + '\n' +
+            '<p>Latitude: '          + position.coords.latitude          + '</p>' +
+            '<p>Longitude: '         + position.coords.longitude         + '</p>' +
             '<p>Altitude: '          + position.coords.altitude          + '</p>' +
-            'Accuracy: '          + position.coords.accuracy          + '\n' +
-            'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-            'Heading: '           + position.coords.heading           + '\n' +
-            'Speed: '             + position.coords.speed             + '\n' +
-            'Timestamp: '         + position.timestamp                + '\n' +
-            'Measurement time: '  + curDateTime                       + '\n' +
-            'Current time: '      + new Date()                        + '\n';
+            '<p>Accuracy: '          + position.coords.accuracy          + '</p>' +
+            '<p>Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '</p>' +
+            '<p>Heading: '           + position.coords.heading           + '</p>' +
+            '<p>Speed: '             + position.coords.speed             + '</p>' +
+            '<p>Timestamp: '         + position.timestamp                + '</p>' +
+            '<p>Measurement time: '  + curDateTime                       + '</p>' +
+            '<p>Current time: '      + new Date()                        + '</p>';
 
             //Notify user about successfull check-in
             //alertTitle, alertButton, alertBody
@@ -216,16 +217,16 @@ app.service('positionService', function($rootScope, $q, indexedDBexo, UUID4, use
         //Create text message to notify user about successfull check-in
         var alertTitle = "GPS works fine!";
         var alertBody = '' +
-        'Latitude: '          + position.coords.latitude          + '\n' +
-        'Longitude: '         + position.coords.longitude         + '\n' +
-        'Altitude: '          + position.coords.altitude          + '\n' +
-        'Accuracy: '          + position.coords.accuracy          + '\n' +
-        'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
-        'Heading: '           + position.coords.heading           + '\n' +
-        'Speed: '             + position.coords.speed             + '\n' +
-        'Timestamp: '         + position.timestamp                + '\n' +
-        'Measurement time: '  + curDateTime                       + '\n' +
-        'Current time: '      + new Date()                        + '\n';
+        '<p>Latitude: '          + position.coords.latitude          + '</p>' +
+        '<p>Longitude: '         + position.coords.longitude         + '</p>' +
+        '<p>Altitude: '          + position.coords.altitude          + '</p>' +
+        '<p>Accuracy: '          + position.coords.accuracy          + '</p>' +
+        '<p>Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '</p>' +
+        '<p>Heading: '           + position.coords.heading           + '</p>' +
+        '<p>Speed: '             + position.coords.speed             + '</p>' +
+        '<p>Timestamp: '         + position.timestamp                + '</p>' +
+        '<p>Measurement time: '  + curDateTime                       + '</p>' +
+        '<p>Current time: '      + new Date()                        + '</p>';
 
         //Notify user about successfull check-in
         //alertTitle, alertButton, alertBody
