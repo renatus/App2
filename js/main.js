@@ -700,7 +700,7 @@ app.service('userInterface', function($window, $mdDialog){
             .clickOutsideToClose(true)
             .title(alertTitle)
             .content(alertBody)
-            .ariaLabel(alertTitle)
+            .ariaLabel("Dialog window to notify user about something going on")
             .ok(alertButton)
         );
 
@@ -740,6 +740,14 @@ app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
         }, function() {
             //$scope.alert = 'You cancelled the dialog.';
         });
+    };
+
+
+
+
+
+    $scope.dialog2 = function() {
+        alert('123');
     };
 
 });
