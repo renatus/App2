@@ -1,0 +1,33 @@
+<md-sidenav class="md-sidenav-right" md-component-id="right">
+    <!--App global menu buttons-->
+
+    <!--<md-content>
+        <h2>Permissions</h2>
+    </md-content>-->
+
+    <div class="md-actions" layout="vertical" layout-align="end">
+        <!--<md-button ng-click="cancel()">Cancel</md-button>
+        <md-button class="md-primary" ng-click="hide()">Okay</md-button>-->
+
+
+
+        <!-- Open activities list -->
+        <!-- ng-click="close()" will close Material dialog button is placed in-->
+        <md-button class="md-primary" ng-click="cancel()" exo-href="/activities">Activities</md-button>
+        <div class="gap"></div>
+
+        <!-- Open login page -->
+        <!-- ng-click="close()" will close Material dialog button is placed in-->
+        <md-button class="md-primary" ng-click="cancel()" exo-href="/login">Login</md-button>
+        <br><br>
+
+        <!-- Syn to and from backend -->
+        <!-- ng-click="close()" will close Material dialog button is placed in-->
+        <span ng-controller="allEntriesController">
+            <!-- Button to sync to and from backend-->
+            <md-button class="md-primary" ng-click="syncAllTo(); cancel()">Sync</md-button>
+        </span>
+
+    </div>
+
+</md-sidenav>

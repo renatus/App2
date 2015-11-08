@@ -713,7 +713,7 @@ app.service('userInterface', function($window, $mdDialog){
 
 
 //Controller to work with interface elements we need globallly
-app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
+app.controller('globalController', function ($rootScope, $scope, $mdDialog, $mdSidenav) {
 
 
 
@@ -747,8 +747,13 @@ app.controller('globalController', function ($rootScope, $scope, $mdDialog) {
 
 
     $scope.dialog2 = function() {
-        alert('123');
+        $mdSidenav(navID).toggle({
+            templateUrl: 'templates/sidebar-menu-global.html',
+        });
     };
+
+
+
 
 });
 
